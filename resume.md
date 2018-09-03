@@ -20,7 +20,7 @@ work:
 edu:
     -
         college: The University of Texas at Dallas
-        degree: Batchelors of Science in Computer Science
+        degree: Bachelors of Science in Computer Science
         time: Fall 2013
         link: https://utdallas.edu
 skills:
