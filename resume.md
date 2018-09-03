@@ -16,7 +16,7 @@ work:
         company: Cyclops EMR
         title: Software Devloper
         time: May 2013 to Febuary 2015
-        link: https://cvent.com       
+        link: http://cyclopsemr.com
 edu:
     -
         college: The University of Texas at Dallas
