@@ -3,7 +3,15 @@ var urlsToCache = [
     '/',
     '/404',
     '/resume',
-    '/public'
+    '/public/css/bootstrap.min.css',
+    '/public/css/bootstrap.min.css.map',
+    '/public/css/fontawesome.min.css',
+    '/public/css/styles.css',
+    '/public/images/headshot.jpg',
+    '/public/js/bootstrap.min.js',
+    '/public/js/bootstrap.min.js.map',
+    '/public/js/jquery.slim.min.js',
+    '/public/js/load.js'
 ];
 
 self.addEventListener('install', function(event) {
