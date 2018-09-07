@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Stuart Neivandt
+title: Home
 ---
 
 <section role="region" class="text-center">

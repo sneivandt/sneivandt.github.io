@@ -2,7 +2,7 @@ var CACHE_NAME = 'site-cache-v1';
 var urlsToCache = [
     '/',
     '/404',
-    '/resume',
+    '/about',
     '/public/css/bootstrap.min.css',
     '/public/css/bootstrap.min.css.map',
     '/public/css/fontawesome.min.css',

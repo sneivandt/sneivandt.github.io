@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>{{page.title}}</title>
+<title>{{page.title}} - Stuart Neivandt</title>
 <meta name="description" content="Stuart Neivandt's personal website">
 <meta name="author" content="Stuart Neivandt">
 <meta name="theme-color" content="#343a40">
@@ -43,10 +43,10 @@
                 {% endif %}
             </li>
             <li class="nav-item">
-                {% if page.url == "/resume.html" %}
-                <a class="nav-link active" href="/resume">Resume</a>
+                {% if page.url == "/about.html" %}
+                <a class="nav-link active" href="/about">About</a>
                 {% else %}
-                <a class="nav-link" href="/resume">Resume</a>
+                <a class="nav-link" href="/about">About</a>
                 {% endif %}
             </li>
         </ul>
