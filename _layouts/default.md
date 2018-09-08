@@ -1,3 +1,18 @@
+---
+tabs:
+    - 
+        name: "Home"
+        link: "/"
+        path: "index.md"
+    - 
+        name: "About"
+        link: "/about"
+        path: "about.md"
+    - 
+        name: "Contact"
+        link: "/contact"
+        path: "contact.md"
+---
 <!doctype html>
 
 <html lang="en">
@@ -35,29 +50,33 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+            {% for tab in layout.tabs %}
             <li class="nav-item">
-                {% if page.url == "/" %}
-                <a class="nav-link active" href="/">Home</a>
+                {% if page.path == tab.path %}
+                <a class="nav-link active" href="{{tab.link}}">{{tab.name}}</a>
                 {% else %}
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="{{tab.link}}">{{tab.name}}</a>
                 {% endif %}
             </li>
-            <li class="nav-item">
-                {% if page.url == "/about.html" %}
-                <a class="nav-link active" href="/about">About</a>
-                {% else %}
-                <a class="nav-link" href="/about">About</a>
-                {% endif %}
-            </li>
+            {% endfor %}
         </ul>
     </div>
 </nav>    
 
-<div class="container p-3">
+<div id="wrap">
 <main role="main">
+<div class="container p-3">
 {{content}}
+</div>
 </main>
 </div>
+
+<footer role="contentinfo">
+<div class="container">
+<div class="text-muted">&copy; Stuart Neivandt {{ site.time | date: '%Y' }}
+<div>
+</div>
+</footer>
 
 <script src="public/js/jquery.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="public/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

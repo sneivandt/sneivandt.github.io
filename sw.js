@@ -3,6 +3,7 @@ var urlsToCache = [
     '/',
     '/404',
     '/about',
+    '/contact',
     '/public/css/bootstrap.min.css',
     '/public/css/bootstrap.min.css.map',
     '/public/css/fontawesome.min.css',
