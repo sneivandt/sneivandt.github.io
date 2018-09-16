@@ -22,7 +22,7 @@ tabs:
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>{{page.title}} - Stuart Neivandt</title>
-<meta name="description" content="Stuart Neivandt's personal website">
+<meta name="description" content="Stuart Neivandt's personal website.">
 <meta name="author" content="Stuart Neivandt">
 <meta name="theme-color" content="#343a40">
 
@@ -73,7 +73,7 @@ tabs:
 
 <footer role="contentinfo">
 <div class="container">
-<div class="text-muted">&copy; Stuart Neivandt {{ site.time | date: '%Y' }}
+<div class="text-muted text-center">&copy; Stuart Neivandt {{ site.time | date: '%Y' }}
 <div>
 </div>
 </footer>

@@ -13,6 +13,7 @@ sections:
                 title: Microsoft
                 link: https://www.microsoft.com
                 line1: Software Engineer
+                line2: Since December 2017
     -
         title: Education
         items: 
