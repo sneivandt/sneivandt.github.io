@@ -2,7 +2,7 @@
 layout: default
 title: Contact
 
-message: Direct message me on Twitter. I am not currently seeking full time employment but I am happy to discuss other topics.
+message: Direct message me on Twitter.
 ---
 
 <section role="region">

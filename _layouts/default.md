@@ -4,11 +4,7 @@ tabs:
         name: "Home"
         link: "/"
         path: "index.md"
-    - 
-        name: "About"
-        link: "/about"
-        path: "about.md"
-    - 
+    -
         name: "Contact"
         link: "/contact"
         path: "contact.md"
