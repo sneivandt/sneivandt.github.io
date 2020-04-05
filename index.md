@@ -10,5 +10,4 @@ title: Home
 <section role="region" class="text-center h1">
     <a href="https://github.com/sneivandt" aria-label="github" class="fab fa-github-square"></a>
     <a href="https://linkedin.com/in/stuartneivandt" aria-label="linkedin" class="fab fa-linkedin"></a>
-    <a href="https://twitter.com/stuartneivandt" aria-label="twitter" class="fab fa-twitter-square"></a>
 </section>
