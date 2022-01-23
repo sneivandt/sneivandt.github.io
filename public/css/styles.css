@@ -14,3 +14,7 @@ footer {
     height: 2em;
     line-height: 2em;
 }
+
+a:hover {
+    text-decoration: none;
+}
