@@ -1,0 +1,22 @@
+header {
+    padding: 10px;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+}
+
+.social-links li {
+    display: block;
+    margin: 10px 0;
+}
+
+.social-links a {
+    display: block;
+    padding: 5px;
+}
