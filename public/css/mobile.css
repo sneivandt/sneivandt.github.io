@@ -13,10 +13,4 @@ header h1 {
 
 .social-links li {
     display: block;
-    margin: 10px 0;
-}
-
-.social-links a {
-    display: block;
-    padding: 5px;
 }
