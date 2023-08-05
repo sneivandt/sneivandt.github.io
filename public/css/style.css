@@ -7,7 +7,9 @@ body {
 header {
     background-color: #333;
     color: white;
+    margin: 0;
     padding: 20px;
+    width: 100%;
 }
 
 header h1 {
@@ -16,11 +18,12 @@ header h1 {
 }
 
 .profile-image {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     display: block;
     margin: 20px auto;
+    box-sizing: border-box;
 }
 
 .social-links {
