@@ -4,10 +4,9 @@
 }
 
 body {
-    background: linear-gradient(to bottom, #1C2022, #121516);
+    background: linear-gradient(to right, #1C2022, #121516);
     justify-content: center;
     margin: 0;
-    height: 100vh;
 }
 
 h1 {
