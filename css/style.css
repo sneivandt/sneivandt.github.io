@@ -5,9 +5,7 @@
 
 body {
     background: linear-gradient(to bottom, #1C2022, #121516);
-    display: flex;
     justify-content: center;
-    align-items: center;
     margin: 0;
     height: 100vh;
 }
@@ -15,7 +13,8 @@ body {
 h1 {
     color: #E07A5F;
     font-size: 4em;
-    margin: 0.5em;
+    margin: 1em 0 0.25em 0;
+    padding-top: 1em;
     text-align: center;
     font-family: OpenSans, sans-serif;
 }
