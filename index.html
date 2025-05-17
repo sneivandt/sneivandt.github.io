@@ -9,8 +9,10 @@
     <meta name="theme-color" content="#1C2022">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   </head>
   <body>
+    <div id="particles-js"></div>
     <div class="container">
       <div class="profile-container">
         <div class="profile-image">
@@ -18,10 +20,21 @@
         </div>
       </div>
       <h1>Stuart Neivandt</h1>
+      <div class="typed-container">
+        <span id="typed-strings">
+          <span>Software Engineer</span>
+          <span>Music Enthusiast</span>
+          <span>Chess Player</span>
+        </span>
+        <span id="typed" class="typed"></span>
+      </div>
       <ul class="social-links">
         <li><a href="https://linkedin.com/in/stuartneivandt" class="fa fa-brands fa-linkedin-in" aria-label="LinkedIn"></a></li>
         <li><a href="https://github.com/sneivandt" class="fa fa-brands fa-github" aria-label="GitHub"></a></li>
       </ul>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
