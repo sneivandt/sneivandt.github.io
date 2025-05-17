@@ -18,6 +18,11 @@
     padding: 0;
 }
 
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     background-attachment: fixed;
     background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
@@ -38,6 +43,11 @@ body {
     width: 90%;
     padding: 2rem;
     text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-container {
@@ -112,12 +122,12 @@ ul.social-links li:hover {
     h1 {
         font-size: 3em;
     }
-    
+
     .bio {
         font-size: 1rem;
         padding: 0 1rem;
     }
-    
+
     .profile-image {
         width: 150px;
         height: 150px;
@@ -127,20 +137,30 @@ ul.social-links li:hover {
 /* Small screens (phones) */
 @media (max-width: 480px) {
     h1 {
-        font-size: 2.5em;
-        margin-top: 0.75em;
+        font-size: 2.2em;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
-    
+
     .profile-image {
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
     }
-    
+
     .container {
         padding: 1rem;
+        height: 100vh;
     }
-    
+
     .fa {
-        font-size: 1.75em;
+        font-size: 1.5em;
+    }
+
+    ul.social-links {
+        margin: 1rem 0;
+    }
+
+    .profile-container {
+        margin-bottom: 1rem;
     }
 }
