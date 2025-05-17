@@ -54,11 +54,27 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 2;
     padding-top: 8rem;
+    padding-bottom: 0;
+}
+
+.container > *:not(.source-link) {
+    margin-bottom: 1rem;
+}
+
+.container > *:first-child {
+    margin-top: auto;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
 }
 
 .profile-container {
@@ -96,7 +112,6 @@ h1 {
     font-family: OpenSans, sans-serif;
 }
 
-/* Typing animation styles */
 .typed-container {
     margin: 0.6em 0 1.2em 0;
     min-height: 2em;
@@ -155,6 +170,29 @@ ul.social-links li:hover {
 .fa:hover {
     color: var(--primary-color);
     opacity: 1;
+}
+
+.source-link {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8em;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    padding: 15px 5px 20px;
+    margin-top: auto;
+}
+
+.source-link a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.source-link a:hover {
+    opacity: 1;
+    color: var(--primary-color);
 }
 
 /* Medium screens (tablets) */
@@ -221,5 +259,10 @@ ul.social-links li:hover {
 
     .typed-container {
         margin: 0.4em 0 0.8em 0;
+    }
+
+    .source-link {
+        font-size: 0.7em;
+        padding: 10px 5px;
     }
 }
