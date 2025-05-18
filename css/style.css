@@ -18,21 +18,19 @@
     padding: 0;
 }
 
-html {
+html, body {
     height: 100%;
-    min-height: 100%;
-    background-color: var(--bg-dark);
+    overflow: auto;
 }
 
 body {
     background-attachment: fixed;
-    background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end)) no-repeat;
+    background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
     background-color: var(--bg-dark);
-    background-size: 100% 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100%;
+    align-items: flex-start;
+    height: 100%;
     margin: 0;
     font-family: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     color: var(--text-color);
@@ -56,12 +54,12 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 2;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 8rem;
+    padding-bottom: 0;
 }
 
 .container > *:not(.source-link) {
@@ -214,9 +212,8 @@ ul.social-links li:hover {
     }
 
     .container {
-        justify-content: center;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        justify-content: flex-start;
+        padding-top: 4rem;
     }
 
     .typed {
@@ -226,25 +223,23 @@ ul.social-links li:hover {
 
 /* Small screens (phones) */
 @media (max-width: 480px) {
-    html {
-        min-height: 100%;
-        background-color: var(--bg-dark);
+    html, body {
+        overflow: auto;
+        height: 100%;
     }
-
+    
     body {
-        min-height: 100%;
-        background-attachment: fixed;
-        background-size: 100% 100vh;
+        height: 100%;
         overflow-x: hidden;
     }
-
+    
     .container {
         padding: 1rem;
         height: 100%;
         overflow-y: auto;
-        justify-content: center;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
+        justify-content: space-between;
+        padding-top: min(10vh, 2rem);
+        padding-bottom: 0;
     }
 
     h1 {
@@ -260,7 +255,7 @@ ul.social-links li:hover {
 
     .main-content {
         flex-grow: 0;
-        margin-top: 0;
+        margin-top: min(15vh, 3rem);
     }
 
     .fa {
@@ -302,7 +297,7 @@ ul.social-links li:hover {
     }
 
     .main-content {
-        margin-top: 0;
+        margin-top: 0.5rem;
     }
 
     .profile-image {
