@@ -30,7 +30,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
+    height: 100%;
     margin: 0;
     font-family: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     color: var(--text-color);
@@ -51,7 +51,7 @@ body {
     width: 90%;
     padding: 2rem;
     text-align: center;
-    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -223,6 +223,25 @@ ul.social-links li:hover {
 
 /* Small screens (phones) */
 @media (max-width: 480px) {
+    html, body {
+        overflow: auto;
+        height: 100%;
+    }
+    
+    body {
+        height: 100%;
+        overflow-x: hidden;
+    }
+    
+    .container {
+        padding: 1rem;
+        height: 100%;
+        overflow-y: auto;
+        justify-content: space-between;
+        padding-top: min(10vh, 2rem);
+        padding-bottom: 0;
+    }
+
     h1 {
         font-size: 2.2em;
         margin-top: 0.3em;
@@ -234,18 +253,9 @@ ul.social-links li:hover {
         height: 100px;
     }
 
-    .container {
-        padding: 1rem;
-        height: 100vh;
-        max-height: 100vh;
-        overflow-y: hidden;
-        justify-content: space-between;
-        padding-top: 2rem;
-        padding-bottom: 0;
-    }
-
     .main-content {
         flex-grow: 0;
+        margin-top: min(15vh, 3rem);
     }
 
     .fa {
@@ -275,5 +285,46 @@ ul.social-links li:hover {
         bottom: 0;
         left: 0;
         right: 0;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 360px), (max-height: 480px) {
+    .container {
+        padding-top: 0.5rem;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .main-content {
+        margin-top: 0.5rem;
+    }
+
+    .profile-image {
+        width: 80px;
+        height: 80px;
+        border-width: 2px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .typed {
+        font-size: 0.9em;
+    }
+
+    .typed-container {
+        margin: 0.3em 0 0.6em 0;
+        min-height: 1.6em;
+    }
+
+    .fa {
+        font-size: 1.3em;
+        padding: 0.3rem;
+    }
+
+    ul.social-links li {
+        margin: 0 0.3em;
     }
 }
