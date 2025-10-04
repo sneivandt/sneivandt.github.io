@@ -9,6 +9,49 @@
   document.addEventListener('DOMContentLoaded', function() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const typedTarget = document.querySelector('#typed');
+    const root = document.documentElement;
+    const toggleBtn = document.getElementById('theme-toggle');
+
+    function getStoredTheme() {
+      try { return localStorage.getItem('theme'); } catch(e) { return null; }
+    }
+
+    function storeTheme(t) {
+      try { localStorage.setItem('theme', t); } catch(e) { /* ignore */ }
+    }
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      if (toggleBtn) {
+        const isDark = theme === 'dark';
+        toggleBtn.setAttribute('aria-pressed', String(isDark));
+        // Swap icon
+        toggleBtn.innerHTML = isDark ? '<i class="fa-solid fa-sun" aria-hidden="true"></i>' : '<i class="fa-solid fa-moon" aria-hidden="true"></i>';
+        toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        toggleBtn.title = isDark ? 'Light theme' : 'Dark theme';
+      }
+    }
+
+    function initTheme() {
+      const stored = getStoredTheme();
+      if (stored) {
+        applyTheme(stored);
+      } else {
+        // Respect existing attribute set by inline script; fallback to prefers-color-scheme
+        const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(current);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function() {
+        const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(current);
+        storeTheme(current);
+      });
+    }
+
+    initTheme();
 
     // Typed.js initialization (skip if reduced motion)
     if (!prefersReducedMotion && window.Typed && typedTarget) {
