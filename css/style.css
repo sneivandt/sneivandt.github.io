@@ -229,28 +229,25 @@ ul.social-links li:hover {
 
 #theme-toggle {
     cursor: pointer;
-    background: var(--button-bg);
+    background: none;
     color: var(--button-icon);
-    border: 1px solid var(--button-border);
-    padding: 0.55rem 0.7rem;
-    border-radius: 50%;
+    border: none;
+    padding: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     line-height: 1;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    backdrop-filter: blur(4px);
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 #theme-toggle:hover {
-    background: var(--button-hover-bg);
+    color: var(--primary-color);
     transform: rotate(-10deg);
 }
 
 #theme-toggle:focus-visible {
-    outline: var(--focus-outline);
-    outline-offset: 2px;
+    outline: none;
 }
 
 [data-theme="light"] .fa-moon { display: inline; }
