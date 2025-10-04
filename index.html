@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Stuart Neivandt">
     <meta name="description" content="Stuart Neivandt - Software Engineer, Music Enthusiast, and Chess Player. Personal website featuring professional information and social links.">
-    <meta name="keywords" content="Stuart Neivandt, Software Engineer, Developer, Programming, Portfolio">
     <meta name="theme-color" content="#1C2022">
+    <meta name="color-scheme" content="dark light">
     <meta name="robots" content="index, follow">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://stuartneivandt.com">
+
+    <!-- Preload local font for faster first paint -->
+    <link rel="preload" href="font/OpenSans/OpenSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
 
     <!-- Open Graph Meta Tags for social media sharing -->
     <meta property="og:title" content="Stuart Neivandt | Software Engineer">
@@ -23,10 +26,10 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer">
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Scripts (deferred for non-blocking rendering) -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
 
     <!-- Schema.org structured data for rich search results -->
     <script type="application/ld+json">
@@ -45,36 +48,41 @@
     </script>
   </head>
   <body>
-    <div id="particles-js"></div>
-    <div class="container">
-      <div class="main-content">
+    <div id="particles-js" aria-hidden="true"></div>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <main class="container" id="main-content">
+      <header class="main-content">
         <div class="profile-container">
           <div class="profile-image">
-            <img src="img/profile.jpg" alt="Stuart Neivandt" id="profile-img">
+            <img src="img/profile.jpg" alt="Portrait of Stuart Neivandt" id="profile-img" width="180" height="180" decoding="async" loading="lazy">
           </div>
         </div>
         <h1>Stuart Neivandt</h1>
-        <div class="typed-container">
-          <span id="typed-strings">
+        <div class="typed-container" aria-live="polite">
+          <span id="typed-strings" aria-hidden="true">
             <span>Software Engineer</span>
             <span>Music Enthusiast</span>
             <span>Chess Player</span>
           </span>
-          <span id="typed" class="typed"></span>
+          <span id="typed" class="typed" data-fallback="Software Engineer"></span>
+          <noscript><span>Software Engineer</span></noscript>
         </div>
-        <ul class="social-links">
-          <li><a href="https://linkedin.com/in/stuartneivandt" class="fa fa-brands fa-linkedin-in" aria-label="LinkedIn"></a></li>
-          <li><a href="https://github.com/sneivandt" class="fa fa-brands fa-github" aria-label="GitHub"></a></li>
-          <li><a href="https://open.spotify.com/playlist/366DIjWsefntsOqbo6Z1dz?si=e45029b64b484bd7" class="fa fa-brands fa-spotify" aria-label="Spotify Playlist"></a></li>
-        </ul>
-      </div>
-      <div class="source-link">
-        <a href="https://github.com/sneivandt/sneivandt.github.io" aria-label="Source Code">
-          <i class="fa-solid fa-code"></i>
+        <nav aria-label="Social links">
+          <ul class="social-links">
+            <li><a href="https://linkedin.com/in/stuartneivandt" class="fa fa-brands fa-linkedin-in" aria-label="LinkedIn" rel="me"></a></li>
+            <li><a href="https://github.com/sneivandt" class="fa fa-brands fa-github" aria-label="GitHub" rel="me"></a></li>
+            <li><a href="https://open.spotify.com/playlist/366DIjWsefntsOqbo6Z1dz?si=e45029b64b484bd7" class="fa fa-brands fa-spotify" aria-label="Spotify Playlist"></a></li>
+          </ul>
+        </nav>
+      </header>
+      <footer class="source-link">
+        <a href="https://github.com/sneivandt/sneivandt.github.io" aria-label="Source Code Repository">
+          <i class="fa-solid fa-code" aria-hidden="true"></i>
+          <span class="visually-hidden">View source code on GitHub</span>
         </a>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="js/main.js"></script>
+      </footer>
+    </main>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="js/main.js" defer></script>
   </body>
 </html>
