@@ -1,12 +1,27 @@
-/* tictactoe.js
- * Standalone Tic Tac Toe page with simplified WebRTC manual signaling.
+/*
+ * tictactoe.js
+ * Simple 2‑player Tic‑Tac‑Toe over a peer‑to‑peer WebRTC data channel.
+ * No external dependencies, no signaling server: users exchange a short "code"
+ * (offer/answer) manually via an auto‑copied link (host) + accept code (joiner).
+ *
+ * Major pieces:
+ *  - Game state + rendering (pure DOM buttons)
+ *  - Minimal WebRTC setup (host creates offer; joiner applies, produces answer)
+ *  - Manual signaling using compressed base64 payloads prefixed with G0/G1
+ *  - Lightweight toast notifications for UX feedback
+ *
+ * Cleaned: removed unused vars, clarified logic, added comments, and made
+ * move messages explicit (include symbol) to reduce desynchronization risk.
  */
 (function () {
     'use strict';
 
-    let rtc = null; // { pc, dc, role }
+    // Runtime connection object: { pc: RTCPeerConnection, dc: RTCDataChannel, role: 'host'|'join' }
+    let rtc = null;
+    // Game model (initialized in init())
     let game = null;
-    // Random X assignment happens every network game; host acts as authority.
+    // Prevent multiple toasts / clipboard writes when ICE trickles
+    let hostLinkCopied = false;
 
     function $(id) { return document.getElementById(id); }
     function q(sel) { return document.querySelector(sel); }
@@ -16,7 +31,7 @@
         const statusEl = $('ttt-status');
         const peerStateEl = $('ttt-peer-state');
         const hostBtn = $('ttt-host');
-        const joinBtn = $('ttt-join');
+        const joinBtn = $('ttt-join'); // removed from DOM but referenced defensively
         const resetBtn = $('ttt-reset');
         const signalContainer = $('signal-container');
 
@@ -30,6 +45,7 @@
 
         function setStatus(msg) { statusEl.textContent = msg; }
 
+        // Rebuild the 3x3 board buttons based on current state
         function renderBoard() {
             boardEl.innerHTML = '';
             game.board.forEach((val, idx) => {
@@ -45,6 +61,7 @@
             });
         }
 
+        // Return win/draw info or null; includes winning line for highlight
         function checkWin(board) {
             const lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
             for (const [a, b, c] of lines) { if (board[a] && board[a] === board[b] && board[a] === board[c]) return { w: board[a], line: [a, b, c] }; }
@@ -62,6 +79,7 @@
 
         function qAll(sel) { return Array.from(document.querySelectorAll(sel)); }
 
+        // Local player attempts a move on index; sends to peer if valid
         function handleMove(idx) {
             if (game.over) return;
             if (!game.isMyTurn()) return;
@@ -72,10 +90,11 @@
                 game.over = true;
                 if (r.line) highlightWin(r.line);
                 if (r.draw) setStatus('Draw!'); else setStatus(r.w + ' wins!');
-                send({ type: 'move', idx });
+                // Include symbol for robustness (receiver no longer relies on sequencing)
+                send({ type: 'move', idx, sym: game.turn });
             } else {
                 game.turn = game.turn === 'X' ? 'O' : 'X';
-                send({ type: 'move', idx });
+                send({ type: 'move', idx, sym: game.board[idx] });
                 updateTurnStatus();
             }
             renderBoard();
@@ -86,30 +105,25 @@
             setStatus('Turn: ' + game.turn + (game.isMyTurn() ? ' (Your move)' : ' (Waiting)'));
         }
 
+        // Reset board; if push==true propagate to peer (host authoritative)
         function reset(push) {
-            // If this is a network game and host is initiating a new game (push true), choose X now
             if (push) {
                 if (rtc && rtc.role === 'host') {
                     const hostIsX = Math.random() < 0.5;
                     game.mySymbol = hostIsX ? 'X' : 'O';
                     send({ type: 'roles', xRole: hostIsX ? 'host' : 'join', v: 2 });
                 } else if (!rtc) {
-                    // Local game: randomize X player; assign current user symbol.
                     const iAmX = Math.random() < 0.5;
                     game.mySymbol = iAmX ? 'X' : 'O';
                 }
             }
-
             game.board = Array(9).fill(null);
             game.turn = 'X';
             game.over = false;
             renderBoard();
             setStatus('New game. You are ' + game.mySymbol + '.');
-            // Uniform toast so both sides (and local mode) get feedback immediately
             showToast('Game reset');
-
             if (push) {
-                // Only host sends reset in network mode; local game (no rtc) also allowed
                 if (!rtc || rtc.role === 'host') {
                     send({ type: 'reset' });
                 }
@@ -118,7 +132,7 @@
 
         resetBtn.addEventListener('click', () => {
             if (!rtc) {
-                reset(true); // local only
+                reset(true);
             } else if (rtc.role === 'host') {
                 reset(true);
             } else {
@@ -130,60 +144,110 @@
         hostBtn.addEventListener('click', async () => {
             if (rtc) cleanupRTC();
             await createRTC('host');
-            // Do not announce symbol yet; it will be randomized on connection open.
             game.board = Array(9).fill(null);
             game.turn = 'X';
             game.over = false;
             renderBoard();
             setStatus('Hosting… waiting for peer.');
             renderHostUI();
-            hostBtn.disabled = true; joinBtn.disabled = true;
+            // Keep host button enabled so user can recopy link on demand (recreates session each time).
+            if (joinBtn) joinBtn.disabled = true;
         });
 
-        joinBtn.addEventListener('click', async () => {
-            if (rtc) cleanupRTC();
-            await createRTC('join');
-            // Symbol will be assigned when roles message arrives after host randomizes.
-            game.board = Array(9).fill(null);
-            game.turn = 'X';
-            game.over = false;
-            renderBoard();
-            setStatus('Joining… apply host Game Code.');
-            renderJoinUI();
-            hostBtn.disabled = true; joinBtn.disabled = true;
-        });
+        // Auto-join if URL has ?join=1 (offer link or embedded offer)
+        try {
+            const params = new URLSearchParams(location.search);
+            if (params.get('join') === '1') {
+                (async () => {
+                    if (rtc) cleanupRTC();
+                    await createRTC('join');
+                    game.board = Array(9).fill(null);
+                    game.turn = 'X';
+                    game.over = false;
+                    renderBoard();
+                    const embeddedCode = params.get('code');
+                    setStatus(embeddedCode ? 'Joining… establishing session.' : 'Join link missing code.');
+                    renderJoinUI(); // will create copy button; we will move it next to reset
+                    if (embeddedCode) {
+                        applyEmbeddedHostCode(embeddedCode);
+                    } else {
+                        showToast('Missing host code');
+                    }
+                    // Hide host button completely while in join mode
+                    hostBtn.style.display = 'none';
+                    if (joinBtn) joinBtn.style.display = 'none';
+                })();
+            }
+        } catch (_) { }
 
-        // Cancel button removed: connection can be abandoned by refreshing page.
+        function buildJoinLink(code) {
+            return location.origin + location.pathname + '?join=1' + (code ? '&code=' + encodeURIComponent(code) : '');
+        }
 
+        // Host sees only textarea for peer's Accept Code -> Apply
         function renderHostUI() {
             signalContainer.hidden = false;
+            // Host view: we already copied the join link to clipboard automatically.
+            // Show only the Accept Code input + Apply button (no join link instructions or copy button).
             signalContainer.innerHTML = `
-                <label style="font-size:.7rem;opacity:.7;">Your Game Code (Offer) is copied. Share it. Paste partner's Game Code (Answer) below.</label>
-                <textarea id="remote-answer" placeholder="Paste partner Game Code (Answer)"></textarea>
-        <div class="signal-inline">
-                    <button type="button" class="ttt-btn" id="apply-answer">Apply</button>
-        </div>`;
+                <textarea id="remote-answer" placeholder="Paste peer Accept Code"></textarea>
+                <div class="signal-inline">
+                    <button type="button" class="ttt-btn" id="apply-answer">Apply Accept Code</button>
+                </div>`;
             $('apply-answer').addEventListener('click', async () => {
-                const v = $('remote-answer').value.trim(); if (!v || !rtc) return; try { const d = await decodeGameCode(v); await rtc.pc.setRemoteDescription(d); showToast('Game Code applied'); hideSignalContainerDeferred(); } catch (e) { showToast('Invalid Game Code'); }
+                const v = $('remote-answer').value.trim();
+                if (!v || !rtc) return;
+                try {
+                    const d = await decodeGameCode(v);
+                    await rtc.pc.setRemoteDescription(d);
+                    showToast('Accept Code applied');
+                    hideSignalContainerDeferred();
+                } catch (e) {
+                    showToast('Invalid Accept Code');
+                }
             });
         }
 
+        // Joiner gets a Copy Accept Code button colocated by role buttons
         function renderJoinUI() {
-            signalContainer.hidden = false;
-            signalContainer.innerHTML = `
-                <label style="font-size:.7rem;opacity:.7;">Paste Host Game Code → Apply. Your Game Code (Answer) auto-copies.</label>
-                <textarea id="host-offer" placeholder="Paste Host Game Code (Offer)"></textarea>
-        <div class="signal-inline">
-                    <button type="button" class="ttt-btn" id="apply-offer">Apply</button>
-        </div>`;
-            $('apply-offer').addEventListener('click', async () => {
-                const v = $('host-offer').value.trim(); if (!v || !rtc) return; try { const d = await decodeGameCode(v); await rtc.pc.setRemoteDescription(d); if (rtc.role === 'join') { const ans = await rtc.pc.createAnswer(); await rtc.pc.setLocalDescription(ans); await autoCopy(await encodeGameCode(rtc.pc.localDescription), 'Game Code copied'); } showToast('Game Code applied'); hideSignalContainerDeferred(); } catch (e) { showToast('Invalid Game Code'); }
+            // We want only two buttons visible: Reset and Copy Accept Code side-by-side.
+            // Insert Copy Accept Code button into the existing role-buttons container rather than signal section.
+            const roleBtns = document.querySelector('.role-buttons');
+            if (!roleBtns) return;
+            // Remove any previous copy button
+            const existing = document.getElementById('copy-answer');
+            if (existing) existing.remove();
+            const copyBtn = document.createElement('button');
+            copyBtn.type = 'button';
+            copyBtn.id = 'copy-answer';
+            copyBtn.className = 'ttt-btn';
+            copyBtn.textContent = 'Copy Accept Code';
+            copyBtn.disabled = true;
+            roleBtns.appendChild(copyBtn);
+            copyBtn.addEventListener('click', async () => {
+                if (!rtc || !rtc.pc.localDescription || rtc.pc.localDescription.type !== 'answer') return; await autoCopy(await encodeGameCode(rtc.pc.localDescription), 'Accept Code copied');
             });
+            // Hide signal container if previously used
+            signalContainer.hidden = true; signalContainer.innerHTML = '';
         }
 
+        // Send JSON message over data channel (ignore if not open)
         function send(obj) {
             if (rtc && rtc.dc && rtc.dc.readyState === 'open') {
                 try { rtc.dc.send(JSON.stringify(obj)); } catch (e) { }
+            }
+        }
+        async function applyEmbeddedHostCode(code) {
+            if (!rtc || rtc.role !== 'join') return;
+            try {
+                const d = await decodeGameCode(code);
+                await rtc.pc.setRemoteDescription(d);
+                const ans = await rtc.pc.createAnswer();
+                await rtc.pc.setLocalDescription(ans);
+                const copyBtn = document.getElementById('copy-answer');
+                if (copyBtn) copyBtn.disabled = false;
+            } catch (e) {
+                showToast('Failed to apply host code');
             }
         }
 
@@ -191,13 +255,18 @@
             let m; try { m = JSON.parse(evt.data); } catch (e) { return; }
             if (m.type === 'move') {
                 const idx = m.idx;
+                // Use provided symbol (sym) if valid; fallback to current turn for backward compatibility
+                const sym = (m.sym === 'X' || m.sym === 'O') ? m.sym : game.turn;
                 if (!game.board[idx] && !game.over) {
-                    game.board[idx] = game.turn; // remote played current turn
+                    game.board[idx] = sym;
                     const r = checkWin(game.board);
                     if (r) {
-                        game.over = true; if (r.line) highlightWin(r.line); if (r.draw) setStatus('Draw!'); else setStatus(r.w + ' wins!');
+                        game.over = true;
+                        if (r.line) highlightWin(r.line);
+                        if (r.draw) setStatus('Draw!'); else setStatus(r.w + ' wins!');
                     } else {
-                        game.turn = game.turn === 'X' ? 'O' : 'X'; updateTurnStatus();
+                        game.turn = game.turn === 'X' ? 'O' : 'X';
+                        updateTurnStatus();
                     }
                     renderBoard();
                 }
@@ -212,7 +281,7 @@
                 showToast('Game reset');
             } else if (m.type === 'request-reset') {
                 if (rtc && rtc.role === 'host') {
-                    reset(true); // host triggers new random assignment & reset
+                    reset(true);
                 }
             }
         }
@@ -222,19 +291,27 @@
             const pc = new RTCPeerConnection(cfg);
             rtc = { pc, dc: null, role };
             if (role === 'host') {
+                // Reset single-copy flag for a fresh hosting session
+                hostLinkCopied = false;
                 const dc = pc.createDataChannel('ttt', { ordered: true });
                 setupDC(dc);
                 const offer = await pc.createOffer();
                 await pc.setLocalDescription(offer);
-                await autoCopy(await encodeGameCode(pc.localDescription), 'Game Code copied');
+                // Defer copying until ICE gathering completes so we only show one toast
             } else {
                 pc.ondatachannel = e => setupDC(e.channel);
             }
-
             async function maybeCopy() {
                 if (pc.iceGatheringState === 'complete') {
-                    if (role === 'host') await autoCopy(await encodeGameCode(pc.localDescription), 'Game Code updated');
-                    else if (role === 'join' && pc.localDescription?.type === 'answer') await autoCopy(await encodeGameCode(pc.localDescription), 'Game Code copied');
+                    if (role === 'host' && !hostLinkCopied) {
+                        // Encode offer only once and copy URL with embedded code
+                        const offerCode = await encodeGameCode(pc.localDescription);
+                        await autoCopy(buildJoinLink(offerCode), 'Join link copied');
+                        hostLinkCopied = true;
+                    }
+                    else if (role === 'join' && pc.localDescription?.type === 'answer') {
+                        // no auto-copy; user clicks button
+                    }
                 }
             }
             pc.onicecandidate = () => maybeCopy();
@@ -243,15 +320,20 @@
             pc.onconnectionstatechange = () => { peerStateEl.textContent = 'Peer: ' + pc.connectionState; };
         }
 
+        // Wire up data channel lifecycle + initial sync
         function setupDC(dc) {
             dc.onopen = () => {
                 showToast('Connected');
                 toggleHostJoinVisibility(true);
-                // Host initiates first game with randomized roles.
                 if (rtc && rtc.role === 'host') {
-                    reset(true); // will send roles + reset
+                    reset(true);
                 }
                 updateTurnStatus();
+                // Remove Copy Accept Code button after connection established for joiner
+                if (rtc && rtc.role === 'join') {
+                    const copyBtn = document.getElementById('copy-answer');
+                    if (copyBtn) copyBtn.remove();
+                }
             };
             dc.onclose = () => { showToast('Disconnected'); toggleHostJoinVisibility(false); };
             dc.onerror = () => { showToast('Channel error'); toggleHostJoinVisibility(false); };
@@ -260,23 +342,27 @@
         }
 
         function cleanupRTC() {
-            if (rtc) { try { rtc.dc && rtc.dc.close(); } catch (e) { } try { rtc.pc.close(); } catch (e) { } rtc = null; }
+            if (!rtc) return;
+            try { rtc.dc && rtc.dc.close(); } catch (e) { }
+            try { rtc.pc.close(); } catch (e) { }
+            rtc = null;
         }
 
         window.addEventListener('beforeunload', cleanupRTC);
 
         renderBoard();
-        setStatus('Local game. Choose Host or Join for P2P.');
+        setStatus('Local game. Click Host to create a shareable join link.');
     }
 
+    // Ensure a single toast div exists (lazy created)
     function ensureToast() { let t = q('.ttt-toast'); if (!t) { t = document.createElement('div'); t.className = 'ttt-toast'; document.body.appendChild(t); } return t; }
     let toastTimer = null;
     function showToast(msg) { const t = ensureToast(); t.style.display = 'block'; t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2400); }
 
+    // Clipboard helper with fallback to execCommand for older browsers
     async function autoCopy(text, msg) { let ok = false; try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { try { const ta = document.createElement('textarea'); ta.style.position = 'fixed'; ta.style.opacity = '0'; ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); ok = true; } catch (_) { } } showToast(ok ? (msg || 'Copied') : 'Copy failed'); }
 
-    // Game Code encoding/decoding utilities
-    // Format prefixes: G1 = gzip+base64 of JSON {t,type; s,sdp}; G0 = plain base64 fallback
+    // Encode RTCSessionDescription into compact shareable string (gzip if supported)
     async function encodeGameCode(desc) {
         const payload = JSON.stringify({ t: desc.type, s: desc.sdp });
         try {
@@ -286,10 +372,11 @@
                 const compressed = await new Response(blob.stream().pipeThrough(cs)).arrayBuffer();
                 return 'G1' + arrayBufferToBase64(compressed);
             }
-        } catch (e) { /* ignore, fallback below */ }
+        } catch (e) { }
         return 'G0' + btoa(payload);
     }
 
+    // Decode previously encoded game code back to RTCSessionDescriptionInit
     async function decodeGameCode(code) {
         code = code.trim();
         if (/^G[01]/.test(code)) {
@@ -302,14 +389,13 @@
                     const decompressed = await new Response(new Blob([bytes]).stream().pipeThrough(ds)).text();
                     const obj = JSON.parse(decompressed);
                     return { type: obj.t, sdp: obj.s };
-                } catch (e) { /* fall through to try as plain */ }
+                } catch (e) { }
             }
             if (mode === 'G0') {
                 try { const text = new TextDecoder().decode(bytes); const obj = JSON.parse(text); return { type: obj.t, sdp: obj.s }; } catch (e) { }
             }
             throw new Error('Bad code');
         } else {
-            // Backwards compatibility: raw JSON (old flow)
             try { const obj = JSON.parse(code); if (obj.type && obj.sdp) return obj; } catch (e) { }
             throw new Error('Bad code');
         }
@@ -328,36 +414,34 @@
         return bytes;
     }
 
-    // Hide signal UI a short moment after application to allow user to see success toast first
+    // Hide + clear the signaling container after slight delay (for UX)
     function hideSignalContainerDeferred() {
         const sc = document.getElementById('signal-container');
         if (!sc) return;
         setTimeout(() => { sc.hidden = true; sc.innerHTML = ''; }, 400);
     }
 
+    // Show/hide Host / Join role buttons (after connection hides them)
     function toggleHostJoinVisibility(hide) {
         const hostBtn = document.getElementById('ttt-host');
         const joinBtn = document.getElementById('ttt-join');
-        if (!hostBtn || !joinBtn) return;
+        if (!hostBtn) return;
         if (hide) {
             hostBtn.style.display = 'none';
-            joinBtn.style.display = 'none';
+            if (joinBtn) joinBtn.style.display = 'none';
         } else {
             hostBtn.style.display = '';
-            joinBtn.style.display = '';
             hostBtn.disabled = false;
-            joinBtn.disabled = false;
+            if (joinBtn) { joinBtn.style.display = ''; joinBtn.disabled = false; }
         }
     }
 
+    // Apply role/side assignment (host communicated which role is X)
     function applyRolesMessage(msg) {
         if (!rtc || !game) return;
         const myRole = rtc.role;
         game.mySymbol = (myRole === msg.xRole) ? 'X' : 'O';
     }
-
-    // Handle messages outside init scope via event delegation in onMessage (within init)
-    // Additional message type handled: request-reset (join asks host to start a new game)
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

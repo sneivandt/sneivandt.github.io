@@ -12,9 +12,9 @@ This repository hosts the source for my landing page / profile site. It is inten
 - Responsive layout (mobile-first, fluid typography)
 - Accessible markup (skip link, proper alt text, ARIA labels, reduced motion friendly)
 - SEO & Social:
-	- Meta description, canonical link
-	- Open Graph tags for rich link previews
-	- JSON-LD structured data (Person schema)
+    - Meta description, canonical link
+    - Open Graph tags for rich link previews
+    - JSON-LD structured data (Person schema)
 - Subtle visual enhancements: particle background + typing effect
 - Custom domain via `CNAME` (GitHub Pages)
 
@@ -29,7 +29,6 @@ This repository hosts the source for my landing page / profile site. It is inten
 | Effects     | [particles.js](https://github.com/VincentGarreau/particles.js), [typed.js](https://github.com/mattboldt/typed.js) |
 | Hosting     | GitHub Pages |
 
-## Repository Structure �
 ## Repository Structure 📂
 ```
 .
@@ -53,7 +52,6 @@ Brief notes:
 - `js/main.js` only mounts enhancements; core content works without JS.
 - `font/OpenSans/` may be replaced with a subsetted WOFF2-only variant for performance.
 - `CNAME` must remain for the custom domain; remove if you fork under a different domain.
-
 
 ## Local Development 💻
 
@@ -97,11 +95,6 @@ If you fork this:
 Code & content: MIT (see `LICENSE`).
 
 You may reuse structural or configuration ideas; please replace personal content (name, images, profile links) with your own.
-
-## Contact 🤝
-
-- GitHub: [@sneivandt](https://github.com/sneivandt)
-- LinkedIn: [linkedin.com/in/stuartneivandt](https://linkedin.com/in/stuartneivandt)
 
 ---
 
