@@ -33,13 +33,14 @@ This repository hosts the source for my landing page / profile site. It is inten
 ```
 .
 ├── index.html        # Main landing page (SEO + structured data)
-├── css/
-│   └── style.css     # Core styles (layout, typography, animations)
-├── js/
-│   └── main.js       # Initialization (particles + typed text setup)
-├── img/              # Images (profile, social/share assets)
-├── font/
-│   └── OpenSans/     # Self-hosted font files
+├── assets/           # Consolidated static assets
+│   ├── css/
+│   │   └── style.css # Core styles (layout, typography, animations)
+│   ├── js/
+│   │   └── main.js   # Initialization (particles + typed text setup)
+│   ├── img/          # Images (profile, social/share assets)
+│   └── font/
+│       └── OpenSans/ # Self-hosted font files
 ├── CNAME             # Custom domain mapping for GitHub Pages
 ├── LICENSE           # MIT license
 └── README.md         # Project documentation
@@ -48,9 +49,9 @@ This repository hosts the source for my landing page / profile site. It is inten
 Brief notes:
 
 - `index.html` keeps everything lean; no bundler/build step.
-- `css/style.css` could later be split (e.g. components / utilities) if complexity grows.
-- `js/main.js` only mounts enhancements; core content works without JS.
-- `font/OpenSans/` may be replaced with a subsetted WOFF2-only variant for performance.
+- `assets/css/style.css` could later be split (e.g. components / utilities) if complexity grows.
+- `assets/js/main.js` only mounts enhancements; core content works without JS.
+- `assets/font/OpenSans/` may be replaced with a subsetted WOFF2-only variant for performance.
 - `CNAME` must remain for the custom domain; remove if you fork under a different domain.
 
 ## Local Development 💻
