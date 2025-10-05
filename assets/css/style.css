@@ -2,6 +2,7 @@
 @font-face {
     font-family: 'OpenSans';
     src: url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
+    /* path unchanged until font folder moved */
     font-display: swap;
 }
 
@@ -13,9 +14,9 @@
     --bg-gradient-start: #1C2022;
     --bg-gradient-end: #121516;
     --focus-outline: 2px solid var(--primary-color);
-    --button-bg: rgba(255,255,255,0.06);
-    --button-border: rgba(255,255,255,0.25);
-    --button-hover-bg: rgba(255,255,255,0.12);
+    --button-bg: rgba(255, 255, 255, 0.06);
+    --button-border: rgba(255, 255, 255, 0.25);
+    --button-hover-bg: rgba(255, 255, 255, 0.12);
     --button-icon: var(--text-color);
 }
 
@@ -25,9 +26,9 @@
     --bg-dark: #F5F7F9;
     --bg-gradient-start: #ffffff;
     --bg-gradient-end: #E7EBEF;
-    --button-bg: rgba(0,0,0,0.05);
-    --button-border: rgba(0,0,0,0.15);
-    --button-hover-bg: rgba(0,0,0,0.1);
+    --button-bg: rgba(0, 0, 0, 0.05);
+    --button-border: rgba(0, 0, 0, 0.15);
+    --button-hover-bg: rgba(0, 0, 0, 0.1);
     --button-icon: #1E1F21;
 }
 
@@ -37,7 +38,8 @@
     padding: 0;
 }
 
-html, body {
+html,
+body {
     height: 100%;
     overflow: auto;
 }
@@ -59,7 +61,6 @@ body {
     transition: background-color 0.6s ease, color 0.4s ease, background 0.8s ease;
 }
 
-/* Utility / a11y */
 .visually-hidden {
     position: absolute !important;
     width: 1px !important;
@@ -85,6 +86,7 @@ body {
     transition: top 0.2s ease;
     font-weight: 600;
 }
+
 .skip-link:focus-visible {
     top: 0;
 }
@@ -112,11 +114,11 @@ body {
     padding-bottom: 0;
 }
 
-.container > *:not(.source-link) {
+.container>*:not(.source-link) {
     margin-bottom: 1rem;
 }
 
-.container > *:first-child {
+.container>*:first-child {
     margin-top: auto;
 }
 
@@ -185,9 +187,17 @@ h1 {
 }
 
 @keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 ul.social-links {
@@ -222,7 +232,6 @@ ul.social-links li:hover {
     opacity: 1;
 }
 
-/* Theme toggle */
 .theme-toggle-wrapper {
     display: inline-block;
 }
@@ -250,11 +259,21 @@ ul.social-links li:hover {
     outline: none;
 }
 
-[data-theme="light"] .fa-moon { display: inline; }
-[data-theme="light"] .fa-sun { display: none; }
+[data-theme="light"] .fa-moon {
+    display: inline;
+}
 
-[data-theme="dark"] .fa-moon { display: none; }
-[data-theme="dark"] .fa-sun { display: inline; }
+[data-theme="light"] .fa-sun {
+    display: none;
+}
+
+[data-theme="dark"] .fa-moon {
+    display: none;
+}
+
+[data-theme="dark"] .fa-sun {
+    display: inline;
+}
 
 .social-links a:focus-visible,
 .source-link a:focus-visible {
@@ -262,7 +281,6 @@ ul.social-links li:hover {
     outline-offset: 2px;
 }
 
-/* Footer */
 .site-footer {
     width: 100%;
     margin-top: auto;
@@ -278,7 +296,8 @@ ul.social-links li:hover {
     gap: 1rem;
 }
 
-.footer-left, .footer-right {
+.footer-left,
+.footer-right {
     display: flex;
     align-items: center;
 }
@@ -300,8 +319,7 @@ ul.social-links li:hover {
     color: var(--primary-color);
 }
 
-/* Medium screens (tablets) */
-@media (max-width: 768px) {
+@media (max-width:768px) {
     h1 {
         font-size: 3em;
     }
@@ -326,18 +344,19 @@ ul.social-links li:hover {
     }
 }
 
-/* Small screens (phones) */
-@media (max-width: 480px) {
-    html, body {
+@media (max-width:480px) {
+
+    html,
+    body {
         overflow: auto;
         height: 100%;
     }
-    
+
     body {
         height: 100%;
         overflow-x: hidden;
     }
-    
+
     .container {
         padding: 1rem;
         height: 100%;
@@ -388,8 +407,8 @@ ul.social-links li:hover {
     }
 }
 
-/* Extra small screens */
-@media (max-width: 360px), (max-height: 480px) {
+@media (max-width:360px),
+(max-height:480px) {
     .container {
         padding-top: 0.5rem;
         justify-content: center;
@@ -429,13 +448,13 @@ ul.social-links li:hover {
     }
 }
 
-/* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none !important;
         transition: none !important;
         scroll-behavior: auto !important;
     }
+
     .profile-image:hover {
         transform: none;
     }

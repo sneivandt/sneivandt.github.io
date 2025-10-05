@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe | Stuart Neivandt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Peer-to-peer WebRTC Tic Tac Toe demo.">
+  <link rel="canonical" href="/tictactoe/">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/tictactoe.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer">
+  <script>
+    (function(){
+      try { var t = localStorage.getItem('theme'); if(t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+    })();
+  </script>
+</head>
+<body>
+  <div id="particles-js" aria-hidden="true"></div>
+  <main class="game-wrapper" id="main-content">
+    <div class="game-header">
+      <h1>Tic Tac Toe</h1>
+      <p class="status-line" id="ttt-status">Loading…</p>
+    </div>
+    <div id="ttt-peer-state" class="status-line" style="font-size:.7rem; opacity:.65;">Not connected</div>
+    <div id="ttt-board" class="ttt-board-page" role="grid" aria-label="Tic Tac Toe Board"></div>
+    <div class="role-buttons">
+      <button class="ttt-btn" id="ttt-reset" type="button">Reset</button>
+      <button class="ttt-btn" id="ttt-host" type="button">Host</button>
+      <button class="ttt-btn" id="ttt-join" type="button">Join</button>
+    </div>
+    <section id="signal-container" class="signal-section" hidden></section>
+    <div class="divider"></div>
+    <p class="foot-note">Sharing a Game Code may reveal information about your connection. Share only with trusted peers.</p>
+  </main>
+  <div class="ttt-toast" style="display:none;"></div>
+  <script src="./assets/js/tictactoe.js" defer></script>
+</body>
+</html>

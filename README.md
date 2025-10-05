@@ -4,7 +4,7 @@ Personal website for [stuartneivandt.com](https://stuartneivandt.com) — a mini
 
 ## Overview 🗺️
 
-This repository hosts the source for my landing page / profile site. It is intentionally simple: plain HTML, a single CSS file, a light vanilla JS enhancement layer, and a couple of small third‑party libraries loaded from CDNs.
+This repository hosts the source for my landing page / profile site. It is intentionally simple: plain HTML, a single CSS file, a light vanilla JS enhancement layer, and a couple of small third-party libraries loaded from CDNs.
 
 ## Features 🚀
 
@@ -85,14 +85,6 @@ npx serve .
 If you fork this:
 - Remove or update `CNAME` (otherwise Pages will not build for your fork)
 - Replace analytics / tracking (none present yet) and social meta to match your identity
-
-## Customization Ideas / Future Enhancements 💡
-
-- Add a build step to inline critical CSS for even faster LCP
-- Provide reduced‑motion variant for the particle background
-- Add dark/light theme toggle (currently relies on system `prefers-color-scheme`)
-- Image optimization (generate multiple sizes + `srcset`)
-- Subset / WOFF2 encode the font to reduce transfer size
 
 ## Accessibility Notes ✅
 
