@@ -1,18 +1,27 @@
+/*
+  ===================================================================
+    Global Site Styles (sneivandt.github.io)
+
+    Philosophy: lightweight, no build step, accessible, responsive.
+  ===================================================================
+*/
+
 /* Font Face */
 @font-face {
     font-family: 'OpenSans';
     src: url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
-    /* path unchanged until font folder moved */
     font-display: swap;
 }
 
+/* Design Tokens: Dark Theme (default scope via :root) ---------------- */
 :root {
-    /* Dark theme (default) */
+    /* Primary brand + base colors */
     --primary-color: #E07A5F;
     --text-color: #EEECEC;
     --bg-dark: #121516;
     --bg-gradient-start: #1C2022;
     --bg-gradient-end: #121516;
+    /* Focus ring + button surfaces */
     --focus-outline: 2px solid var(--primary-color);
     --button-bg: rgba(255, 255, 255, 0.06);
     --button-border: rgba(255, 255, 255, 0.25);
@@ -20,7 +29,7 @@
     --button-icon: var(--text-color);
 }
 
-/* Light theme overrides */
+/* Light Theme Overrides (activated by [data-theme="light"]) --------- */
 [data-theme="light"] {
     --text-color: #1E1F21;
     --bg-dark: #F5F7F9;
@@ -32,18 +41,21 @@
     --button-icon: #1E1F21;
 }
 
+/* Minimal Reset / Box Sizing ----------------------------------------- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Full-Height Root to allow flex centering --------------------------- */
 html,
 body {
     height: 100%;
     overflow: auto;
 }
 
+/* Body: gradient background + flex vertical layout ------------------ */
 body {
     background-attachment: fixed;
     background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
@@ -61,6 +73,7 @@ body {
     transition: background-color 0.6s ease, color 0.4s ease, background 0.8s ease;
 }
 
+/* Accessibility Utility: Visually Hidden (still readable by AT) ------ */
 .visually-hidden {
     position: absolute !important;
     width: 1px !important;
@@ -74,6 +87,7 @@ body {
     white-space: nowrap !important;
 }
 
+/* Skip Link: keyboard jump to main content -------------------------- */
 .skip-link {
     position: absolute;
     top: -40px;
@@ -91,6 +105,7 @@ body {
     top: 0;
 }
 
+/* Decorative Particle Canvas (layered behind content) ---------------- */
 #particles-js {
     position: fixed;
     width: 100%;
@@ -98,6 +113,7 @@ body {
     z-index: 1;
 }
 
+/* Main Centered Container -------------------------------------------- */
 .container {
     max-width: 800px;
     width: 90%;
@@ -122,6 +138,7 @@ body {
     margin-top: auto;
 }
 
+/* Flexible content region grows to fill vertical space --------------- */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -129,6 +146,7 @@ body {
     flex-grow: 1;
 }
 
+/* Profile Image + Hover Accent --------------------------------------- */
 .profile-container {
     display: flex;
     justify-content: center;
@@ -156,6 +174,7 @@ body {
     object-fit: cover;
 }
 
+/* Hero Heading ------------------------------------------------------- */
 h1 {
     color: var(--primary-color);
     font-size: 4em;
@@ -164,6 +183,7 @@ h1 {
     font-family: OpenSans, sans-serif;
 }
 
+/* Typed Text Intro (height reserved to prevent layout shift) --------- */
 .typed-container {
     margin: 0.6em 0 1.2em 0;
     min-height: 2em;
@@ -180,6 +200,7 @@ h1 {
     opacity: 0.9;
 }
 
+/* Blinking Cursor Animation ------------------------------------------ */
 .typed-cursor {
     color: var(--primary-color);
     font-size: 1.5em;
@@ -200,6 +221,7 @@ h1 {
     }
 }
 
+/* Social Icon List --------------------------------------------------- */
 ul.social-links {
     text-align: center;
     list-style-type: none;
@@ -218,6 +240,7 @@ ul.social-links li:hover {
     transform: translateY(-5px);
 }
 
+/* Icon Base (font-awesome classes already present) ------------------- */
 .fa {
     color: var(--text-color);
     text-decoration: none;
@@ -232,33 +255,49 @@ ul.social-links li:hover {
     opacity: 1;
 }
 
+/* Theme Toggle Wrapper (layout only) --------------------------------- */
 .theme-toggle-wrapper {
     display: inline-block;
 }
 
-#theme-toggle {
+/* Shared Footer Icon Button Styling ---------------------------------- */
+.footer-icon-btn {
     cursor: pointer;
     background: none;
-    color: var(--button-icon);
     border: none;
-    padding: 0;
+    color: var(--button-icon);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     line-height: 1;
-    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 0.35rem 0.65rem;
+    /* horizontal breathing room */
+    border-radius: 8px;
+    transition: color 0.25s ease, transform 0.25s ease;
 }
 
-#theme-toggle:hover {
+.footer-icon-btn:hover {
     color: var(--primary-color);
-    transform: rotate(-10deg);
+    transform: translateY(-2px);
+}
+
+.footer-icon-btn:focus-visible {
+    outline: var(--focus-outline);
+    outline-offset: 2px;
+}
+
+
+/* Theme toggle variant subtle rotation */
+#theme-toggle:hover {
+    transform: rotate(-10deg) translateY(-2px);
 }
 
 #theme-toggle:focus-visible {
-    outline: none;
+    outline: var(--focus-outline);
 }
 
+/* Icon Swapping logic based on current theme ------------------------- */
 [data-theme="light"] .fa-moon {
     display: inline;
 }
@@ -275,12 +314,14 @@ ul.social-links li:hover {
     display: inline;
 }
 
+/* Accessible, consistent focus outlines for links -------------------- */
 .social-links a:focus-visible,
 .source-link a:focus-visible {
     outline: var(--focus-outline);
     outline-offset: 2px;
 }
 
+/* Footer Layout ------------------------------------------------------ */
 .site-footer {
     width: 100%;
     margin-top: auto;
@@ -302,6 +343,7 @@ ul.social-links li:hover {
     align-items: center;
 }
 
+/* Source Code Link (GitHub) subtle until hover ----------------------- */
 .source-link {
     opacity: 0.6;
     transition: opacity 0.3s ease;
@@ -319,6 +361,7 @@ ul.social-links li:hover {
     color: var(--primary-color);
 }
 
+/* Breakpoint ≤768px: tablet adjustments ------------------------------ */
 @media (max-width:768px) {
     h1 {
         font-size: 3em;
@@ -344,25 +387,35 @@ ul.social-links li:hover {
     }
 }
 
+/* Breakpoint ≤480px: small phone layout & scroll handling ------------ */
 @media (max-width:480px) {
 
     html,
     body {
         overflow: auto;
-        height: 100%;
+        /* Allow body to expand so top content can always scroll fully into view */
+        height: auto;
+        min-height: 100%;
     }
 
     body {
-        height: 100%;
+        height: auto;
+        /* release strict viewport lock */
         overflow-x: hidden;
+        padding-top: env(safe-area-inset-top, 0px);
+        /* respect notches / safe areas */
     }
 
     .container {
         padding: 1rem;
-        height: 100%;
-        overflow-y: auto;
-        justify-content: space-between;
-        padding-top: min(10vh, 2rem);
+        height: auto;
+        /* allow natural growth */
+        min-height: 100%;
+        overflow: visible;
+        /* body handles scroll */
+        justify-content: flex-start;
+        /* Provide a consistent, safe-area aware top spacing so the profile image never clips */
+        padding-top: calc(env(safe-area-inset-top, 0px) + 1.25rem);
         padding-bottom: 0;
     }
 
@@ -405,14 +458,38 @@ ul.social-links li:hover {
     .source-link {
         font-size: 0.7em;
     }
+
+    .footer-icon-btn,
+    #quick-nav-toggle {
+        font-size: 1.05rem;
+        /* down from ~1.3rem */
+        padding: 0.3rem 0.55rem;
+    }
+
+    .container {
+        height: auto;
+        /* release fixed viewport lock */
+        min-height: 100%;
+        /* still ensure at least full height */
+        overflow-y: visible;
+        /* body handles scrolling */
+    }
+
+    /* Override auto margin pushing first child downward on narrow screens */
+    .container>*:first-child {
+        margin-top: 0;
+    }
 }
 
+/* Ultra-small width (≤360px) or low-height (≤480px) adjustments ------ */
 @media (max-width:360px),
 (max-height:480px) {
     .container {
-        padding-top: 0.5rem;
-        justify-content: center;
-        height: 100%;
+        /* Keep small but guaranteed scrollable top offset; remove fixed height to avoid clipping */
+        padding-top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
+        justify-content: flex-start;
+        height: auto;
+        min-height: 100%;
     }
 
     .main-content {
@@ -446,8 +523,15 @@ ul.social-links li:hover {
     ul.social-links li {
         margin: 0 0.3em;
     }
+
+    .footer-icon-btn,
+    #quick-nav-toggle {
+        font-size: 0.95rem;
+        padding: 0.25rem 0.5rem;
+    }
 }
 
+/* Reduced Motion Preference: remove non-essential animation ---------- */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none !important;
@@ -457,5 +541,148 @@ ul.social-links li:hover {
 
     .profile-image:hover {
         transform: none;
+    }
+}
+
+/* Quick Nav Component (footer dropdown menu) ------------------------- */
+.footer-inner {
+    gap: 1.75rem;
+}
+
+@media (max-width: 420px) {
+    .footer-inner {
+        gap: 1rem;
+    }
+}
+
+.footer-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.quick-nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.footer-right {
+    margin-left: 1rem;
+}
+
+@media (min-width: 640px) {
+    .footer-right {
+        margin-left: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-right {
+        margin-left: 0.7rem;
+    }
+}
+
+#quick-nav-toggle {
+    font-size: 1.3rem;
+}
+
+#quick-nav-toggle:hover {
+    color: var(--primary-color);
+}
+
+.quick-nav-menu {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    /* sits above toggle with spacing */
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--button-bg);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    border: 1px solid var(--button-border);
+    border-radius: 12px;
+    padding: 0.6rem 0.5rem;
+    min-width: 180px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+    transform-origin: bottom center;
+    /* Keep popup static horizontally (include translateX in keyframes) */
+    animation: quick-nav-in 0.25s ease;
+    z-index: 40;
+    text-align: center; /* ensure link text visually centered */
+}
+
+@keyframes quick-nav-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.9) translateY(6px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+}
+
+.quick-nav-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.quick-nav-menu li {
+    margin: 0;
+}
+
+.quick-nav-menu a {
+    display: block;
+    padding: 0.45rem 0.75rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.quick-nav-menu a:hover,
+.quick-nav-menu a:focus-visible {
+    background: var(--button-hover-bg);
+    color: var(--primary-color);
+    outline: none;
+}
+
+.quick-nav-noscript-inline a {
+    background: var(--button-bg);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.75rem;
+}
+
+.quick-nav-noscript-inline a:hover {
+    background: var(--button-hover-bg);
+    color: var(--primary-color);
+}
+
+@media (max-width: 600px) {
+    .quick-nav-menu {
+        min-width: 160px;
+        bottom: 48px;
+    }
+}
+
+/* Reduced Motion override for Quick Nav animation -------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .quick-nav-menu {
+        animation: none !important;
+    }
+
+    #quick-nav-toggle {
+        transition: none !important;
     }
 }

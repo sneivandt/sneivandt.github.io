@@ -14,7 +14,7 @@
     <link rel="canonical" href="https://stuartneivandt.com">
 
     <!-- Preload local font for faster first paint -->
-  <link rel="preload" href="assets/font/OpenSans/OpenSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/font/OpenSans/OpenSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
 
     <!-- Open Graph Meta Tags for social media sharing -->
     <meta property="og:title" content="Stuart Neivandt | Software Engineer">
@@ -36,7 +36,7 @@
         } catch (e) { /* ignore */ }
       })();
     </script>
-  <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer">
 
     <!-- Scripts (deferred for non-blocking rendering) -->
@@ -91,16 +91,28 @@
       </header>
       <footer class="site-footer">
         <div class="footer-inner">
-          <div class="footer-left source-link">
-            <a href="https://github.com/sneivandt/sneivandt.github.io" aria-label="Source Code Repository">
-              <i class="fa-solid fa-code" aria-hidden="true"></i>
-              <span class="visually-hidden">View source code on GitHub</span>
-            </a>
-          </div>
-          <div class="footer-right theme-toggle-wrapper">
-            <button id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle light/dark theme" aria-pressed="false">
-              <i class="fa-solid fa-moon" aria-hidden="true"></i>
-            </button>
+          <div class="footer-center">
+            <div class="quick-nav" data-state="closed">
+              <button id="quick-nav-toggle" class="footer-icon-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="quick-nav-menu" title="Open navigation menu" aria-label="Open navigation menu">
+                <i class="fa-solid fa-compass" aria-hidden="true"></i>
+                <span class="visually-hidden">Open site navigation</span>
+              </button>
+              <nav id="quick-nav-menu" class="quick-nav-menu" aria-label="Quick navigation" hidden>
+                <ul>
+                  <li><a href="/tictactoe/" data-nav-link>Tic Tac Toe</a></li>
+                </ul>
+              </nav>
+              <noscript>
+                <div class="quick-nav-noscript-inline">
+                  <a href="/tictactoe/">Tic Tac Toe</a>
+                </div>
+              </noscript>
+            </div>
+            <div class="theme-toggle-wrapper">
+              <button id="theme-toggle" class="footer-icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle light/dark theme" aria-pressed="false">
+                <i class="fa-solid fa-moon" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
         </div>
       </footer>
