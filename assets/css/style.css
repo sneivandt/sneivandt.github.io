@@ -408,15 +408,15 @@ ul.social-links li:hover {
 
     .container {
         padding: 1rem;
-        height: auto;
-        /* allow natural growth */
-        min-height: 100%;
-        overflow: visible;
-        /* body handles scroll */
-        justify-content: flex-start;
-        /* Provide a consistent, safe-area aware top spacing so the profile image never clips */
-        padding-top: calc(env(safe-area-inset-top, 0px) + 1.25rem);
-        padding-bottom: 0;
+        /* Use dynamic viewport height to avoid browser chrome issues */
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* center vertically */
+        /* Reserve space for fixed footer */
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5.25rem);
+        /* Provide additional top breathing room above profile image */
+        padding-top: clamp(2.5rem, 14vh, 6rem);
     }
 
     h1 {
@@ -432,7 +432,8 @@ ul.social-links li:hover {
 
     .main-content {
         flex-grow: 0;
-        margin-top: min(15vh, 3rem);
+        /* Slight downward shift after centering for improved visual balance */
+        margin-top: 0;
     }
 
     .fa {
@@ -475,26 +476,36 @@ ul.social-links li:hover {
         /* body handles scrolling */
     }
 
-    /* Override auto margin pushing first child downward on narrow screens */
-    .container>*:first-child {
-        margin-top: 0;
+    /* Reset first child margin since we now control spacing with padding-top */
+    .container>*:first-child { margin-top: 0; }
+
+    /* Pin footer (nav + theme toggle) to bottom on small screens */
+    .site-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0.6rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.65rem);
+        backdrop-filter: blur(10px) saturate(140%);
+        -webkit-backdrop-filter: blur(10px) saturate(140%);
+        background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.15));
+        z-index: 50;
     }
+
+    /* Tweak inner alignment for compact fixed bar */
+    .footer-inner { gap: 1.1rem; }
 }
 
 /* Ultra-small width (≤360px) or low-height (≤480px) adjustments ------ */
 @media (max-width:360px),
 (max-height:480px) {
     .container {
-        /* Keep small but guaranteed scrollable top offset; remove fixed height to avoid clipping */
-        padding-top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
-        justify-content: flex-start;
-        height: auto;
-        min-height: 100%;
+        padding-top: clamp(1.5rem, 12vh, 4rem); /* maintain breathing room even on very small screens */
+        min-height: 100dvh;
+        justify-content: center;
     }
 
-    .main-content {
-        margin-top: 0.5rem;
-    }
+    .main-content { margin-top: 0; }
 
     .profile-image {
         width: 80px;
