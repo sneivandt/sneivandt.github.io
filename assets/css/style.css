@@ -477,9 +477,14 @@ ul.social-links li:hover {
         left: 0;
         width: 100%;
         padding: 0.6rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.65rem);
-        background: none;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
+        /* Force full transparency on mobile (override any lingering UA/composited backgrounds) */
+        background: none !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: 0 !important;
         z-index: 50;
     }
 
