@@ -5,13 +5,14 @@ body {
 .game-wrapper {
     max-width: 760px;
     margin: 4rem auto 2rem;
-    padding: 1.5rem 1.2rem 2.5rem;
-    background: var(--bg-gradient-start);
-    border: 1px solid var(--button-border);
-    border-radius: 16px;
+    /* Remove framed card look: no background panel or border, just free-floating content */
+    padding: 0.5rem 0.5rem 1.5rem;
+    background: none;
+    border: none;
+    border-radius: 0;
     position: relative;
     z-index: 2;
-    box-shadow: 0 8px 28px -6px rgba(0, 0, 0, .55);
+    box-shadow: none;
 }
 
 .game-header {
@@ -85,6 +86,34 @@ body {
     line-height: 1.2;
 }
 
+.ttt-toast {
+    position: absolute; /* positioned dynamically over board center */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(.92);
+    background: var(--button-bg);
+    border: 1px solid var(--button-border);
+    color: var(--text-color);
+    padding: .65rem 1.05rem;
+    border-radius: 10px;
+    font-size: .78rem;
+    letter-spacing: .5px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 4px 22px -6px rgba(0,0,0,.55);
+    opacity: 0;
+    pointer-events: none; /* allow clicks to pass through */
+    transition: opacity .28s ease, transform .32s cubic-bezier(.22,.9,.3,1.05);
+    z-index: 20;
+    max-width: 260px;
+}
+.ttt-toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Board layout on the standalone page (board element with id ttt-board also gets these via separate component) */
 .ttt-board-page {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -93,25 +122,10 @@ body {
     margin: 0.4rem auto 0;
 }
 
-.ttt-board-page .ttt-cell {
-    aspect-ratio: 1/1;
-}
-
-@media (max-width:640px) {
-    .game-wrapper {
-        margin: 1.4rem auto;
-        padding: 1.1rem 1rem 1.8rem;
-    }
-
-    .game-header h1 {
-        font-size: 1.9rem;
-    }
-}
+.ttt-board-page .ttt-cell { aspect-ratio: 1/1; }
 
 @media (max-width:480px) {
-    .ttt-board-page {
-        gap: 6px;
-    }
+    .ttt-board-page { gap: 6px; }
 }
 
 /* Shared Tic Tac Toe component styles */
@@ -299,31 +313,6 @@ body {
     margin-top: .3rem;
 }
 
-.ttt-toast {
-    position: fixed;
-    bottom: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--button-bg);
-    border: 1px solid var(--button-border);
-    color: var(--text-color);
-    padding: .6rem 1rem;
-    border-radius: 8px;
-    font-size: .75rem;
-    letter-spacing: .5px;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    box-shadow: 0 4px 18px -4px rgba(0, 0, 0, .5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .35s ease, transform .35s ease;
-    z-index: 10000;
-}
-
-.ttt-toast.show {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
 
 @media (max-width: 520px) {
     .ttt-modal {

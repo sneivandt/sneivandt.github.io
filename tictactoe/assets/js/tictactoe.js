@@ -113,8 +113,8 @@
                     game.mySymbol = hostIsX ? 'X' : 'O';
                     send({ type: 'roles', xRole: hostIsX ? 'host' : 'join', v: 2 });
                 } else if (!rtc) {
-                    const iAmX = Math.random() < 0.5;
-                    game.mySymbol = iAmX ? 'X' : 'O';
+                    // Local (non peer-to-peer) game: always be X so user consistently starts.
+                    game.mySymbol = 'X';
                 }
             }
             game.board = Array(9).fill(null);

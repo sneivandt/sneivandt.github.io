@@ -117,26 +117,26 @@ body {
 .container {
     max-width: 800px;
     width: 90%;
-    padding: 2rem;
+    padding: 2rem 2rem 0;
     text-align: center;
-    height: 100%;
+    /* Let height grow naturally so content can't be clipped */
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start; /* remove space-between pushing first child upward */
     align-items: center;
     position: relative;
     z-index: 2;
-    padding-top: 8rem;
-    padding-bottom: 0;
+    /* Adaptive top spacing scaled by viewport height, but never excessive */
+    padding-top: clamp(2.5rem, 11vh, 6.5rem);
 }
 
 .container>*:not(.source-link) {
     margin-bottom: 1rem;
 }
 
-.container>*:first-child {
-    margin-top: auto;
-}
+/* Ensure natural flow; no forced upward shift */
+.container > *:first-child { margin-top: 0; }
 
 /* Flexible content region grows to fill vertical space --------------- */
 .main-content {
@@ -154,8 +154,9 @@ body {
 }
 
 .profile-image {
-    width: 180px;
-    height: 180px;
+    /* Fluid sizing: shrinks smoothly on short viewports */
+    width: clamp(110px, 22vh, 180px);
+    height: clamp(110px, 22vh, 180px);
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid var(--primary-color);
@@ -182,6 +183,8 @@ h1 {
     text-align: center;
     font-family: OpenSans, sans-serif;
 }
+
+/* Removed stepped low-height overrides in favor of fluid clamp sizing */
 
 /* Typed Text Intro (height reserved to prevent layout shift) --------- */
 .typed-container {
@@ -408,13 +411,13 @@ ul.social-links li:hover {
 
     .container {
         padding: 1rem;
-        /* Use dynamic viewport height to avoid browser chrome issues */
+        /* Allow natural document flow & scrolling */
         min-height: 100dvh;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* center vertically */
-        /* Reserve space for fixed footer */
-        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5.25rem);
+        justify-content: flex-start; /* start so content flows, footer follows */
+        /* Reduced bottom padding now that footer is not fixed */
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
         /* Provide additional top breathing room above profile image */
         padding-top: clamp(2.5rem, 14vh, 6rem);
     }
@@ -470,22 +473,14 @@ ul.social-links li:hover {
     /* Reset first child margin since we now control spacing with padding-top */
     .container>*:first-child { margin-top: 0; }
 
-    /* Pin footer (nav + theme toggle) to bottom on small screens */
+    /* Footer now participates in normal flow (no overlap); retain compact spacing */
     .site-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 0.6rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.65rem);
-        /* Force full transparency on mobile (override any lingering UA/composited backgrounds) */
-        background: none !important;
-        background-color: transparent !important;
-        background-image: none !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        box-shadow: none !important;
-        border: 0 !important;
-        z-index: 50;
+        position: static;
+        padding: 0.75rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+        background: none;
+        background-color: transparent;
+        box-shadow: none;
+        border: 0;
     }
 
     /* Tweak inner alignment for compact fixed bar */
