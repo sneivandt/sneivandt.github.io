@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Favicon: ultra-minimal solid user silhouette (Font Awesome style) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Favicon: user silhouette icon">
+  <title>Stuart Neivandt User Icon</title>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#1C2022"/>
+  <!-- Combined head + shoulders block (single solid shape for crisp 16px render) -->
+  <path fill="#E07A5F" d="M32 18c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8Zm0 20c7.2 0 14 4 16 10.5V50c0 .6-.4 1-1 1H17c-.6 0-1-.4-1-1v-1.5C18 42 24.8 38 32 38Z"/>
+</svg>
