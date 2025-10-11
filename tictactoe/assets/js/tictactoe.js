@@ -203,6 +203,7 @@
                 <div class="signal-inline">
                     <button type="button" class="ttt-btn" id="apply-answer">Apply Accept Code</button>
                     ${canWebShare ? '<button type="button" class="ttt-btn" id="share-host-link" disabled>Share Host Link</button>' : ''}
+                    ${!canWebShare ? '<button type="button" class="ttt-btn" id="copy-host-link" disabled>Copy Host Link</button>' : ''}
                 </div>`;
             $('apply-answer').addEventListener('click', async () => {
                 const v = $('remote-answer').value.trim();
@@ -230,6 +231,16 @@
                                 await autoCopy(link, 'Join link copied');
                             }
                         }
+                    });
+                }
+            } else {
+                // Non Web Share mode: provide manual re-copy button
+                const copyBtn = document.getElementById('copy-host-link');
+                if (copyBtn) {
+                    copyBtn.addEventListener('click', async () => {
+                        const link = copyBtn.dataset.link;
+                        if (!link) return;
+                        await autoCopy(link, 'Join link copied');
                     });
                 }
             }
@@ -374,6 +385,12 @@
                             showToast('Host link ready');
                         } else {
                             await autoCopy(link, 'Join link copied');
+                            // Enable copy button and stash link for future recopy
+                            const copyBtn = document.getElementById('copy-host-link');
+                            if (copyBtn) {
+                                copyBtn.dataset.link = link;
+                                copyBtn.disabled = false;
+                            }
                         }
                         hostLinkCopied = true;
                     }

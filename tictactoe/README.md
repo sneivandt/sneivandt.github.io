@@ -1,34 +1,46 @@
 # Tic Tac Toe (WebRTC Demo) 🎮
 
-A standalone peer-to-peer demo available at `/tictactoe` ( `https://stuartneivandt.com/tictactoe`).
+A tiny peer‑to‑peer demo at https://stuartneivandt.com/tictactoe.
 
-It supports:
-- Local hot-seat play (two people at same screen)
-- Remote play over an encrypted WebRTC data channel
+- 👥 Local hot‑seat (two people, one screen)
+- 🌐🔐 Remote play over an encrypted WebRTC data channel (no server relay)
 
 ## Remote Play
-Because there’s no signaling server, players exchange a short **Game Code** out-of-band (chat, email, etc.). The Game Code encodes the WebRTC offer/answer in a compressed, base64 form (with a small prefix).
+There is **no signaling server**. Instead you exchange a short text blob ("Game Code") out‑of‑band (chat, email, etc.). That blob is a compressed + base64 encoded WebRTC offer or answer with a simple prefix. After both sides apply each other's code, the direct peer connection is established.
 
-### Host Flow
-1. Visit `/tictactoe` and click **Host**.
-2. When the connection offer finishes gathering, one of two things happens:
-	- **Mobile / Web Share capable**: A disabled "Share Host Link" button becomes enabled and a toast says *"Host link ready"*. Tap it to open your device share sheet (SMS, chat apps, etc.).
-	- **Desktop / No Web Share**: The join link (URL containing the embedded offer) is auto‑copied to your clipboard (toast confirms). Paste/send it to the other player.
-3. After the joiner returns their **Accept Code** (answer), paste it into the textarea and click **Apply Accept Code**.
+1. Host clicks **Host** → gets a link → sends it.
+2. Joiner opens link → gets an **Accept Code** → sends it back.
+3. Host pastes Accept Code → **Apply Accept Code** → game syncs.
 
-### Join Flow
-1. Open the host's shared link. (If you navigated manually, click **Join** and paste the Host’s code, then **Apply**.)
-2. Your side generates an **Accept Code** (answer). When it’s ready:
-	- **Mobile / Web Share capable**: A **Share Accept Code** button enables. Tap to use the native share sheet. If sharing fails (other than cancel), it falls back to copying.
-	- **Desktop / No Web Share**: A **Copy Accept Code** button enables. Click it to copy and send to the host.
-3. The host applies your Accept Code to finalize the peer connection.
+### Host Steps
+1. Open `/tictactoe` and press **Host**.
+2. Wait a moment while the offer is gathered.
+3. You’ll then get either:
+   - Mobile / share‑capable: **Share Host Link** button lights up (toast: “Host link ready”). Tap to use your device share sheet.
+   - Desktop / no share sheet: The join link auto‑copies (toast confirms). Paste it to your friend.
+4. Receive the **Accept Code** from the joiner, paste it, click **Apply Accept Code**.
+5. Board appears on both sides; play begins.
 
-Once connected, moves sync instantly. For each new game, the X player is chosen randomly (host sends assignment; both sides update). Pressing Reset as a joiner sends a request; only the host triggers the randomization broadcast.
+### Joiner Steps
+1. Open the link the host sent you. (If you navigated manually, click **Join**, paste the host code, then **Apply**.)
+2. Your browser generates an **Accept Code**.
+3. When ready you’ll get either:
+   - Mobile / share‑capable: **Share Accept Code** button (uses native share; fallback copies).
+   - Desktop: **Copy Accept Code** button; click to copy.
+4. Send the Accept Code to the host. Connection finishes once they apply it.
 
-## Privacy Note
-Sharing a Game Code may reveal some information about your network connection. Only exchange codes with trusted peers.
+## Troubleshooting
+| Problem | Try |
+|---------|-----|
+| Connection never completes | Refresh both pages and repeat the exchange (codes are single‑use). |
+| Buttons never enable | Give it a few seconds; ICE gathering may still be happening. |
+| Copy/share fails | Manually select the textarea contents and copy. |
+| One side stops receiving moves | Refresh both sides; start a fresh exchange. |
 
-## Caveats
-- Some restrictive NAT / corporate networks may block direct P2P (only a public STUN server is used; no TURN fallback).
-- If connection fails, refresh both sides and repeat the exchange (codes/links aren’t reusable after reload).
-- Web Share availability is a heuristic (coarse pointer + `navigator.share`). Desktop browsers may still show classic copy behavior even if they technically expose the API.
+## Limitations & Caveats
+- Only a public STUN server; **no TURN**. Some strict NAT / corporate networks may block P2P.
+- Web Share detection is heuristic (coarse pointer + `navigator.share`). Desktop browsers often fall back to plain copy.
+- Codes/links cannot be reused after a page reload.
+
+## Privacy
+Game Codes include metadata that can reveal limited network info (e.g., ICE candidates). Share only with people you trust. 🤝
