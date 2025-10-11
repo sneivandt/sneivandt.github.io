@@ -22,6 +22,15 @@
     let game = null;
     // Prevent multiple toasts / clipboard writes when ICE trickles
     let hostLinkCopied = false;
+    // Feature detection: basic Web Share support.
+    // Rationale: On mobile the system share sheet is a friendlier affordance than auto-copy.
+    // We purposely keep desktop behavior unchanged (auto copy) to avoid surprising users.
+    const canWebShare = (function(){
+        const nav = navigator;
+        // Heuristic: require navigator.share AND a coarse pointer / small viewport (avoid showing on desktop browsers where share UI less helpful)
+        const isLikelyMobile = (matchMedia && matchMedia('(pointer:coarse)').matches) || (window.innerWidth < 820 && window.innerHeight < 820);
+        return !!(nav && nav.share) && isLikelyMobile;
+    })();
 
     function $(id) { return document.getElementById(id); }
     function q(sel) { return document.querySelector(sel); }
@@ -193,6 +202,7 @@
                 <textarea id="remote-answer" placeholder="Paste peer Accept Code"></textarea>
                 <div class="signal-inline">
                     <button type="button" class="ttt-btn" id="apply-answer">Apply Accept Code</button>
+                    ${canWebShare ? '<button type="button" class="ttt-btn" id="share-host-link" disabled>Share Host Link</button>' : ''}
                 </div>`;
             $('apply-answer').addEventListener('click', async () => {
                 const v = $('remote-answer').value.trim();
@@ -206,6 +216,23 @@
                     showToast('Invalid Accept Code');
                 }
             });
+            if (canWebShare) {
+                const shareBtn = document.getElementById('share-host-link');
+                if (shareBtn) {
+                    shareBtn.addEventListener('click', async () => {
+                        const link = shareBtn.dataset.link;
+                        if (!link) return; // not ready yet
+                        try {
+                            await navigator.share({ title: 'Tic Tac Toe Invite', text: 'Join my Tic Tac Toe game:', url: link });
+                        } catch (e) {
+                            // If user cancels do nothing; otherwise fallback to clipboard
+                            if (e && e.name !== 'AbortError') {
+                                await autoCopy(link, 'Join link copied');
+                            }
+                        }
+                    });
+                }
+            }
         }
 
         // Joiner gets a Copy Accept Code button colocated by role buttons
@@ -215,18 +242,46 @@
             const roleBtns = document.querySelector('.role-buttons');
             if (!roleBtns) return;
             // Remove any previous copy button
-            const existing = document.getElementById('copy-answer');
-            if (existing) existing.remove();
-            const copyBtn = document.createElement('button');
-            copyBtn.type = 'button';
-            copyBtn.id = 'copy-answer';
-            copyBtn.className = 'ttt-btn';
-            copyBtn.textContent = 'Copy Accept Code';
-            copyBtn.disabled = true;
-            roleBtns.appendChild(copyBtn);
-            copyBtn.addEventListener('click', async () => {
-                if (!rtc || !rtc.pc.localDescription || rtc.pc.localDescription.type !== 'answer') return; await autoCopy(await encodeGameCode(rtc.pc.localDescription), 'Accept Code copied');
-            });
+            const existingCopy = document.getElementById('copy-answer');
+            if (existingCopy) existingCopy.remove();
+            const existingShare = document.getElementById('share-accept-code');
+            if (existingShare) existingShare.remove();
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            if (canWebShare) {
+                btn.id = 'share-accept-code';
+                btn.textContent = 'Share Accept Code';
+            } else {
+                btn.id = 'copy-answer';
+                btn.textContent = 'Copy Accept Code';
+            }
+            btn.className = 'ttt-btn';
+            btn.disabled = true;
+            roleBtns.appendChild(btn);
+            if (canWebShare) {
+                btn.addEventListener('click', async () => {
+                    if (!rtc || !rtc.pc.localDescription || rtc.pc.localDescription.type !== 'answer') return;
+                    const code = await encodeGameCode(rtc.pc.localDescription);
+                    const shareData = {
+                        title: 'Tic Tac Toe Accept Code',
+                        text: 'Accept Code for your Tic Tac Toe game:',
+                        // Provide code in text field (url param not needed for answer)
+                    };
+                    // Some platforms require at least text or url; we include text + pass code.
+                    shareData.text += '\n' + code;
+                    try {
+                        await navigator.share(shareData);
+                    } catch (e) {
+                        if (e && e.name !== 'AbortError') {
+                            await autoCopy(code, 'Accept Code copied');
+                        }
+                    }
+                });
+            } else {
+                btn.addEventListener('click', async () => {
+                    if (!rtc || !rtc.pc.localDescription || rtc.pc.localDescription.type !== 'answer') return; await autoCopy(await encodeGameCode(rtc.pc.localDescription), 'Accept Code copied');
+                });
+            }
             // Hide signal container if previously used
             signalContainer.hidden = true; signalContainer.innerHTML = '';
         }
@@ -246,6 +301,8 @@
                 await rtc.pc.setLocalDescription(ans);
                 const copyBtn = document.getElementById('copy-answer');
                 if (copyBtn) copyBtn.disabled = false;
+                const shareBtn = document.getElementById('share-accept-code');
+                if (shareBtn) shareBtn.disabled = false;
             } catch (e) {
                 showToast('Failed to apply host code');
             }
@@ -304,13 +361,28 @@
             async function maybeCopy() {
                 if (pc.iceGatheringState === 'complete') {
                     if (role === 'host' && !hostLinkCopied) {
-                        // Encode offer only once and copy URL with embedded code
+                        // Encode offer only once. If Web Share available we delay sharing until user taps button
                         const offerCode = await encodeGameCode(pc.localDescription);
-                        await autoCopy(buildJoinLink(offerCode), 'Join link copied');
+                        const link = buildJoinLink(offerCode);
+                        if (canWebShare) {
+                            // Stash link on button dataset for later explicit share; do not auto-copy.
+                            const shareBtn = document.getElementById('share-host-link');
+                            if (shareBtn) {
+                                shareBtn.dataset.link = link;
+                                shareBtn.disabled = false;
+                            }
+                            showToast('Host link ready');
+                        } else {
+                            await autoCopy(link, 'Join link copied');
+                        }
                         hostLinkCopied = true;
                     }
                     else if (role === 'join' && pc.localDescription?.type === 'answer') {
                         // no auto-copy; user clicks button
+                        const copyBtn = document.getElementById('copy-answer');
+                        if (copyBtn) copyBtn.disabled = false;
+                        const shareBtn = document.getElementById('share-accept-code');
+                        if (shareBtn) shareBtn.disabled = false;
                     }
                 }
             }

@@ -85,18 +85,6 @@ If you fork this:
 - Remove or update `CNAME` (otherwise Pages will not build for your fork)
 - Replace analytics / tracking (none present yet) and social meta to match your identity
 
-## Accessibility Notes ✅
-
-- Skip link provided for keyboard users
-- Decorative particle canvas is `aria-hidden="true"`
-- Live typing region contained and polite (fallback static text provided via `data-fallback` + `<noscript>`)
-
-## License 📄
-
-Code & content: MIT (see `LICENSE`).
-
-You may reuse structural or configuration ideas; please replace personal content (name, images, profile links) with your own.
-
 ---
 
 If you spot an issue or have a suggestion, feel free to open an issue or PR.
