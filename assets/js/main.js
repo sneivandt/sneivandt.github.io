@@ -4,7 +4,6 @@
  *  - Persisted light/dark theme toggle with accessible button state
  *  - Typed text effect (Typed.js) with reduced-motion + graceful fallback
  *  - Optional particles background (particles.js) guarded + resilient
- *  - Accessible quick navigation menu with focus management + escape handling
  *
  * All features are defensive: if an enhancement fails or supporting JS is
  * disabled, core content remains usable. No build tooling; pure vanilla JS.
@@ -140,90 +139,6 @@
         /* ------------------------------------------------------------
          * Quick Navigation Menu (Accessible Toggle + Focus Trap)
          * ------------------------------------------------------------ */
-        (function initQuickNav() {
-            const toggle = document.getElementById('quick-nav-toggle');
-            const menu = document.getElementById('quick-nav-menu');
-            if (!toggle || !menu) return; // Abort if structure not present.
-
-            let open = false;
-
-            /** Open the quick nav menu (idempotent) and set ARIA state. */
-            function openMenu() {
-                if (open) return;
-                open = true;
-                menu.hidden = false;
-                toggle.setAttribute('aria-expanded', 'true');
-                document.querySelector('.quick-nav')?.setAttribute('data-state', 'open');
-
-                // Focus first link for keyboard efficiency.
-                const firstLink = menu.querySelector('a');
-                if (firstLink) firstLink.focus({ preventScroll: true });
-
-                document.addEventListener('click', onDocClick, true);
-                document.addEventListener('keydown', onKeyDown, true);
-            }
-
-            /** Close menu; optionally restore focus to the toggle button. */
-            function closeMenu(focusToggle = false) {
-                if (!open) return;
-                open = false;
-                menu.hidden = true;
-                toggle.setAttribute('aria-expanded', 'false');
-                document.querySelector('.quick-nav')?.setAttribute('data-state', 'closed');
-                document.removeEventListener('click', onDocClick, true);
-                document.removeEventListener('keydown', onKeyDown, true);
-                if (focusToggle) toggle.focus({ preventScroll: true });
-            }
-
-            /** Toggle open/closed state. */
-            function toggleMenu() { open ? closeMenu(true) : openMenu(); }
-
-            /** Close when clicking outside the menu (capture phase for reliability). */
-            function onDocClick(e) {
-                if (!menu.contains(e.target) && e.target !== toggle) {
-                    closeMenu();
-                }
-            }
-
-            /**
-             * Keyboard interactions: Escape to close, Tab wrap to create a simple focus trap
-             * limited to the menu links while open (without complex aria-controls logic).
-             */
-            function onKeyDown(e) {
-                if (e.key === 'Escape') {
-                    closeMenu(true);
-                } else if (e.key === 'Tab' && open) {
-                    const focusable = Array.from(menu.querySelectorAll('a[href]'));
-                    if (!focusable.length) return;
-                    const idx = focusable.indexOf(document.activeElement);
-
-                    // Wrap backwards
-                    if (e.shiftKey && (document.activeElement === toggle || idx === 0)) {
-                        e.preventDefault();
-                        focusable[focusable.length - 1].focus();
-                    }
-                    // Wrap forwards
-                    else if (!e.shiftKey && idx === focusable.length - 1) {
-                        e.preventDefault();
-                        focusable[0].focus();
-                    }
-                }
-            }
-
-            // Primary interactions
-            toggle.addEventListener('click', toggleMenu);
-            toggle.addEventListener('keydown', function (e) {
-                if ((e.key === 'Enter' || e.key === ' ') && !open) {
-                    e.preventDefault();
-                    openMenu();
-                }
-            });
-
-            // Close when user activates a navigation link
-            menu.addEventListener('click', function (e) {
-                const link = e.target.closest('a[data-nav-link]');
-                if (link) closeMenu();
-            });
-        })();
+        // Removed as part of cleanup
     });
 })();

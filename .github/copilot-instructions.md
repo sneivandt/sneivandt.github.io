@@ -23,11 +23,6 @@ If a change would require a build step, reconsider the approach or propose it ex
 │   │   └── main.js         # Light enhancement layer
 │   ├── img/                # Images
 │   └── font/               # Self-hosted fonts (Open Sans)
-├── tictactoe/
-│   ├── index.html          # Self-contained mini app page
-│   └── assets/
-│       ├── css/tictactoe.css
-│       └── js/tictactoe.js
 ├── CNAME                   # Custom domain mapping
 ├── LICENSE                 # MIT License
 └── README.md               # Project overview
@@ -41,7 +36,7 @@ If a change would require a build step, reconsider the approach or propose it ex
 
 ### CSS Guidelines
 - Single global stylesheet in `assets/css/style.css` for site-wide rules.
-- Page- or feature-specific styles live alongside their feature (e.g., `tictactoe/assets/css/tictactoe.css`).
+- Page- or feature-specific styles live alongside their feature (e.g., `feature/assets/css/feature.css`).
 - Avoid preprocessors and custom properties overuse; use native CSS features first.
 - Keep selectors shallow; avoid specificity wars. Prefer utility-like light classes if repetition appears.
 - Use `prefers-reduced-motion` for animations and keep them subtle.
