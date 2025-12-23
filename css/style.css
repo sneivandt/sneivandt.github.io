@@ -143,14 +143,14 @@ body {
     height: clamp(110px, 22vh, 180px);
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid var(--primary-color);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Clean floating look without heavy borders */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
 }
 
 .profile-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
 }
 
 #profile-img {
@@ -161,11 +161,22 @@ body {
 
 /* Hero Heading ------------------------------------------------------- */
 h1 {
-    color: var(--primary-color);
-    font-size: 4em;
+    font-size: 4.5em;
     margin: 0.2em 0 0.15em 0;
     text-align: center;
     font-family: OpenSans, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    
+    /* Modern Gradient Text */
+    background: linear-gradient(135deg, var(--primary-color) 20%, #F4A261 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--primary-color); /* Fallback */
+    
+    /* Subtle drop shadow that works with gradient text (using filter instead of text-shadow) */
+    filter: drop-shadow(0 2px 10px rgba(224, 122, 95, 0.3));
 }
 
 /* Removed stepped low-height overrides in favor of fluid clamp sizing */
@@ -238,8 +249,11 @@ ul.social-links li:hover {
 }
 
 .fa:hover {
-    color: var(--primary-color);
+    color: #F4A261; /* Match the gradient end color for contrast */
     opacity: 1;
+    transform: translateY(-3px) scale(1.1);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* Accessible, consistent focus outlines for links -------------------- */
@@ -362,6 +376,7 @@ ul.social-links li:hover {
         flex-grow: 0;
         /* Slight downward shift after centering for improved visual balance */
         margin-top: 0;
+        padding: 2rem 1.5rem;
     }
 
     .fa {
@@ -474,4 +489,5 @@ ul.social-links li:hover {
     align-items: center;
     justify-content: center;
     position: relative;
+    gap: 1rem;
 }
