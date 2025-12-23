@@ -1,7 +1,6 @@
 /**
  * main.js
  * Progressive, dependency-free enhancements for the site:
- *  - Persisted light/dark theme toggle with accessible button state
  *  - Typed text effect (Typed.js) with reduced-motion + graceful fallback
  *  - Optional particles background (particles.js) guarded + resilient
  *
@@ -17,68 +16,6 @@
          * ------------------------------------------------------------ */
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const typedTarget = document.querySelector('#typed');
-        const root = document.documentElement;
-        const toggleBtn = document.getElementById('theme-toggle');
-
-        /* ------------------------------------------------------------
-         * Theme Utilities
-         * ------------------------------------------------------------ */
-        /**
-         * Safely get a stored theme name from localStorage.
-         * Returns null if storage is unavailable (privacy mode / quota / denial).
-         */
-        function getStoredTheme() {
-            try { return localStorage.getItem('theme'); } catch (_e) { return null; }
-        }
-
-        /**
-         * Persist the chosen theme; intentionally silent on failure.
-         * @param {string} theme
-         */
-        function storeTheme(theme) {
-            try { localStorage.setItem('theme', theme); } catch (_e) { /* noop */ }
-        }
-
-        /**
-         * Apply theme to <html> and update toggle button accessible state/icon.
-         * @param {string} theme - 'light' | 'dark'
-         */
-        function applyTheme(theme) {
-            root.setAttribute('data-theme', theme);
-            if (!toggleBtn) return;
-
-            const isDark = theme === 'dark';
-            toggleBtn.setAttribute('aria-pressed', String(isDark));
-            toggleBtn.innerHTML = isDark
-                ? '<i class="fa-solid fa-sun" aria-hidden="true"></i>'
-                : '<i class="fa-solid fa-moon" aria-hidden="true"></i>';
-            toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-            toggleBtn.title = isDark ? 'Light theme' : 'Dark theme';
-        }
-
-        /**
-         * Initialize theme preference: stored value > current attribute > system.
-         */
-        function initTheme() {
-            const stored = getStoredTheme();
-            if (stored) {
-                applyTheme(stored);
-            } else {
-                const fallback = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                applyTheme(fallback);
-            }
-        }
-
-        // Theme toggle listener (if button present)
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', function () {
-                const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                applyTheme(current);
-                storeTheme(current);
-            });
-        }
-
-        initTheme();
 
         /* ------------------------------------------------------------
          * Typed Text Effect (graceful w/ reduced motion + fallback)

@@ -23,22 +23,6 @@
     --bg-gradient-end: #121516;
     /* Focus ring + button surfaces */
     --focus-outline: 2px solid var(--primary-color);
-    --button-bg: rgba(255, 255, 255, 0.06);
-    --button-border: rgba(255, 255, 255, 0.25);
-    --button-hover-bg: rgba(255, 255, 255, 0.12);
-    --button-icon: var(--text-color);
-}
-
-/* Light Theme Overrides (activated by [data-theme="light"]) --------- */
-[data-theme="light"] {
-    --text-color: #1E1F21;
-    --bg-dark: #F5F7F9;
-    --bg-gradient-start: #ffffff;
-    --bg-gradient-end: #E7EBEF;
-    --button-bg: rgba(0, 0, 0, 0.05);
-    --button-border: rgba(0, 0, 0, 0.15);
-    --button-hover-bg: rgba(0, 0, 0, 0.1);
-    --button-icon: #1E1F21;
 }
 
 /* Minimal Reset / Box Sizing ----------------------------------------- */
@@ -258,65 +242,6 @@ ul.social-links li:hover {
     opacity: 1;
 }
 
-/* Theme Toggle Wrapper (layout only) --------------------------------- */
-.theme-toggle-wrapper {
-    display: inline-block;
-}
-
-/* Shared Footer Icon Button Styling ---------------------------------- */
-.footer-icon-btn {
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: var(--button-icon);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.35rem;
-    line-height: 1;
-    padding: 0.35rem 0.65rem;
-    /* horizontal breathing room */
-    border-radius: 8px;
-    transition: color 0.25s ease, transform 0.25s ease;
-}
-
-.footer-icon-btn:hover {
-    color: var(--primary-color);
-    transform: translateY(-2px);
-}
-
-.footer-icon-btn:focus-visible {
-    outline: var(--focus-outline);
-    outline-offset: 2px;
-}
-
-
-/* Theme toggle variant subtle rotation */
-#theme-toggle:hover {
-    transform: rotate(-10deg) translateY(-2px);
-}
-
-#theme-toggle:focus-visible {
-    outline: var(--focus-outline);
-}
-
-/* Icon Swapping logic based on current theme ------------------------- */
-[data-theme="light"] .fa-moon {
-    display: inline;
-}
-
-[data-theme="light"] .fa-sun {
-    display: none;
-}
-
-[data-theme="dark"] .fa-moon {
-    display: none;
-}
-
-[data-theme="dark"] .fa-sun {
-    display: inline;
-}
-
 /* Accessible, consistent focus outlines for links -------------------- */
 .social-links a:focus-visible,
 .source-link a:focus-visible {
@@ -463,12 +388,6 @@ ul.social-links li:hover {
         font-size: 0.7em;
     }
 
-    .footer-icon-btn {
-        font-size: 1.05rem;
-        /* down from ~1.3rem */
-        padding: 0.3rem 0.55rem;
-    }
-
     /* Reset first child margin since we now control spacing with padding-top */
     .container>*:first-child { margin-top: 0; }
 
@@ -523,11 +442,6 @@ ul.social-links li:hover {
 
     ul.social-links li {
         margin: 0 0.3em;
-    }
-
-    .footer-icon-btn {
-        font-size: 0.95rem;
-        padding: 0.25rem 0.5rem;
     }
 }
 

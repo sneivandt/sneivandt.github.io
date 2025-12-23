@@ -7,7 +7,7 @@
     <meta name="author" content="Stuart Neivandt">
     <meta name="description" content="Stuart Neivandt is a Software Engineer, Music Enthusiast, and Chess Player. Visit his personal site to connect on LinkedIn or GitHub.">
     <meta name="theme-color" content="#1C2022">
-    <meta name="color-scheme" content="dark light">
+    <meta name="color-scheme" content="dark">
     <meta name="robots" content="index, follow">
 
     <!-- Canonical URL -->
@@ -28,17 +28,6 @@
     <meta property="og:site_name" content="Stuart Neivandt">
 
     <!-- Stylesheets -->
-    <!-- Early theme application to avoid flash -->
-    <script>
-      (function() {
-        try {
-          var stored = localStorage.getItem('theme');
-          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            var theme = stored || (prefersDark ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme', theme);
-        } catch (e) { /* ignore */ }
-      })();
-    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer">
 
@@ -95,11 +84,7 @@
       <footer class="site-footer">
         <div class="footer-inner">
           <div class="footer-center">
-            <div class="theme-toggle-wrapper">
-              <button id="theme-toggle" class="footer-icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle light/dark theme" aria-pressed="false">
-                <i class="fa-solid fa-moon" aria-hidden="true"></i>
-              </button>
-            </div>
+            <!-- Footer content can go here -->
           </div>
         </div>
       </footer>
