@@ -533,6 +533,10 @@ ul.social-links li:hover {
     .profile-image:hover {
         transform: none;
     }
+
+    #particles-js {
+        display: none !important;
+    }
 }
 
 /* Print Styles ------------------------------------------------------- */
