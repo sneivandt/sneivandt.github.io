@@ -1,7 +1,7 @@
 /**
  * main.js
  * Progressive, dependency-free enhancements for the site:
- *  - Typed text effect (Typed.js) with reduced-motion + graceful fallback
+ *  - Typed text effect (Custom lightweight implementation)
  *  - Optional particles background (particles.js) guarded + resilient
  *
  * All features are defensive: if an enhancement fails or supporting JS is
@@ -10,35 +10,135 @@
 (function () {
     'use strict';
 
+    /**
+     * Minimal Typewriter effect to replace typed.js dependency
+     * ~1KB minified equivalent, zero external deps.
+     */
+    class Typewriter {
+        constructor(element, strings, options = {}) {
+            this.element = element;
+            this.strings = strings;
+            this.loop = options.loop || false;
+            this.typeSpeed = options.typeSpeed || 50;
+            this.backSpeed = options.backSpeed || 30;
+            this.startDelay = options.startDelay || 0;
+            this.backDelay = options.backDelay || 2000;
+
+            this.state = {
+                textIndex: 0,
+                charIndex: 0,
+                isDeleting: false,
+                isPaused: false
+            };
+
+            this.cursor = null;
+            this.timeout = null;
+
+            this.init();
+        }
+
+        init() {
+            // Create cursor element to match existing CSS
+            this.cursor = document.createElement('span');
+            this.cursor.className = 'typed-cursor';
+            this.cursor.innerHTML = '|';
+            this.cursor.ariaHidden = 'true';
+
+            if (this.element.nextSibling) {
+                this.element.parentNode.insertBefore(this.cursor, this.element.nextSibling);
+            } else {
+                this.element.parentNode.appendChild(this.cursor);
+            }
+
+            // Start typing loop
+            this.timeout = setTimeout(() => this.tick(), this.startDelay);
+        }
+
+        tick() {
+            if (this.state.isPaused) return;
+
+            const currentString = this.strings[this.state.textIndex];
+
+            // Determine operation
+            if (this.state.isDeleting) {
+                this.state.charIndex--;
+            } else {
+                this.state.charIndex++;
+            }
+
+            // Update visible text
+            this.element.textContent = currentString.substring(0, this.state.charIndex);
+
+            // Determine next delay
+            let delta = this.typeSpeed;
+            if (this.state.isDeleting) {
+                delta = this.backSpeed;
+            }
+
+            // End of string reached?
+            if (!this.state.isDeleting && this.state.charIndex === currentString.length) {
+                delta = this.backDelay;
+                this.state.isDeleting = true;
+            }
+            // Fully deleted?
+            else if (this.state.isDeleting && this.state.charIndex === 0) {
+                this.state.isDeleting = false;
+                this.state.textIndex++;
+                delta = 500; // Small pause before typing next
+
+                // Loop or Stop?
+                if (this.state.textIndex >= this.strings.length) {
+                    if (this.loop) {
+                        this.state.textIndex = 0;
+                    } else {
+                        // Stop here (maybe hide cursor?)
+                        this.state.isPaused = true;
+                        return;
+                    }
+                }
+            }
+
+            this.timeout = setTimeout(() => this.tick(), delta);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         /* ------------------------------------------------------------
          * Environment + Element References
          * ------------------------------------------------------------ */
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const typedTarget = document.querySelector('#typed');
+        const stringsSrc = document.querySelector('#typed-strings');
 
         /* ------------------------------------------------------------
-         * Typed Text Effect (graceful w/ reduced motion + fallback)
+         * Typed Text Effect (Custom)
          * ------------------------------------------------------------ */
-        if (!prefersReducedMotion && window.Typed && typedTarget) {
+        if (!prefersReducedMotion && typedTarget && stringsSrc) {
             try {
-                new window.Typed('#typed', {
-                    stringsElement: '#typed-strings',
-                    typeSpeed: 50,
-                    backSpeed: 30,
-                    backDelay: 2000,
-                    startDelay: 1000,
+                // Extract strings from the hidden container
+                const strings = Array.from(stringsSrc.children)
+                    .map(el => el.textContent.trim())
+                    .filter(str => str.length > 0);
+
+                if (strings.length > 0) {
+                    new Typewriter(typedTarget, strings, {
                         loop: true,
-                    showCursor: true,
-                    cursorChar: '|'
-                });
+                        typeSpeed: 60,
+                        backSpeed: 30,
+                        backDelay: 2000,
+                        startDelay: 500
+                    });
+                }
             } catch (e) {
-                console.warn('Typed.js failed to initialize:', e);
-                const fallback = typedTarget.getAttribute('data-fallback') || 'Software Engineer';
-                typedTarget.textContent = fallback;
+                console.warn('Typewriter failed to initialize:', e);
+                // Fallback is handled by HTML data-fallback if JS fails,
+                // but if we are here, we might want to ensure text exists.
+                if (!typedTarget.textContent) {
+                    typedTarget.textContent = typedTarget.getAttribute('data-fallback') || 'Software Engineer';
+                }
             }
         } else if (typedTarget) {
-            // Fallback static text if motion is reduced or library absent.
+            // Fallback static text if motion is reduced.
             const fallback = typedTarget.getAttribute('data-fallback') || 'Software Engineer';
             typedTarget.textContent = fallback;
         }
