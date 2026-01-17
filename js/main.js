@@ -45,17 +45,18 @@
 
         /* ------------------------------------------------------------
          * Particles Background (optional enhancement)
+         * - guarded by reduced motion preference
          * ------------------------------------------------------------ */
-        if (window.particlesJS) {
+        if (!prefersReducedMotion && window.particlesJS) {
             try {
                 window.particlesJS('particles-js', {
                     particles: {
                         number: { value: 50, density: { enable: true, value_area: 800 } },
-                        color: { value: '#E07A5F' },
+                        color: { value: '#78909C' },
                         shape: { type: 'circle' },
                         opacity: { value: 0.15, random: true },
                         size: { value: 3, random: true },
-                        line_linked: { enable: true, distance: 150, color: '#E07A5F', opacity: 0.1, width: 1 },
+                        line_linked: { enable: true, distance: 150, color: '#78909C', opacity: 0.1, width: 1 },
                         move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false }
                     },
                     interactivity: {
@@ -72,10 +73,5 @@
                 console.warn('particles.js failed to initialize:', e);
             }
         }
-
-        /* ------------------------------------------------------------
-         * Quick Navigation Menu (Accessible Toggle + Focus Trap)
-         * ------------------------------------------------------------ */
-        // Removed as part of cleanup
     });
 })();

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Favicon: ultra-minimal solid user silhouette (Font Awesome style) -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Favicon: user silhouette icon">
-  <title>Stuart Neivandt User Icon</title>
-  <!-- Combined head + shoulders block (single solid shape for crisp 16px render) -->
-  <path fill="#E07A5F" d="M32 18c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8Zm0 20c7.2 0 14 4 16 10.5V50c0 .6-.4 1-1 1H17c-.6 0-1-.4-1-1v-1.5C18 42 24.8 38 32 38Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="20%" stop-color="#78909C" />
+      <stop offset="80%" stop-color="#CFD8DC" />
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="#1C2022"/>
+  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-weight="bold" font-size="320" fill="url(#grad)">S</text>
 </svg>
