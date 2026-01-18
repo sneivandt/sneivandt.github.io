@@ -1,0 +1,20 @@
+{
+  "name": "Stuart Neivandt",
+  "short_name": "Stuart",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#121516",
+  "theme_color": "#1C2022",
+  "icons": [
+    {
+      "src": "img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "img/profile.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
