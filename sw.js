@@ -1,6 +1,6 @@
 /*
  * Simple Service Worker for offline support.
- * Strategy: Network-First (cache fallback) for all assets.
+ * Strategy: Stale-While-Revalidate (Cache-First-like, update in background) for all assets.
  */
 
 const CACHE_NAME = 'sneivandt-v1';
@@ -15,7 +15,8 @@ const PRECACHE_ASSETS = [
   './js/typewriter.js',
   './font/OpenSans/OpenSans-Regular.ttf',
   './img/favicon.svg',
-  './img/profile.webp'
+  './img/profile.webp',
+  './manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
@@ -43,30 +44,32 @@ self.addEventListener('fetch', (e) => {
   // Only handle GET requests
   if (e.request.method !== 'GET') return;
 
-  // Strategy: Network First (with Cache Fallback)
-  // Ensures user always gets fresh content if online, but has offline backup.
+  // Strategy: Stale-While-Revalidate
+  // Returns cached content immediately (fast), then updates cache in background.
   e.respondWith(
     (async () => {
-      try {
-        // 1. Try network
-        const response = await fetch(e.request);
+      const cache = await caches.open(CACHE_NAME);
+      const cachedResponse = await cache.match(e.request);
 
-        // 2. If valid response, update cache
-        // (Check response.ok for own assets, or opaque for external/CDN)
-        if (response && (response.ok || response.type === 'opaque')) {
-          const cache = await caches.open(CACHE_NAME);
-          cache.put(e.request, response.clone());
+      // Fetch from network to update cache (background)
+      const fetchPromise = fetch(e.request).then((networkResponse) => {
+        // Check if valid response
+        if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
+          cache.put(e.request, networkResponse.clone());
         }
+        return networkResponse;
+      });
 
-        return response;
-      } catch (err) {
-        // 3. Network failed, try cache
-        const cachedResponse = await caches.match(e.request);
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        throw err;
+      // If cached response exists, return it immediately and update in background
+      if (cachedResponse) {
+        fetchPromise.catch(() => {
+          // Fail silently on background update error
+        });
+        return cachedResponse;
       }
+
+      // Otherwise wait for network
+      return fetchPromise;
     })()
   );
 });

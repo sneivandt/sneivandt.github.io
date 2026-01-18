@@ -1,6 +1,8 @@
 {
   "name": "Stuart Neivandt",
   "short_name": "Stuart",
+  "description": "Portfolio of Stuart Neivandt, Software Engineer.",
+  "id": "/",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#121516",

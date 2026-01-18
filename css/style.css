@@ -9,12 +9,13 @@
 /* Font Face */
 @font-face {
   font-family: 'OpenSans';
-  src: url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  src: local('Open Sans'), local('OpenSans'), url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
   font-display: swap;
 }
 
 /* Design Tokens: Dark Theme (default scope via :root) ---------------- */
 :root {
+  color-scheme: dark;
   /* Primary brand + base colors */
   --primary-color: #78909C;
   --text-color: #EEECEC;
@@ -22,7 +23,7 @@
   --bg-dark: #121516;
   --bg-gradient-start: #1C2022;
   --bg-gradient-end: #121516;
-  
+
   /* Typography */
   --font-main: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
@@ -55,6 +56,7 @@
 /* Full-Height Root to allow flex centering --------------------------- */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--bg-dark);
 }
@@ -96,22 +98,25 @@ body {
   white-space: nowrap !important;
 }
 
-/* Skip Link: keyboard jump to main content -------------------------- */
+/* Accessibility Utility: Skip Link (visible on focus) ---------------- */
 .skip-link {
   position: absolute;
   top: -40px;
-  left: 0;
+  left: 10px;
   background: var(--primary-color);
-  color: #000;
-  padding: 0.5rem 1rem;
-  z-index: 999;
+  color: var(--bg-dark);
+  padding: 8px 12px;
+  z-index: 100;
+  transition: top 0.3s ease;
+  font-weight: 700;
+  border-radius: 0 0 4px 4px;
   text-decoration: none;
-  transition: top 0.2s ease;
-  font-weight: 600;
 }
 
-.skip-link:focus-visible {
+.skip-link:focus {
   top: 0;
+  outline: var(--focus-outline);
+  outline-offset: -2px;
 }
 
 /* Decorative Particle Canvas (layered behind content) ---------------- */
@@ -589,7 +594,7 @@ ul.social-links li:hover {
     padding: 0;
     backdrop-filter: none;
     max-width: none;
-    text-align: center; 
+    text-align: center;
   }
 
   h1 {
@@ -612,14 +617,41 @@ ul.social-links li:hover {
   ul.social-links {
     justify-content: center;
     margin-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  ul.social-links li {
+    margin: 0.5rem 0;
   }
 
   .social-icon {
     color: #000;
     border: 1px solid #ccc;
     border-radius: 50%;
-    width: 2.5rem; 
+    width: 2.5rem;
     height: 2.5rem;
     padding: 0.5rem;
+    display: flex;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+    border: none;
+    border-radius: 0;
+  }
+
+  .social-icon svg {
+    display: none;
+  }
+
+  .social-icon::after {
+    content: ": " attr(href);
+    font-size: 0.9em;
+    color: #444;
+  }
+
+  .social-icon::before {
+    content: attr(aria-label);
+    font-weight: bold;
   }
 }

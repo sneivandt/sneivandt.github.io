@@ -23,6 +23,7 @@ const loadParticlesLibrary = () => {
     script.src = SCRIPT_URL;
     script.integrity = "sha384-d+UOwmNNIC7V4izkTAKSXzWhjC2GxiS9PTykO1XdOPC3nc2z65UOS7SP6QdKPA70";
     script.crossOrigin = "anonymous";
+    script.async = true;
     script.onload = () => {
       resolve();
     };
