@@ -3,6 +3,7 @@
   Global Site Styles (sneivandt.github.io)
 
   Philosophy: lightweight, no build step, accessible, responsive.
+  Uses modern CSS features (logical properties, clamp, backdrop-filter).
   ===================================================================
 */
 
@@ -16,29 +17,65 @@
 /* Design Tokens: Dark Theme (default scope via :root) ---------------- */
 :root {
   color-scheme: dark;
-  /* Primary brand + base colors */
-  --primary-color: #78909C;
-  --text-color: #EEECEC;
-  --text-muted: #B0BEC5;
-  --bg-dark: #121516;
-  --bg-gradient-start: #1C2022;
-  --bg-gradient-end: #121516;
+
+  /* Palette */
+  --color-primary: #4DD0E1;
+  --color-primary-dim: rgba(77, 208, 225, 0.3);
+  --color-text: #EEECEC;
+  --color-text-muted: #B0BEC5;
+  --color-bg: #121516;
+  --color-surface: rgba(23, 27, 29, 0.65);
+
+  /* Gradients */
+  --bg-gradient: radial-gradient(circle at center top, #263238, var(--color-bg));
+  --text-gradient: linear-gradient(135deg, var(--color-primary) 20%, #E0F7FA 80%);
 
   /* Typography */
   --font-main: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-size-h1: clamp(2.5rem, 8vw, 3.8rem);
+  --font-size-typed: clamp(1.1rem, 4vw, 1.5rem);
 
-  /* Focus ring + button surfaces */
-  --focus-outline: 2px solid var(--primary-color);
-  
-  /* Modern browser control accent (checkboxes, radios, progress) */
-  accent-color: var(--primary-color);
+  /* Layout */
+  --container-width: min(90%, 800px);
+  --header-height: clamp(2.5rem, 11vh, 6.5rem); /* Top spacing */
+
+  /* Focus & Interactive */
+  --focus-outline: 2px solid var(--color-primary);
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+  --shadow-card: 0 24px 64px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  --shadow-img: 0 15px 35px rgba(0, 0, 0, 0.5);
+
+  accent-color: var(--color-primary);
 }
 
-/* Minimal Reset / Box Sizing ----------------------------------------- */
-* {
+/* Keyframe Animations -------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Modern Reset / Box Sizing ----------------------------------------- */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+img, picture, svg {
+  display: block;
+  max-width: 100%;
 }
 
 /* Custom Scrollbar */
@@ -47,47 +84,44 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);
+  background-color: var(--color-primary);
   border-radius: 6px;
-  border: 3px solid var(--bg-dark);
+  border: 3px solid var(--color-bg);
 }
 
-/* Full-Height Root to allow flex centering --------------------------- */
+/* Root Layout -------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--bg-dark);
-}
-
-html,
-body {
+  scrollbar-color: var(--color-primary) var(--color-bg);
   height: 100%;
-  overflow: auto;
 }
 
-/* Body: gradient background + flex vertical layout ------------------ */
 body {
+  background: var(--bg-gradient);
+  background-color: var(--color-bg);
   background-attachment: fixed;
-  background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
-  background-color: var(--bg-dark);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 100%;
-  margin: 0;
+
   font-family: var(--font-main);
-  color: var(--text-color);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Full screen layout */
+  min-height: 100%;
+  min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  display: flex;
+  flex-direction: column;
   position: relative;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* Accessibility Utility: Visually Hidden (still readable by AT) ------ */
+/* Accessibility Utility: Visually Hidden ----------------------------- */
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -96,19 +130,21 @@ body {
   margin: -1px !important;
   overflow: hidden !important;
   clip: rect(0 0 0 0) !important;
-  clip-path: inset(50%) !important;
-  border: 0 !important;
   white-space: nowrap !important;
+  border: 0 !important;
 }
 
-/* Accessibility Utility: Skip Link (visible on focus) ---------------- */
+/* Skip Link ---------------------------------------------------------- */
 .skip-link {
   position: absolute;
+  top: -40px; /* Fallback */
   inset-block-start: -40px;
+  left: 10px; /* Fallback */
   inset-inline-start: 10px;
-  background: var(--primary-color);
-  color: var(--bg-dark);
-  padding: 8px 12px;
+
+  background: var(--color-primary);
+  color: var(--color-bg);
+  padding: 0.5rem 0.75rem;
   z-index: 100;
   transition: inset-block-start 0.3s ease;
   font-weight: 700;
@@ -122,91 +158,95 @@ body {
   outline-offset: -2px;
 }
 
-/* Decorative Particle Canvas (layered behind content) ---------------- */
+/* Particles Background ----------------------------------------------- */
 #particles-js {
   position: fixed;
+  inset: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
+  pointer-events: none;
 }
 
-/* Main Centered Container -------------------------------------------- */
+/* Main Layout Container ---------------------------------------------- */
 .container {
-  max-width: 800px;
-  width: 90%;
-  padding: 2rem 2rem 0;
-  text-align: center;
-  /* Let height grow naturally so content can't be clipped */
-  min-height: 100%;
+  width: var(--container-width);
+  margin-inline: auto;
+
+  /* Adaptive top spacing */
+  padding-block-start: var(--header-height);
+  padding-inline: 1rem;
+  padding-block-end: 2rem;
+
+  /* Flex layout for centering content */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* remove space-between pushing first child upward */
   align-items: center;
+  flex-grow: 1; /* Pushes footer down */
+
   position: relative;
   z-index: 2;
-  /* Adaptive top spacing scaled by viewport height, but never excessive */
-  padding-block-start: clamp(2.5rem, 11vh, 6.5rem);
 }
 
-.container>*:not(.source-link) {
-  margin-block-end: 1rem;
-}
-
-/* Ensure natural flow; no forced upward shift */
-.container > *:first-child { margin-block-start: 0; }
-
-/* Flexible content region grows to fill vertical space --------------- */
+/* Main Content Area -------------------------------------------------- */
 .main-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
+  width: 100%;
 }
 
 /* Profile Content Card ----------------------------------------------- */
 .profile-card {
-  background: rgba(23, 27, 29, 0.65);
+  background: var(--color-surface);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  padding: 3.5rem 3rem;
+
+  padding: clamp(2rem, 5vh, 3.5rem) clamp(1.5rem, 5vw, 3rem);
   border-radius: 28px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-card);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 600px;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 
-.profile-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 32px 72px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.08); /* slightly lighter border on hover */
+.profile-card > * + * {
+  margin-block-start: 1rem;
 }
 
-/* Profile Image + Hover Accent --------------------------------------- */
+/* Profile Image ------------------------------------------------------ */
 .profile-container {
-  display: flex;
-  justify-content: center;
   margin-block-end: 0.8rem;
 }
 
 .profile-image {
-  /* Fluid sizing: shrinks smoothly on short viewports */
+  /* Fluid sizing */
   width: clamp(110px, 22vh, 180px);
-  height: clamp(110px, 22vh, 180px);
+  height: clamp(110px, 22vh, 180px); /* Aspect ratio could replace height if simplified */
+
   border-radius: 50%;
   overflow: hidden;
-  /* Clean floating look without heavy borders */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
+  box-shadow: var(--shadow-img);
+  border: 2px solid rgba(77, 208, 225, 0.1);
+
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease, border-color 0.5s ease;
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s backwards;
+
+  /* Fix safari radius clipping */
+  isolation: isolate;
+  transform: translateZ(0);
 }
 
 .profile-image:hover {
   transform: translateY(-5px) scale(1.03);
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  border-color: var(--color-primary-dim);
 }
 
 #profile-img {
@@ -215,350 +255,140 @@ body {
   object-fit: cover;
 }
 
-/* Hero Heading ------------------------------------------------------- */
+/* Typography components ---------------------------------------------- */
 h1 {
-  font-size: 3.8em;
-  margin: 0.2em 0 0.15em 0;
+  font-size: var(--font-size-h1);
+  line-height: 1.1;
   text-align: center;
-  font-family: var(--font-main);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 
-  /* Modern Gradient Text */
-  background: linear-gradient(135deg, var(--primary-color) 20%, #CFD8DC 80%);
+  margin: 0;
+
+  /* Gradient Text */
+  background: var(--text-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: var(--primary-color); /* Fallback */
+  color: var(--color-primary); /* Fallback */
 
-  /* Nice multiline balancing */
   text-wrap: balance;
+  filter: drop-shadow(0 2px 10px var(--color-primary-dim));
 
-  /* Subtle drop shadow that works with gradient text (using filter instead of text-shadow) */
-  filter: drop-shadow(0 2px 10px rgba(120, 144, 156, 0.3));
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
 }
 
-/* Typed Text Intro (height reserved to prevent layout shift) --------- */
 .typed-container {
-  margin: 0.6em 0 1.2em 0;
   min-height: 2em;
+  margin-block: 0.5em 1em;
+
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s backwards;
 }
 
 .typed {
-  font-size: 1.5em;
-  color: var(--text-color);
+  font-size: var(--font-size-typed);
+  color: var(--color-text);
   text-align: center;
   opacity: 0.9;
 }
 
-/* Blinking Cursor Animation ------------------------------------------ */
 .typed-cursor {
-  color: var(--primary-color);
-  font-size: 1.5em;
+  color: var(--color-primary);
+  font-size: var(--font-size-typed);
   animation: blink 0.7s infinite;
 }
 
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Social Icon List --------------------------------------------------- */
+/* Social Links ------------------------------------------------------- */
 ul.social-links {
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap; /* Force single row */
+  flex-wrap: wrap;
+  gap: 0.25rem;
   padding: 0;
-  margin: 0.8rem 0;
   list-style: none;
   width: 100%;
+
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s backwards;
 }
 
 ul.social-links li {
-  flex: 0 1 auto; /* Allow items to shrink if necessary */
-  min-width: 0;
-  margin-block: 0;
-  margin-inline: clamp(0.25rem, 1.5vw, 0.6rem); /* Responsive spacing */
-  transition: transform 0.3s ease;
+  display: flex;
 }
 
-ul.social-links li:hover {
-  transform: translateY(-5px);
-}
-
-/* Icon Base (SVG replacement) -------------------------------------- */
 .social-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-color);
-  text-decoration: none;
-  /* Responsive sizing: scale down on small screens, max out at 3.5rem */
-  /* Ensure minimum touch target size of 48px (~3rem) for accessibility */
-  width: clamp(3rem, 12vw, 4rem);
-  height: clamp(3rem, 12vw, 4rem);
-  padding: clamp(0.5rem, 2vw, 0.8rem);
+
+  color: var(--color-text);
+  width: clamp(3.2rem, 11vw, 4.2rem);
+  height: clamp(3.2rem, 11vw, 4.2rem);
+  padding: 0.25rem; /* Small fixed padding to maximize icon size */
+
   border-radius: 50%;
   transition: all 0.3s ease;
-}
 
-.social-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
+  /* Clipper for background hover shape */
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .social-icon:hover {
-  color: #CFD8DC; /* Match the gradient end color for contrast */
-  opacity: 1;
-  transform: translateY(-3px) scale(1.1);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  color: var(--color-primary);
+  transform: translateY(-5px) scale(1.15);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
-/* Accessible, consistent focus outlines for links -------------------- */
-.social-links a:focus-visible,
+.social-icon:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Footer ------------------------------------------------------------- */
+.site-footer {
+  width: 100%;
+  margin-block-start: auto;
+  padding-block: 2rem 1rem;
+  font-size: 0.8em;
+  z-index: 10;
+  text-align: center;
+}
+
+/* Source Link */
+.source-link a {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.3s ease;
+  opacity: 0.7;
+}
+
+.source-link a:hover {
+  opacity: 1;
+}
+
 .source-link a:focus-visible {
   outline: var(--focus-outline);
   outline-offset: 2px;
 }
 
-/* Footer Layout ------------------------------------------------------ */
-.site-footer {
-  width: 100%;
-  margin-block-start: auto;
-  padding: 10px 5px 20px;
-  font-size: 0.8em;
-  z-index: 10;
-}
-
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* Source Code Link (GitHub) subtle until hover ----------------------- */
-.source-link {
-  /* Removed opacity to ensure text meets contrast requirements at rest */
-  transition: color 0.3s ease;
-}
-
-.source-link a {
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: color 0.3s ease;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-}
-
-.source-link a:hover {
-  color: var(--primary-color);
-}
-
-/* Utilities ---------------------------------------------------------- */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background: var(--primary-color);
-  color: var(--bg-dark);
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: 700;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-}
-
-.btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.btn:focus-visible {
-  outline: var(--focus-outline);
-  outline-offset: 2px;
-}
-
-/* Breakpoint ≤768px: tablet adjustments ------------------------------ */
-@media (max-width:768px) {
-  h1 {
-    font-size: 3em;
-  }
-
-  .profile-card {
-    padding: 2.5rem 2rem;
-  }
-
-  .profile-image {
-    width: 150px;
-    height: 150px;
-  }
-
-  .container {
-    justify-content: flex-start;
-    padding-top: 4rem;
-  }
-
-  .typed {
-    font-size: 1.3em;
-  }
-}
-
-/* Breakpoint ≤480px: small phone layout & scroll handling ------------ */
-@media (max-width:480px) {
-
-  html,
-  body {
-    overflow: auto;
-    /* Allow body to expand so top content can always scroll fully into view */
-    height: auto;
-    min-height: 100%;
-  }
-
-  body {
-    height: auto;
-    /* release strict viewport lock */
-    overflow-x: hidden;
-    padding-top: env(safe-area-inset-top, 0px);
-    /* respect notches / safe areas */
-  }
-
-  .container {
-    padding: 1rem;
-    /* Allow natural document flow & scrolling */
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* start so content flows, footer follows */
-    /* Reduced bottom padding now that footer is not fixed */
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
-    /* Provide additional top breathing room above profile image */
-    padding-top: clamp(2.5rem, 14vh, 6rem);
-  }
-
-  h1 {
-    font-size: 2.2em;
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
-  }
-
-  .profile-image {
-    width: 100px;
-    height: 100px;
-  }
-
-  .profile-card {
-    padding: 2rem 1.5rem;
-    background: rgba(23, 27, 29, 0.75); /* slightly more opaque for readability on small screens */
-  }
-
-  .main-content {
-    flex-grow: 0;
-    /* Slight downward shift after centering for improved visual balance */
-    margin-top: 0;
-    padding: 2rem 1.5rem;
-  }
-
-  .fa {
-    font-size: 1.5em;
-  }
-
-  ul.social-links {
-    margin-bottom: 0.6rem;
-  }
-
-  .typed {
-    font-size: 1.1em;
-  }
-
-  .typed-container {
-    margin: 0.4em 0 0.8em 0;
-  }
-
-  .source-link {
-    font-size: 0.7em;
-  }
-
-  /* Reset first child margin since we now control spacing with padding-top */
-  .container>*:first-child { margin-top: 0; }
-
-  /* Footer now participates in normal flow (no overlap); retain compact spacing */
-  .site-footer {
-    position: static;
-    padding: 0.75rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
-    background: none;
-    background-color: transparent;
-    box-shadow: none;
-    border: 0;
-  }
-
-  /* Tweak inner alignment for compact fixed bar */
-  .footer-inner { gap: 1.1rem; }
-}
-
-/* Ultra-small width (≤360px) or low-height (≤480px) adjustments ------ */
-@media (max-width:360px),
-(max-height:480px) {
-  .container {
-    padding-top: clamp(1.5rem, 12vh, 4rem); /* maintain breathing room even on very small screens */
-    min-height: 100dvh;
-    justify-content: center;
-  }
-
-  .main-content { margin-top: 0; }
-
-  .profile-image {
-    width: 80px;
-    height: 80px;
-    border-width: 2px;
-  }
-
-  h1 {
-    font-size: 1.8em;
-  }
-
-  .typed {
-    font-size: 0.9em;
-  }
-
-  .typed-container {
-    margin: 0.3em 0 0.6em 0;
-    min-height: 1.6em;
-  }
-
-  .fa {
-    font-size: 1.3em;
-    padding: 0.3rem;
-  }
-}
-
-/* Reduced Motion Preference: remove non-essential animation ---------- */
+/* Reduced Motion ----------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
+  *, ::before, ::after {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
   }
 
-  .profile-image:hover {
-    transform: none;
-  }
-
   #particles-js {
     display: none !important;
+  }
+
+  .profile-image:hover {
+    transform: none;
   }
 }
 
@@ -568,6 +398,7 @@ ul.social-links li:hover {
     background: #fff;
     color: #000;
     display: block;
+    min-height: auto;
   }
 
   #particles-js,
@@ -580,14 +411,9 @@ ul.social-links li:hover {
 
   .container {
     width: 100%;
-    max-width: none;
-    padding: 2rem;
     margin: 0;
-    min-height: auto;
-  }
-
-  .main-content {
-    display: block;
+    padding: 2rem;
+    max-width: none;
   }
 
   .profile-card {
@@ -598,7 +424,6 @@ ul.social-links li:hover {
     padding: 0;
     backdrop-filter: none;
     max-width: none;
-    text-align: center;
   }
 
   h1 {
@@ -606,47 +431,25 @@ ul.social-links li:hover {
     -webkit-text-fill-color: initial;
     color: #000;
     filter: none;
-    font-size: 2.5rem;
+    font-size: 24pt;
   }
 
-  .typed-container {
-    color: #000;
-    margin-bottom: 2rem;
-  }
-
-  .typed {
-    color: #333;
-  }
-
+  /* Make social links a list of text */
   ul.social-links {
-    justify-content: center;
-    margin-top: 1rem;
     flex-direction: column;
-    align-items: center;
-  }
-
-  ul.social-links li {
-    margin: 0.5rem 0;
+    gap: 0.5rem;
   }
 
   .social-icon {
-    color: #000;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0.5rem;
-    display: flex;
-    text-decoration: none;
     width: auto;
     height: auto;
-    border: none;
     border-radius: 0;
+    padding: 0;
+    color: #000;
+    text-decoration: none;
   }
 
-  .social-icon svg {
-    display: none;
-  }
+  .social-icon svg { display: none; }
 
   .social-icon::after {
     content: ": " attr(href);
@@ -655,7 +458,11 @@ ul.social-links li:hover {
   }
 
   .social-icon::before {
-    content: attr(title);
+    content: attr(aria-label);
     font-weight: bold;
+    margin-right: 0.5rem;
   }
+
+  /* Hide the "(opens in a new tab)" part of aria-label in print if possible,
+     but CSS content attr is limited. Simpler approach: */
 }
