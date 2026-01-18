@@ -105,9 +105,15 @@ mediaQuery.addEventListener('change', handleMotionPreference);
  * ------------------------------------------------------------ */
 if ('serviceWorker' in navigator) {
   // Register after load to prioritize content rendering
-  window.addEventListener('load', () => {
+  const registerSw = () => {
     navigator.serviceWorker.register('./sw.js').catch(() => {
       // Fail silently
     });
-  });
+  };
+
+  if (document.readyState === 'complete') {
+    registerSw();
+  } else {
+    window.addEventListener('load', registerSw);
+  }
 }

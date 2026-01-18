@@ -2,11 +2,14 @@
   "name": "Stuart Neivandt",
   "short_name": "Stuart",
   "description": "Portfolio of Stuart Neivandt, Software Engineer.",
+  "lang": "en-US",
   "id": "/",
   "start_url": ".",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#121516",
   "theme_color": "#1C2022",
+  "categories": ["education", "portfolio", "productivity"],
   "icons": [
     {
       "src": "img/favicon.svg",

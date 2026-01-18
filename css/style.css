@@ -29,6 +29,9 @@
 
   /* Focus ring + button surfaces */
   --focus-outline: 2px solid var(--primary-color);
+  
+  /* Modern browser control accent (checkboxes, radios, progress) */
+  accent-color: var(--primary-color);
 }
 
 /* Minimal Reset / Box Sizing ----------------------------------------- */
@@ -101,20 +104,20 @@ body {
 /* Accessibility Utility: Skip Link (visible on focus) ---------------- */
 .skip-link {
   position: absolute;
-  top: -40px;
-  left: 10px;
+  inset-block-start: -40px;
+  inset-inline-start: 10px;
   background: var(--primary-color);
   color: var(--bg-dark);
   padding: 8px 12px;
   z-index: 100;
-  transition: top 0.3s ease;
+  transition: inset-block-start 0.3s ease;
   font-weight: 700;
   border-radius: 0 0 4px 4px;
   text-decoration: none;
 }
 
 .skip-link:focus {
-  top: 0;
+  inset-block-start: 0;
   outline: var(--focus-outline);
   outline-offset: -2px;
 }
@@ -142,15 +145,15 @@ body {
   position: relative;
   z-index: 2;
   /* Adaptive top spacing scaled by viewport height, but never excessive */
-  padding-top: clamp(2.5rem, 11vh, 6.5rem);
+  padding-block-start: clamp(2.5rem, 11vh, 6.5rem);
 }
 
 .container>*:not(.source-link) {
-  margin-bottom: 1rem;
+  margin-block-end: 1rem;
 }
 
 /* Ensure natural flow; no forced upward shift */
-.container > *:first-child { margin-top: 0; }
+.container > *:first-child { margin-block-start: 0; }
 
 /* Flexible content region grows to fill vertical space --------------- */
 .main-content {
@@ -187,7 +190,7 @@ body {
 .profile-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 0.8rem;
+  margin-block-end: 0.8rem;
 }
 
 .profile-image {
@@ -241,10 +244,6 @@ h1 {
   min-height: 2em;
 }
 
-#typed-strings {
-  display: none;
-}
-
 .typed {
   font-size: 1.5em;
   color: var(--text-color);
@@ -287,7 +286,8 @@ ul.social-links {
 ul.social-links li {
   flex: 0 1 auto; /* Allow items to shrink if necessary */
   min-width: 0;
-  margin: 0 clamp(0.25rem, 1.5vw, 0.6rem); /* Responsive spacing */
+  margin-block: 0;
+  margin-inline: clamp(0.25rem, 1.5vw, 0.6rem); /* Responsive spacing */
   transition: transform 0.3s ease;
 }
 
@@ -335,7 +335,7 @@ ul.social-links li:hover {
 /* Footer Layout ------------------------------------------------------ */
 .site-footer {
   width: 100%;
-  margin-top: auto;
+  margin-block-start: auto;
   padding: 10px 5px 20px;
   font-size: 0.8em;
   z-index: 10;
@@ -360,6 +360,8 @@ ul.social-links li:hover {
   padding: 5px 10px;
   border-radius: 4px;
   transition: color 0.3s ease;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
 }
 
 .source-link a:hover {
@@ -543,7 +545,9 @@ ul.social-links li:hover {
 
 /* Reduced Motion Preference: remove non-essential animation ---------- */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  ::before,
+  ::after {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
@@ -651,7 +655,7 @@ ul.social-links li:hover {
   }
 
   .social-icon::before {
-    content: attr(aria-label);
+    content: attr(title);
     font-weight: bold;
   }
 }

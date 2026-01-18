@@ -2,8 +2,10 @@
  * Simple Service Worker for offline support.
  * Strategy: Stale-While-Revalidate (Cache-First-like, update in background) for all assets.
  */
+"use strict";
 
-const CACHE_NAME = 'sneivandt-v1';
+const CACHE_VERSION = 'v1';
+const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // Precache assets: Site functionality depends on these
 const PRECACHE_ASSETS = [
@@ -41,8 +43,8 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Only handle GET requests
-  if (e.request.method !== 'GET') return;
+  // Only handle GET requests and ensure valid scheme (http/https)
+  if (e.request.method !== 'GET' || !e.request.url.startsWith('http')) return;
 
   // Strategy: Stale-While-Revalidate
   // Returns cached content immediately (fast), then updates cache in background.
