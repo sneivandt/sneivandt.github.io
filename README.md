@@ -16,6 +16,7 @@ This repository hosts the source for my landing page / profile site. It is inten
     - Open Graph tags for rich link previews
     - JSON-LD structured data (Person schema)
 - Subtle visual enhancements: particle background + typing effect
+- Installable as a PWA (manifest)
 - Custom domain via `CNAME` (GitHub Pages)
 
 ## Tech Stack 🧰
@@ -24,42 +25,22 @@ This repository hosts the source for my landing page / profile site. It is inten
 |-------------|--------|
 | Markup      | Plain HTML5 |
 | Styling     | CSS (no preprocessor) |
-| Scripting   | Vanilla JS (`js/main.js`) |
+| Scripting   | Vanilla JS |
 | Fonts       | Self-hosted Open Sans (subset could be a future optimization) |
 | Effects     | [particles.js](https://github.com/VincentGarreau/particles.js), Custom Typewriter (Vanilla JS) |
 | Hosting     | GitHub Pages |
-
-## Repository Structure 📂
-```
-.
-├── index.html        # Main landing page (SEO + structured data)
-├── css/
-│   └── style.css     # Core styles (layout, typography, animations)
-├── js/
-│   └── main.js       # Initialization (particles + typed text setup)
-├── img/              # Images (profile, social/share assets)
-├── font/
-│   └── OpenSans/     # Self-hosted font files
-├── CNAME             # Custom domain mapping for GitHub Pages
-├── LICENSE           # MIT license
-└── README.md         # Project documentation
-```
-
-Brief notes:
-
-- `index.html` keeps everything lean; no bundler/build step.
-- `css/style.css` could later be split (e.g. components / utilities) if complexity grows.
-- `js/main.js` only mounts enhancements; core content works without JS.
-- `font/OpenSans/` may be replaced with a subsetted WOFF2-only variant for performance.
-- `CNAME` must remain for the custom domain; remove if you fork under a different domain.
 
 ## Local Development 💻
 
 Because this is pure static content, you only need a simple HTTP server (avoids font / relative path issues that can occur when opening the file directly).
 
-### Quick start
+Using the helper script (macOS/Linux):
 
-Using Python (already on most systems):
+```bash
+./serve.sh
+```
+
+Or manually using Python:
 
 ```bash
 python3 -m http.server 8000
@@ -67,23 +48,9 @@ python3 -m http.server 8000
 
 Then visit: http://localhost:8000
 
-Alternative (Node.js):
-
-```bash
-npx serve .
-```
-
 ## Deployment (GitHub Pages + Custom Domain) 🌐
 
 1. The repository is named `<username>.github.io`, so the `master` (or `main`) branch automatically serves at `https://<username>.github.io`.
 2. The `CNAME` file contains `stuartneivandt.com`; GitHub Pages uses this to configure the custom domain.
 3. DNS: An A/ALIAS/ANAME (or CNAME for `www`) record points the domain to GitHub Pages (already configured outside of this repo).
 4. GitHub automatically provisions HTTPS certificates via Let’s Encrypt.
-
-If you fork this:
-- Remove or update `CNAME` (otherwise Pages will not build for your fork)
-- Replace analytics / tracking (none present yet) and social meta to match your identity
-
----
-
-If you spot an issue or have a suggestion, feel free to open an issue or PR.

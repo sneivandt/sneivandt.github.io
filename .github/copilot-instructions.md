@@ -11,22 +11,6 @@ This repository is intentionally **minimal, dependency-free, build-free static c
 
 If a change would require a build step, reconsider the approach or propose it explicitly before implementing.
 
-## Current High-Level Structure
-
-```
-.
-├── index.html              # Landing page (SEO, structured data)
-├── css/
-│   └── style.css           # Global styles
-├── js/
-│   └── main.js             # Light enhancement layer
-├── img/                    # Images
-├── font/                   # Self-hosted fonts (Open Sans)
-├── CNAME                   # Custom domain mapping
-├── LICENSE                 # MIT License
-└── README.md               # Project overview
-```
-
 ### Page Layout Conventions
 - Keep each page self-explanatory with minimal DOM depth.
 - Prefer `<main>`, `<header>`, `<nav>`, `<section>`, `<footer>` where appropriate.
@@ -71,17 +55,12 @@ If a change would require a build step, reconsider the approach or propose it ex
 - Single external script for a visual effect (already using particles / typed).
 - Inline SVG icons instead of icon fonts.
 
-## Maintenance Notes
-- Prefer small, atomic commits with descriptive messages.
-- Avoid churn: do not reformat all files for stylistic nits.
-- Keep HTML attributes ordered logically (lang, meta, links, scripts at end with `defer`).
-
 ## FAQ
 **Why not add a build step for critical CSS or image pipelines?**
 Deliberate constraint: simplicity > micro-optimization. Manual curation is enough at this scale.
 
-**Can we add a service worker or PWA manifest?**
-Only if it meaningfully improves UX (offline access) without complexity creep.
+**Can we add a service worker?**
+Only if it meaningfully improves UX (offline access) without complexity creep. (A `manifest.json` exists for basic installability).
 
 **Can we add TypeScript?**
 Not unless a compelling complexity threshold is reached; current JS is minimal.

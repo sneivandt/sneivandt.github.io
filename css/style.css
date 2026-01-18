@@ -1,140 +1,145 @@
 /*
   ===================================================================
-    Global Site Styles (sneivandt.github.io)
+  Global Site Styles (sneivandt.github.io)
 
-    Philosophy: lightweight, no build step, accessible, responsive.
+  Philosophy: lightweight, no build step, accessible, responsive.
   ===================================================================
 */
 
 /* Font Face */
 @font-face {
-    font-family: 'OpenSans';
-    src: url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
-    font-display: swap;
+  font-family: 'OpenSans';
+  src: url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 
 /* Design Tokens: Dark Theme (default scope via :root) ---------------- */
 :root {
-    /* Primary brand + base colors */
-    --primary-color: #78909C;
-    --text-color: #EEECEC;
-    --bg-dark: #121516;
-    --bg-gradient-start: #1C2022;
-    --bg-gradient-end: #121516;
-    /* Focus ring + button surfaces */
-    --focus-outline: 2px solid var(--primary-color);
+  /* Primary brand + base colors */
+  --primary-color: #78909C;
+  --text-color: #EEECEC;
+  --text-muted: #B0BEC5;
+  --bg-dark: #121516;
+  --bg-gradient-start: #1C2022;
+  --bg-gradient-end: #121516;
+  
+  /* Typography */
+  --font-main: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Focus ring + button surfaces */
+  --focus-outline: 2px solid var(--primary-color);
 }
 
 /* Minimal Reset / Box Sizing ----------------------------------------- */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--bg-dark);
+  background: var(--bg-dark);
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 6px;
-    border: 3px solid var(--bg-dark);
+  background-color: var(--primary-color);
+  border-radius: 6px;
+  border: 3px solid var(--bg-dark);
 }
 
 /* Full-Height Root to allow flex centering --------------------------- */
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 html,
 body {
-    height: 100%;
-    overflow: auto;
+  height: 100%;
+  overflow: auto;
 }
 
 /* Body: gradient background + flex vertical layout ------------------ */
 body {
-    background-attachment: fixed;
-    background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
-    background-color: var(--bg-dark);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    margin: 0;
-    font-family: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    color: var(--text-color);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
+  background-attachment: fixed;
+  background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+  background-color: var(--bg-dark);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
 /* Accessibility Utility: Visually Hidden (still readable by AT) ------ */
 .visually-hidden {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0 0 0 0) !important;
-    clip-path: inset(50%) !important;
-    border: 0 !important;
-    white-space: nowrap !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  border: 0 !important;
+  white-space: nowrap !important;
 }
 
 /* Skip Link: keyboard jump to main content -------------------------- */
 .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--primary-color);
-    color: #000;
-    padding: 0.5rem 1rem;
-    z-index: 999;
-    text-decoration: none;
-    transition: top 0.2s ease;
-    font-weight: 600;
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: #000;
+  padding: 0.5rem 1rem;
+  z-index: 999;
+  text-decoration: none;
+  transition: top 0.2s ease;
+  font-weight: 600;
 }
 
 .skip-link:focus-visible {
-    top: 0;
+  top: 0;
 }
 
 /* Decorative Particle Canvas (layered behind content) ---------------- */
 #particles-js {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 /* Main Centered Container -------------------------------------------- */
 .container {
-    max-width: 800px;
-    width: 90%;
-    padding: 2rem 2rem 0;
-    text-align: center;
-    /* Let height grow naturally so content can't be clipped */
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* remove space-between pushing first child upward */
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    /* Adaptive top spacing scaled by viewport height, but never excessive */
-    padding-top: clamp(2.5rem, 11vh, 6.5rem);
+  max-width: 800px;
+  width: 90%;
+  padding: 2rem 2rem 0;
+  text-align: center;
+  /* Let height grow naturally so content can't be clipped */
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* remove space-between pushing first child upward */
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  /* Adaptive top spacing scaled by viewport height, but never excessive */
+  padding-top: clamp(2.5rem, 11vh, 6.5rem);
 }
 
 .container>*:not(.source-link) {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* Ensure natural flow; no forced upward shift */
@@ -142,470 +147,455 @@ body {
 
 /* Flexible content region grows to fill vertical space --------------- */
 .main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
 }
 
 /* Profile Content Card ----------------------------------------------- */
 .profile-card {
-    background: rgba(23, 27, 29, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 3.5rem 3rem;
-    border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  background: rgba(23, 27, 29, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 3.5rem 3rem;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .profile-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 32px 72px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.08); /* slightly lighter border on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 32px 72px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.08); /* slightly lighter border on hover */
 }
 
 /* Profile Image + Hover Accent --------------------------------------- */
 .profile-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
 }
 
 .profile-image {
-    /* Fluid sizing: shrinks smoothly on short viewports */
-    width: clamp(110px, 22vh, 180px);
-    height: clamp(110px, 22vh, 180px);
-    border-radius: 50%;
-    overflow: hidden;
-    /* Clean floating look without heavy borders */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
+  /* Fluid sizing: shrinks smoothly on short viewports */
+  width: clamp(110px, 22vh, 180px);
+  height: clamp(110px, 22vh, 180px);
+  border-radius: 50%;
+  overflow: hidden;
+  /* Clean floating look without heavy borders */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
 }
 
 .profile-image:hover {
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
 }
 
 #profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Hero Heading ------------------------------------------------------- */
 h1 {
-    font-size: 3.8em;
-    margin: 0.2em 0 0.15em 0;
-    text-align: center;
-    font-family: OpenSans, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    
-    /* Modern Gradient Text */
-    background: linear-gradient(135deg, var(--primary-color) 20%, #CFD8DC 80%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: var(--primary-color); /* Fallback */
-    
-    /* Subtle drop shadow that works with gradient text (using filter instead of text-shadow) */
-    filter: drop-shadow(0 2px 10px rgba(120, 144, 156, 0.3));
+  font-size: 3.8em;
+  margin: 0.2em 0 0.15em 0;
+  text-align: center;
+  font-family: var(--font-main);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+
+  /* Modern Gradient Text */
+  background: linear-gradient(135deg, var(--primary-color) 20%, #CFD8DC 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--primary-color); /* Fallback */
+
+  /* Nice multiline balancing */
+  text-wrap: balance;
+
+  /* Subtle drop shadow that works with gradient text (using filter instead of text-shadow) */
+  filter: drop-shadow(0 2px 10px rgba(120, 144, 156, 0.3));
 }
 
 /* Typed Text Intro (height reserved to prevent layout shift) --------- */
 .typed-container {
-    margin: 0.6em 0 1.2em 0;
-    min-height: 2em;
+  margin: 0.6em 0 1.2em 0;
+  min-height: 2em;
 }
 
 #typed-strings {
-    display: none;
+  display: none;
 }
 
 .typed {
-    font-size: 1.5em;
-    color: var(--text-color);
-    text-align: center;
-    opacity: 0.9;
+  font-size: 1.5em;
+  color: var(--text-color);
+  text-align: center;
+  opacity: 0.9;
 }
 
 /* Blinking Cursor Animation ------------------------------------------ */
 .typed-cursor {
-    color: var(--primary-color);
-    font-size: 1.5em;
-    animation: blink 0.7s infinite;
+  color: var(--primary-color);
+  font-size: 1.5em;
+  animation: blink 0.7s infinite;
 }
 
 @keyframes blink {
-    0% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 1;
+  }
 
-    50% {
-        opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Social Icon List --------------------------------------------------- */
 ul.social-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: nowrap; /* Force single row */
-    padding: 0;
-    margin: 0.8rem 0;
-    list-style: none;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap; /* Force single row */
+  padding: 0;
+  margin: 0.8rem 0;
+  list-style: none;
+  width: 100%;
 }
 
 ul.social-links li {
-    flex: 0 1 auto; /* Allow items to shrink if necessary */
-    min-width: 0;
-    margin: 0 clamp(0.25rem, 1.5vw, 0.6rem); /* Responsive spacing */
-    transition: transform 0.3s ease;
+  flex: 0 1 auto; /* Allow items to shrink if necessary */
+  min-width: 0;
+  margin: 0 clamp(0.25rem, 1.5vw, 0.6rem); /* Responsive spacing */
+  transition: transform 0.3s ease;
 }
 
 ul.social-links li:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 /* Icon Base (SVG replacement) -------------------------------------- */
 .social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-color);
-    text-decoration: none;
-    /* Responsive sizing: scale down on small screens, max out at 3.5rem */
-    width: clamp(2.5rem, 12vw, 3.5rem);
-    height: clamp(2.5rem, 12vw, 3.5rem);
-    padding: clamp(0.5rem, 2vw, 0.8rem);
-    border-radius: 50%;
-    transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  text-decoration: none;
+  /* Responsive sizing: scale down on small screens, max out at 3.5rem */
+  /* Ensure minimum touch target size of 48px (~3rem) for accessibility */
+  width: clamp(3rem, 12vw, 4rem);
+  height: clamp(3rem, 12vw, 4rem);
+  padding: clamp(0.5rem, 2vw, 0.8rem);
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
 .social-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
 }
 
 .social-icon:hover {
-    color: #CFD8DC; /* Match the gradient end color for contrast */
-    opacity: 1;
-    transform: translateY(-3px) scale(1.1);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  color: #CFD8DC; /* Match the gradient end color for contrast */
+  opacity: 1;
+  transform: translateY(-3px) scale(1.1);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* Accessible, consistent focus outlines for links -------------------- */
 .social-links a:focus-visible,
 .source-link a:focus-visible {
-    outline: var(--focus-outline);
-    outline-offset: 2px;
+  outline: var(--focus-outline);
+  outline-offset: 2px;
 }
 
 /* Footer Layout ------------------------------------------------------ */
 .site-footer {
-    width: 100%;
-    margin-top: auto;
-    padding: 10px 5px 20px;
-    font-size: 0.8em;
-    z-index: 10;
+  width: 100%;
+  margin-top: auto;
+  padding: 10px 5px 20px;
+  font-size: 0.8em;
+  z-index: 10;
 }
 
 .footer-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.footer-left,
-.footer-right {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 /* Source Code Link (GitHub) subtle until hover ----------------------- */
 .source-link {
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
+  /* Removed opacity to ensure text meets contrast requirements at rest */
+  transition: color 0.3s ease;
 }
 
 .source-link a {
-    color: var(--text-color);
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 4px;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: color 0.3s ease;
 }
 
 .source-link a:hover {
-    opacity: 1;
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 /* Breakpoint ≤768px: tablet adjustments ------------------------------ */
 @media (max-width:768px) {
-    h1 {
-        font-size: 3em;
-    }
+  h1 {
+    font-size: 3em;
+  }
 
-    .profile-card {
-        padding: 2.5rem 2rem;
-    }
+  .profile-card {
+    padding: 2.5rem 2rem;
+  }
 
-    .bio {
-        font-size: 1rem;
-        padding: 0 1rem;
-    }
+  .profile-image {
+    width: 150px;
+    height: 150px;
+  }
 
-    .profile-image {
-        width: 150px;
-        height: 150px;
-    }
+  .container {
+    justify-content: flex-start;
+    padding-top: 4rem;
+  }
 
-    .container {
-        justify-content: flex-start;
-        padding-top: 4rem;
-    }
-
-    .typed {
-        font-size: 1.3em;
-    }
+  .typed {
+    font-size: 1.3em;
+  }
 }
 
 /* Breakpoint ≤480px: small phone layout & scroll handling ------------ */
 @media (max-width:480px) {
 
-    html,
-    body {
-        overflow: auto;
-        /* Allow body to expand so top content can always scroll fully into view */
-        height: auto;
-        min-height: 100%;
-    }
+  html,
+  body {
+    overflow: auto;
+    /* Allow body to expand so top content can always scroll fully into view */
+    height: auto;
+    min-height: 100%;
+  }
 
-    body {
-        height: auto;
-        /* release strict viewport lock */
-        overflow-x: hidden;
-        padding-top: env(safe-area-inset-top, 0px);
-        /* respect notches / safe areas */
-    }
+  body {
+    height: auto;
+    /* release strict viewport lock */
+    overflow-x: hidden;
+    padding-top: env(safe-area-inset-top, 0px);
+    /* respect notches / safe areas */
+  }
 
-    .container {
-        padding: 1rem;
-        /* Allow natural document flow & scrolling */
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* start so content flows, footer follows */
-        /* Reduced bottom padding now that footer is not fixed */
-        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
-        /* Provide additional top breathing room above profile image */
-        padding-top: clamp(2.5rem, 14vh, 6rem);
-    }
+  .container {
+    padding: 1rem;
+    /* Allow natural document flow & scrolling */
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* start so content flows, footer follows */
+    /* Reduced bottom padding now that footer is not fixed */
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
+    /* Provide additional top breathing room above profile image */
+    padding-top: clamp(2.5rem, 14vh, 6rem);
+  }
 
-    h1 {
-        font-size: 2.2em;
-        margin-top: 0.3em;
-        margin-bottom: 0.3em;
-    }
+  h1 {
+    font-size: 2.2em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
 
-    .profile-image {
-        width: 100px;
-        height: 100px;
-    }
+  .profile-image {
+    width: 100px;
+    height: 100px;
+  }
 
-    .profile-card {
-        padding: 2rem 1.5rem;
-        background: rgba(23, 27, 29, 0.75); /* slightly more opaque for readability on small screens */
-    }
+  .profile-card {
+    padding: 2rem 1.5rem;
+    background: rgba(23, 27, 29, 0.75); /* slightly more opaque for readability on small screens */
+  }
 
-    .main-content {
-        flex-grow: 0;
-        /* Slight downward shift after centering for improved visual balance */
-        margin-top: 0;
-        padding: 2rem 1.5rem;
-    }
+  .main-content {
+    flex-grow: 0;
+    /* Slight downward shift after centering for improved visual balance */
+    margin-top: 0;
+    padding: 2rem 1.5rem;
+  }
 
-    .fa {
-        font-size: 1.5em;
-    }
+  .fa {
+    font-size: 1.5em;
+  }
 
-    ul.social-links {
-        margin: 0.6rem 0;
-    }
+  ul.social-links {
+    margin-bottom: 0.6rem;
+  }
 
-    .profile-container {
-        margin-bottom: 0.6rem;
-    }
+  .typed {
+    font-size: 1.1em;
+  }
 
-    .typed {
-        font-size: 1.1em;
-    }
+  .typed-container {
+    margin: 0.4em 0 0.8em 0;
+  }
 
-    .typed-container {
-        margin: 0.4em 0 0.8em 0;
-    }
+  .source-link {
+    font-size: 0.7em;
+  }
 
-    .source-link {
-        font-size: 0.7em;
-    }
+  /* Reset first child margin since we now control spacing with padding-top */
+  .container>*:first-child { margin-top: 0; }
 
-    /* Reset first child margin since we now control spacing with padding-top */
-    .container>*:first-child { margin-top: 0; }
+  /* Footer now participates in normal flow (no overlap); retain compact spacing */
+  .site-footer {
+    position: static;
+    padding: 0.75rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+    background: none;
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+  }
 
-    /* Footer now participates in normal flow (no overlap); retain compact spacing */
-    .site-footer {
-        position: static;
-        padding: 0.75rem 0.75rem calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
-        background: none;
-        background-color: transparent;
-        box-shadow: none;
-        border: 0;
-    }
-
-    /* Tweak inner alignment for compact fixed bar */
-    .footer-inner { gap: 1.1rem; }
+  /* Tweak inner alignment for compact fixed bar */
+  .footer-inner { gap: 1.1rem; }
 }
 
 /* Ultra-small width (≤360px) or low-height (≤480px) adjustments ------ */
 @media (max-width:360px),
 (max-height:480px) {
-    .container {
-        padding-top: clamp(1.5rem, 12vh, 4rem); /* maintain breathing room even on very small screens */
-        min-height: 100dvh;
-        justify-content: center;
-    }
+  .container {
+    padding-top: clamp(1.5rem, 12vh, 4rem); /* maintain breathing room even on very small screens */
+    min-height: 100dvh;
+    justify-content: center;
+  }
 
-    .main-content { margin-top: 0; }
+  .main-content { margin-top: 0; }
 
-    .profile-image {
-        width: 80px;
-        height: 80px;
-        border-width: 2px;
-    }
+  .profile-image {
+    width: 80px;
+    height: 80px;
+    border-width: 2px;
+  }
 
-    h1 {
-        font-size: 1.8em;
-    }
+  h1 {
+    font-size: 1.8em;
+  }
 
-    .typed {
-        font-size: 0.9em;
-    }
+  .typed {
+    font-size: 0.9em;
+  }
 
-    .typed-container {
-        margin: 0.3em 0 0.6em 0;
-        min-height: 1.6em;
-    }
+  .typed-container {
+    margin: 0.3em 0 0.6em 0;
+    min-height: 1.6em;
+  }
 
-    .fa {
-        font-size: 1.3em;
-        padding: 0.3rem;
-    }
-
-    ul.social-links li {
-        margin: 0 0.3em;
-    }
+  .fa {
+    font-size: 1.3em;
+    padding: 0.3rem;
+  }
 }
 
 /* Reduced Motion Preference: remove non-essential animation ---------- */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
-    }
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 
-    .profile-image:hover {
-        transform: none;
-    }
+  .profile-image:hover {
+    transform: none;
+  }
 
-    #particles-js {
-        display: none !important;
-    }
+  #particles-js {
+    display: none !important;
+  }
 }
 
 /* Print Styles ------------------------------------------------------- */
 @media print {
-    body {
-        background: #fff;
-        color: #000;
-        display: block;
-    }
+  body {
+    background: #fff;
+    color: #000;
+    display: block;
+  }
 
-    #particles-js,
-    .skip-link,
-    .typed-cursor,
-    .source-link,
-    .site-footer {
-        display: none !important;
-    }
+  #particles-js,
+  .skip-link,
+  .typed-cursor,
+  .source-link,
+  .site-footer {
+    display: none !important;
+  }
 
-    .container {
-        width: 100%;
-        max-width: none;
-        padding: 2rem;
-        margin: 0;
-        min-height: auto;
-    }
+  .container {
+    width: 100%;
+    max-width: none;
+    padding: 2rem;
+    margin: 0;
+    min-height: auto;
+  }
 
-    .main-content {
-        display: block;
-    }
+  .main-content {
+    display: block;
+  }
 
-    .profile-card {
-        box-shadow: none;
-        border: none;
-        background: transparent;
-        color: #000;
-        padding: 0;
-        backdrop-filter: none;
-        max-width: none;
-        text-align: center; 
-    }
+  .profile-card {
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    color: #000;
+    padding: 0;
+    backdrop-filter: none;
+    max-width: none;
+    text-align: center; 
+  }
 
-    h1 {
-        background: none;
-        -webkit-text-fill-color: initial;
-        color: #000;
-        filter: none;
-        font-size: 2.5rem;
-    }
+  h1 {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: #000;
+    filter: none;
+    font-size: 2.5rem;
+  }
 
-    .typed-container {
-        color: #000;
-        margin-bottom: 2rem;
-    }
+  .typed-container {
+    color: #000;
+    margin-bottom: 2rem;
+  }
 
-    .typed {
-        color: #333;
-    }
+  .typed {
+    color: #333;
+  }
 
-    ul.social-links {
-        justify-content: center;
-        margin-top: 1rem;
-    }
-    
-    .social-icon {
-        color: #000;
-        border: 1px solid #ccc;
-        border-radius: 50%;
-        width: 2.5rem; 
-        height: 2.5rem;
-        padding: 0.5rem;
-    }
+  ul.social-links {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .social-icon {
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 2.5rem; 
+    height: 2.5rem;
+    padding: 0.5rem;
+  }
 }
