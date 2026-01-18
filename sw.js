@@ -1,10 +1,12 @@
 /*
  * Simple Service Worker for offline support.
- * Strategy: Stale-While-Revalidate for assets, Network-First for navigation.
+ * Strategy: Network-First (cache fallback) for all assets.
  */
 
 const CACHE_NAME = 'sneivandt-v1';
-const ASSETS = [
+
+// Precache assets: Site functionality depends on these
+const PRECACHE_ASSETS = [
   './',
   './index.html',
   './css/style.css',
@@ -13,13 +15,15 @@ const ASSETS = [
   './js/typewriter.js',
   './font/OpenSans/OpenSans-Regular.ttf',
   './img/favicon.svg',
-  './img/profile.webp',
-  'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js'
+  './img/profile.webp'
 ];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      // Must cache critical assets successfully
+      await cache.addAll(PRECACHE_ASSETS);
+    })
   );
   self.skipWaiting();
 });
@@ -39,34 +43,30 @@ self.addEventListener('fetch', (e) => {
   // Only handle GET requests
   if (e.request.method !== 'GET') return;
 
-  // Strategy 1: Network First for HTML (Navigation) to ensure fresh content
-  if (e.request.mode === 'navigate') {
-    e.respondWith(
-      fetch(e.request)
-        .catch(() => caches.match(e.request)) // Fallback to cache if offline
-    );
-    return;
-  }
-
-  // Strategy 2: Stale-While-Revalidate for known assets
-  // Returns cached version immediately, then fetches update in background
+  // Strategy: Network First (with Cache Fallback)
+  // Ensures user always gets fresh content if online, but has offline backup.
   e.respondWith(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      const cachedResponse = await cache.match(e.request);
+    (async () => {
+      try {
+        // 1. Try network
+        const response = await fetch(e.request);
 
-      const networkFetch = fetch(e.request).then((resp) => {
-        if (resp.ok) {
-          cache.put(e.request, resp.clone());
+        // 2. If valid response, update cache
+        // (Check response.ok for own assets, or opaque for external/CDN)
+        if (response && (response.ok || response.type === 'opaque')) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(e.request, response.clone());
         }
-        return resp;
-      }).catch(() => {
-        // network failed, just return undefined (cachedResponse handles it)
-      });
 
-      // Keep SW alive until cache is updated
-      e.waitUntil(networkFetch);
-
-      return cachedResponse || networkFetch;
-    })
+        return response;
+      } catch (err) {
+        // 3. Network failed, try cache
+        const cachedResponse = await caches.match(e.request);
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        throw err;
+      }
+    })()
   );
 });

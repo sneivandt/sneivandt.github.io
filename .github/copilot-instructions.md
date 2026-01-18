@@ -65,6 +65,12 @@ Only if it meaningfully improves UX (offline access) without complexity creep. (
 **Can we add TypeScript?**
 Not unless a compelling complexity threshold is reached; current JS is minimal.
 
+**Do we need a custom 404 page?**
+No. GitHub Pages provides a default one, and this site is simple enough that a custom one is unnecessary maintenance.
+
+**Do we need a copyright notice?**
+No. The content is personal and minimal; adding legal boilerplate would detract from the simplicity
+
 ---
 
 Keep it simple, fast, and human-readable. If in doubt, choose the option that requires the fewest moving parts.
