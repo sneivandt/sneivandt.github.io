@@ -65,6 +65,13 @@ self.addEventListener('fetch', (e) => {
             cache.put(e.request, networkResponse.clone());
             return networkResponse;
           }
+          // Non-ok response (404, 500, etc.) - try cache as fallback
+          const cachedResponse = await cache.match(e.request);
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // No cache available, return the non-ok network response
+          return networkResponse;
         } catch (error) {
           // Network failed (offline), try cache
           const cachedResponse = await cache.match(e.request);
