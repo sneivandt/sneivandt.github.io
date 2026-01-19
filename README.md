@@ -27,7 +27,7 @@ This repository hosts the source for my landing page / profile site. It is inten
 | Styling     | CSS (no preprocessor) |
 | Scripting   | Vanilla JS |
 | Fonts       | Self-hosted Open Sans (subset could be a future optimization) |
-| Effects     | [tsParticles](https://github.com/tsparticles/tsparticles) (Slim bundle), Custom Typewriter (Vanilla JS) |
+| Effects     | [particles.js](https://github.com/VincentGarreau/particles.js) (Classic), Custom Typewriter (Vanilla JS) |
 | Hosting     | GitHub Pages |
 
 ## Local Development 💻
@@ -38,12 +38,6 @@ Using the helper script (macOS/Linux):
 
 ```bash
 ./serve.sh
-```
-
-Or manually using Python:
-
-```bash
-python3 -m http.server 8000
 ```
 
 Then visit: http://localhost:8000
