@@ -30,8 +30,17 @@ const loadLibrary = () => {
     script.crossOrigin = 'anonymous';
     script.src = SCRIPT_URL;
     script.defer = true;
-    script.onload = () => resolve();
+
+    const timeoutId = setTimeout(() => {
+      reject(new Error('Particles library load timed out'));
+    }, 5000);
+
+    script.onload = () => {
+      clearTimeout(timeoutId);
+      resolve();
+    };
     script.onerror = (e) => {
+      clearTimeout(timeoutId);
       loadPromise = null; // Reset on failure so we can retry
       reject(e);
     };
@@ -174,14 +183,14 @@ export const stopParticles = () => {
     // Iterate and destroy all instances related to our ID
     // Note: particles.js stores the pJS object which has a destroy methods
     for (let i = window.pJSDom.length - 1; i >= 0; i--) {
-        const instance = window.pJSDom[i];
-        if (instance.pJS && instance.pJS.canvas && instance.pJS.canvas.el) {
-            // Check if this instance belongs to our container
-            // (or just clear all for safety since we only use one)
-             if (instance.pJS.fn.vendors.destroypJS) {
-                 instance.pJS.fn.vendors.destroypJS();
-             }
+      const instance = window.pJSDom[i];
+      if (instance.pJS && instance.pJS.canvas && instance.pJS.canvas.el) {
+        // Check if this instance belongs to our container
+        // (or just clear all for safety since we only use one)
+        if (instance.pJS.fn.vendors.destroypJS) {
+          instance.pJS.fn.vendors.destroypJS();
         }
+      }
     }
     // Reset the array
     window.pJSDom = [];

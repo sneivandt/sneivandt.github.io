@@ -250,6 +250,9 @@ body::before {
 
   isolation: isolate;
   transform: translateZ(0);
+
+  /* Performance hint */
+  will-change: transform;
 }
 
 @media (hover: hover) {
@@ -344,6 +347,7 @@ ul.social-links li {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
+  will-change: transform;
 }
 
 @media (hover: hover) {
