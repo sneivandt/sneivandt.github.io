@@ -23,7 +23,14 @@ jobs:
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress --accept 200,403,429 './**/*.html' './**/*.md' --exclude-path './node_modules' --exclude-path './vendor'
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,403,429
+            './**/*.html'
+            './**/*.md'
+            --exclude-path './node_modules'
+            --exclude-path './vendor'
           fail: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -46,7 +53,8 @@ jobs:
             exit 1
           fi
           if [ -f "package.json" ] || [ -f "package-lock.json" ]; then
-            echo "Warning: package.json found - this should be a build-free static site"
+            echo "Error: package.json found - this should be a build-free static site"
+            exit 1
           fi
           echo "No build artifacts detected ✓"
       
