@@ -24,7 +24,7 @@ const loadParticlesLibrary = () => {
     script.src = SCRIPT_URL;
     // SRI hash for: https://cdn.jsdelivr.net/npm/@tsparticles/slim@3.9.1/tsparticles.slim.bundle.min.js
     // Verified Jan 2026
-    script.integrity = "sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb";
+    script.integrity = "sha384-5kcDJ+ffJMa++kaV4PRkP1XvsEfY8/TRo+szgO3MHfkufilpbHEAT0t2V2nPK14E";
     script.crossOrigin = "anonymous";
     script.defer = true;
     script.referrerPolicy = "no-referrer";
@@ -36,7 +36,7 @@ const loadParticlesLibrary = () => {
     };
     document.head.appendChild(script);
   });
-    
+
   return loadPromise;
 };
 
@@ -71,28 +71,25 @@ export const startParticles = async () => {
   const primaryColor = style.getPropertyValue('--color-primary').trim() || '#78909C';
 
   try {
-    particlesContainer = await window.tsParticles.load({
-      id: PARTICLES_ID,
-      options: {
-        particles: {
-          number: { value: 50, density: { enable: true, area: 800 } },
-          color: { value: primaryColor },
-          shape: { type: 'circle' },
-          opacity: { value: 0.15, random: true },
-          size: { value: 3, random: true },
-          links: { enable: true, distance: 150, color: primaryColor, opacity: 0.1, width: 1 },
-          move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, outModes: { default: 'out' } }
-        },
-        interactivity: {
-          detectsOn: 'canvas',
-          events: {
-            onHover: { enable: true, mode: 'repulse' },
-            onClick: { enable: true, mode: 'push' },
-            resize: true
-          }
-        },
-        detectRetina: true
-      }
+    particlesContainer = await window.tsParticles.load(PARTICLES_ID, {
+      particles: {
+        number: { value: 50, density: { enable: true, area: 800 } },
+        color: { value: primaryColor },
+        shape: { type: 'circle' },
+        opacity: { value: 0.15, random: true },
+        size: { value: 3, random: true },
+        links: { enable: true, distance: 150, color: primaryColor, opacity: 0.1, width: 1 },
+        move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, outModes: { default: 'out' } }
+      },
+      interactivity: {
+        detectsOn: 'window',
+        events: {
+          onHover: { enable: true, mode: 'repulse' },
+          onClick: { enable: true, mode: 'push' },
+          resize: true
+        }
+      },
+      detectRetina: true
     });
   } catch (e) {
     console.warn('tsParticles init failed:', e);

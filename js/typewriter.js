@@ -2,6 +2,7 @@
  * Typewriter Effect
  * A lightweight, dependency-free typewriter effect.
  */
+
 export default class Typewriter {
   /**
    * @param {HTMLElement} element - The DOM element to type into.

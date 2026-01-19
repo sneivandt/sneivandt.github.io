@@ -103,9 +103,7 @@ html {
 }
 
 body {
-  background: var(--bg-gradient);
-  background-color: var(--color-bg);
-  background-attachment: fixed;
+  background-color: var(--color-bg); /* Fallback */
 
   font-family: var(--font-main);
   color: var(--color-text);
@@ -119,6 +117,18 @@ body {
   flex-direction: column;
   position: relative;
   overflow-x: hidden; /* Prevent horizontal scroll */
+  isolation: isolate; /* Create new stacking context */
+}
+
+/* Fixed background via pseudo-element for better mobile performance */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg-gradient);
+  background-color: var(--color-bg);
+  pointer-events: none;
 }
 
 /* Accessibility Utility: Visually Hidden ----------------------------- */
