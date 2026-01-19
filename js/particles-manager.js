@@ -69,7 +69,7 @@ export const startParticles = async () => {
       window.particlesJS(PARTICLES_ID, {
         "particles": {
           "number": {
-            "value": 60,
+            "value": 40,
             "density": {
               "enable": true,
               "value_area": 800
@@ -86,7 +86,7 @@ export const startParticles = async () => {
             }
           },
           "opacity": {
-            "value": 0.5,
+            "value": 0.3,
             "random": true,
             "anim": {
               "enable": false,
@@ -96,7 +96,7 @@ export const startParticles = async () => {
             }
           },
           "size": {
-            "value": 3,
+            "value": 2,
             "random": true,
             "anim": {
               "enable": false,
@@ -109,14 +109,14 @@ export const startParticles = async () => {
             "enable": true,
             "distance": 150,
             "color": colorHex,
-            "opacity": 0.4,
+            "opacity": 0.2,
             "width": 1
           },
           "move": {
             "enable": true,
-            "speed": 2,
+            "speed": 0.6,
             "direction": "none",
-            "random": false,
+            "random": true,
             "straight": false,
             "out_mode": "out",
             "bounce": false,
