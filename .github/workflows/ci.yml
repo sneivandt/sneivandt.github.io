@@ -11,17 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Validate HTML
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
           root: .
           css: true
-      
+
       - name: Validate JavaScript
         run: |
           echo "Validating JavaScript syntax..."
@@ -30,7 +30,7 @@ jobs:
             node --check "$file" || exit 1
           done
           echo "All JavaScript files are valid ✓"
-      
+
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v2
         with:
@@ -45,17 +45,30 @@ jobs:
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Verify required files
         run: |
           echo "Checking for required files..."
+          # Core files
           test -f index.html || { echo "Error: index.html not found"; exit 1; }
-          test -f css/style.css || { echo "Error: css/style.css not found"; exit 1; }
           test -f manifest.json || { echo "Error: manifest.json not found"; exit 1; }
           test -f robots.txt || { echo "Error: robots.txt not found"; exit 1; }
           test -f sitemap.xml || { echo "Error: sitemap.xml not found"; exit 1; }
+          test -f LICENSE || { echo "Error: LICENSE not found"; exit 1; }
+          test -f CNAME || { echo "Error: CNAME not found"; exit 1; }
+
+          # Assets
+          test -f css/style.css || { echo "Error: css/style.css not found"; exit 1; }
+          test -d img || { echo "Error: img directory not found"; exit 1; }
+
+          # JavaScript
+          test -f sw.js || { echo "Error: sw.js not found"; exit 1; }
+          test -f js/main.js || { echo "Error: js/main.js not found"; exit 1; }
+          test -f js/particles-manager.js || { echo "Error: js/particles-manager.js not found"; exit 1; }
+          test -f js/typewriter.js || { echo "Error: js/typewriter.js not found"; exit 1; }
+
           echo "All required files present ✓"
-      
+
       - name: Check for build artifacts
         run: |
           echo "Ensuring no build artifacts are committed..."
@@ -68,7 +81,7 @@ jobs:
             exit 1
           fi
           echo "No build artifacts detected ✓"
-      
+
       - name: Validate manifest.json
         run: |
           echo "Validating manifest.json syntax..."
