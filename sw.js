@@ -49,63 +49,61 @@ self.addEventListener('fetch', (e) => {
   // Only handle GET requests and ensure valid scheme (http/https)
   if (e.request.method !== 'GET' || !e.request.url.startsWith('http')) return;
 
-  // Hybrid Strategy:
-  // - Navigation requests (HTML): Network-First (fresh content when online)
-  // - Asset requests (CSS, JS, images): Stale-While-Revalidate (fast loading)
+  // Optimized Strategy:
+  // - Navigation (HTML): Network-First (fresh content)
+  // - Static Assets (Images, Fonts): Cache-First (performance, save bandwidth)
+  // - Code (CSS, JS): Stale-While-Revalidate (fast load + updates)
   e.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
+      const url = new URL(e.request.url);
 
-      // Check if this is a navigation request (HTML page)
+      // 1. Navigation requests (HTML) - Network First
       if (e.request.mode === 'navigate') {
-        // Network-First Strategy for HTML
         try {
           const networkResponse = await fetch(e.request);
-          // If successful, update cache and return fresh content
           if (networkResponse && networkResponse.ok) {
             cache.put(e.request, networkResponse.clone());
             return networkResponse;
           }
-          // Non-ok response (404, 500, etc.) - try cache as fallback
-          const cachedResponse = await cache.match(e.request);
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          // No cache available, return the non-ok network response
-          return networkResponse;
+          return (await cache.match(e.request)) || networkResponse;
         } catch (error) {
-          // Network failed (offline), try cache
           const cachedResponse = await cache.match(e.request);
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          // No cache either, let the error propagate
+          if (cachedResponse) return cachedResponse;
           throw error;
         }
       }
 
-      // Stale-While-Revalidate Strategy for assets
-      const cachedResponse = await cache.match(e.request);
+      // 2. Static Assets (Images, Fonts) - Cache First
+      // Addresses "efficient cache lifetimes" by avoiding network requests for unchanged assets
+      if (url.pathname.match(/\.(webp|png|jpg|jpeg|svg|ttf|woff|woff2)$/i) ||
+          url.pathname.includes('/img/') ||
+          url.pathname.includes('/font/')) {
+        const cachedResponse = await cache.match(e.request);
+        if (cachedResponse) return cachedResponse;
 
-      // Fetch from network to update cache (background)
+        try {
+          const networkResponse = await fetch(e.request);
+          if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
+            cache.put(e.request, networkResponse.clone());
+          }
+          return networkResponse;
+        } catch (error) {
+          // If offline and image not in cache, we just fail or could return placeholder
+          throw error;
+        }
+      }
+
+      // 3. Other Assets (CSS, JS) - Stale-While-Revalidate
+      const cachedResponse = await cache.match(e.request);
       const fetchPromise = fetch(e.request).then((networkResponse) => {
-        // Check if valid response
         if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
           cache.put(e.request, networkResponse.clone());
         }
         return networkResponse;
       });
 
-      // If cached response exists, return it immediately and update in background
-      if (cachedResponse) {
-        fetchPromise.catch(() => {
-          // Fail silently on background update error
-        });
-        return cachedResponse;
-      }
-
-      // Otherwise wait for network
-      return fetchPromise;
+      return cachedResponse || fetchPromise;
     })()
   );
 });
