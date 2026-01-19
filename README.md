@@ -27,7 +27,7 @@ This repository hosts the source for my landing page / profile site. It is inten
 | Styling     | CSS (no preprocessor) |
 | Scripting   | Vanilla JS |
 | Fonts       | Self-hosted Open Sans (subset could be a future optimization) |
-| Effects     | [particles.js](https://github.com/VincentGarreau/particles.js), Custom Typewriter (Vanilla JS) |
+| Effects     | [tsParticles](https://github.com/tsparticles/tsparticles) (Slim bundle), Custom Typewriter (Vanilla JS) |
 | Hosting     | GitHub Pages |
 
 ## Local Development 💻
