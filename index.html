@@ -20,7 +20,7 @@
 
   <!-- Web App Manifest -->
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="img/profile.webp">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
   <!-- iOS PWA capability -->
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -39,7 +39,7 @@
   <!-- Open Graph Meta Tags for social media sharing -->
   <meta property="og:title" content="Stuart Neivandt | Software Engineer">
   <meta property="og:description" content="Stuart Neivandt is a Software Engineer, Music Enthusiast, and Chess Player. Visit his personal site to connect on LinkedIn, GitHub, Facebook, and Instagram.">
-  <meta property="og:image" content="https://stuartneivandt.com/img/profile.webp">
+  <meta property="og:image" content="https://stuartneivandt.com/img/profile.png">
   <meta property="og:url" content="https://stuartneivandt.com">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Stuart Neivandt">
@@ -48,7 +48,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Stuart Neivandt | Software Engineer">
   <meta name="twitter:description" content="Stuart Neivandt is a Software Engineer, Music Enthusiast, and Chess Player. Visit his personal site to connect on LinkedIn, GitHub, Facebook, and Instagram.">
-  <meta name="twitter:image" content="https://stuartneivandt.com/img/profile.webp">
+  <meta name="twitter:image" content="https://stuartneivandt.com/img/profile.png">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/style.css">
@@ -60,7 +60,7 @@
     "@type": "Person",
     "name": "Stuart Neivandt",
     "url": "https://stuartneivandt.com",
-    "image": "https://stuartneivandt.com/img/profile.webp",
+    "image": "https://stuartneivandt.com/img/profile.png",
     "jobTitle": "Software Engineer",
     "sameAs": [
       "https://linkedin.stuartneivandt.com",
@@ -84,7 +84,10 @@
   <div class="profile-card">
     <div class="profile-container">
       <div class="profile-image">
-        <img src="img/profile.webp" alt="Portrait of Stuart Neivandt" id="profile-img" width="180" height="180" decoding="async" loading="eager">
+        <picture>
+          <source srcset="img/profile.webp" type="image/webp">
+          <img src="img/profile.png" alt="Portrait of Stuart Neivandt" id="profile-img" width="180" height="180" decoding="async" loading="eager">
+        </picture>
       </div>
     </div>
     <h1>Stuart Neivandt</h1>
