@@ -368,12 +368,12 @@ ul.social-links li {
   text-underline-offset: 4px;
   transition: opacity 0.3s ease;
   opacity: 0.7;
+}
+
 @media (hover: hover) {
   .source-link a:hover {
     opacity: 1;
   }
-.source-link a:hover {
-  opacity: 1;
 }
 
 .source-link a:focus-visible {
