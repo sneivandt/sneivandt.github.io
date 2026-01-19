@@ -55,6 +55,9 @@ If a change would require a build step, reconsider the approach or propose it ex
 - Single external script for a visual effect (already using particles / typed).
 - Inline SVG icons instead of icon fonts.
 
+### Pull Request Requirements
+- **Always include screenshots of the site after changes.** This helps reviewers quickly understand the visual impact of modifications.
+
 ## FAQ
 **Why not add a build step for critical CSS or image pipelines?**
 Deliberate constraint: simplicity > micro-optimization. Manual curation is enough at this scale.
