@@ -1,6 +1,8 @@
 /*
  * Simple Service Worker for offline support.
- * Strategy: Stale-While-Revalidate (Cache-First-like, update in background) for all assets.
+ * Strategy: 
+ * - Network-First for navigation requests (HTML) - ensures fresh content when online
+ * - Stale-While-Revalidate for assets (CSS, JS, images) - fast loading with background updates
  */
 "use strict";
 
@@ -46,11 +48,35 @@ self.addEventListener('fetch', (e) => {
   // Only handle GET requests and ensure valid scheme (http/https)
   if (e.request.method !== 'GET' || !e.request.url.startsWith('http')) return;
 
-  // Strategy: Stale-While-Revalidate
-  // Returns cached content immediately (fast), then updates cache in background.
+  // Hybrid Strategy:
+  // - Navigation requests (HTML): Network-First (fresh content when online)
+  // - Asset requests (CSS, JS, images): Stale-While-Revalidate (fast loading)
   e.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
+
+      // Check if this is a navigation request (HTML page)
+      if (e.request.mode === 'navigate') {
+        // Network-First Strategy for HTML
+        try {
+          const networkResponse = await fetch(e.request);
+          // If successful, update cache and return fresh content
+          if (networkResponse && networkResponse.ok) {
+            cache.put(e.request, networkResponse.clone());
+            return networkResponse;
+          }
+        } catch (error) {
+          // Network failed (offline), try cache
+          const cachedResponse = await cache.match(e.request);
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // No cache either, let the error propagate
+          throw error;
+        }
+      }
+
+      // Stale-While-Revalidate Strategy for assets
       const cachedResponse = await cache.match(e.request);
 
       // Fetch from network to update cache (background)
