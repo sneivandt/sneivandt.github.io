@@ -1,6 +1,6 @@
 /*
  * Simple Service Worker for offline support.
- * Strategy: 
+ * Strategy:
  * - Network-First for navigation requests (HTML) - ensures fresh content when online
  * - Stale-While-Revalidate for assets (CSS, JS, images) - fast loading with background updates
  */
@@ -20,7 +20,8 @@ const PRECACHE_ASSETS = [
   './font/OpenSans/OpenSans-Regular.ttf',
   './img/favicon.svg',
   './img/profile.webp',
-  './manifest.json'
+  './manifest.json',
+  'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js'
 ];
 
 self.addEventListener('install', (e) => {

@@ -248,7 +248,6 @@ body::before {
   transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease, border-color 0.5s ease;
   animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s backwards;
 
-  /* Fix safari radius clipping */
   isolation: isolate;
   transform: translateZ(0);
 }
@@ -335,7 +334,7 @@ ul.social-links li {
   color: var(--color-text);
   width: clamp(3.2rem, 11vw, 4.2rem);
   height: clamp(3.2rem, 11vw, 4.2rem);
-  padding: 0.25rem; /* Small fixed padding to maximize icon size */
+  padding: 0.25rem;
 
   border-radius: 50%;
   transition: all 0.3s ease;
@@ -450,7 +449,6 @@ ul.social-links li {
     font-size: 24pt;
   }
 
-  /* Make social links a list of text */
   ul.social-links {
     flex-direction: column;
     gap: 0.5rem;
@@ -478,7 +476,4 @@ ul.social-links li {
     font-weight: bold;
     margin-right: 0.5rem;
   }
-
-  /* Hide the "(opens in a new tab)" part of aria-label in print if possible,
-     but CSS content attr is limited. Simpler approach: */
 }
