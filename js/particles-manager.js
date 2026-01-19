@@ -67,7 +67,7 @@ export const startParticles = async () => {
 
   // Extract color from CSS variable for consistency
   const style = getComputedStyle(document.documentElement);
-  const primaryColor = style.getPropertyValue('--primary-color').trim() || '#78909C';
+  const primaryColor = style.getPropertyValue('--color-primary').trim() || '#78909C';
 
   try {
     window.particlesJS(PARTICLES_ID, {
