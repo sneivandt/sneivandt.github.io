@@ -22,6 +22,21 @@ jobs:
           root: .
           css: true
       
+      - name: Validate JavaScript
+        run: |
+          echo "Validating JavaScript syntax..."
+          EXIT_CODE=0
+          for file in $(find . -type f -name "*.js" ! -path "./node_modules/*" ! -path "./.git/*"); do
+            echo "Checking $file..."
+            node --check "$file" || EXIT_CODE=1
+          done
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "All JavaScript files are valid ✓"
+          else
+            echo "JavaScript validation failed"
+            exit 1
+          fi
+      
       - name: Check for broken links
         uses: lycheeverse/lychee-action@v2
         with:
