@@ -81,7 +81,7 @@ export const startParticles = async () => {
           opacity: { value: 0.15, random: true },
           size: { value: 3, random: true },
           links: { enable: true, distance: 150, color: primaryColor, opacity: 0.1, width: 1 },
-          move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, outModes: 'out' }
+          move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, outModes: { default: 'out' } }
         },
         interactivity: {
           detectsOn: 'canvas',
