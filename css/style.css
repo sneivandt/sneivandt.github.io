@@ -32,7 +32,7 @@
 
   /* Typography */
   --font-main: OpenSans, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-size-h1: clamp(2.5rem, 8vw, 3.8rem);
+  --font-size-h1: clamp(1.6rem, 9vw, 4rem);
   --font-size-typed: clamp(1.1rem, 4vw, 1.5rem);
 
   /* Layout */
@@ -286,7 +286,7 @@ h1 {
   -webkit-text-fill-color: transparent;
   color: var(--color-primary); /* Fallback */
 
-  text-wrap: balance;
+  white-space: nowrap;
   filter: drop-shadow(0 2px 10px var(--color-primary-dim));
 
   animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
@@ -294,9 +294,25 @@ h1 {
 
 .typed-container {
   min-height: 2em;
-  margin-block: 0.5em 1em;
+  margin-block: 0.5em 0.25em;
 
   animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s backwards;
+}
+
+.profile-card nav {
+  margin-block-start: 0.5rem;
+}
+
+.bio-text {
+  text-align: center;
+  max-width: 45ch;
+  margin-inline: auto;
+  margin-block-start: 0.8rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.85;
+  animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s backwards;
 }
 
 .typed {
