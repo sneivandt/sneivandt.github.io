@@ -6,8 +6,9 @@
  * Respects user preferences for reduced motion.
  */
 
-import Typewriter from './typewriter.js';
+import typewriter from './typewriter.js';
 import { startParticles, stopParticles } from './particles-manager.js';
+import { initShareButton } from './share-button.js';
 
 /* ------------------------------------------------------------
  * Environment + Element References
@@ -48,7 +49,7 @@ const startTypewriter = () => {
       .filter(str => str.length > 0);
 
     if (strings.length > 0) {
-      typewriterInstance = new Typewriter(typedTarget, strings, {
+      typewriterInstance = new typewriter(typedTarget, strings, {
         loop: true,
         typeSpeed: 60,
         backSpeed: 30,
@@ -99,6 +100,9 @@ handleMotionPreference(mediaQuery);
 
 // Listen for changes
 mediaQuery.addEventListener('change', handleMotionPreference);
+
+// Initialize Share Button
+initShareButton();
 
 /* ------------------------------------------------------------
  * Service Worker Registration for PWA / Offline Support

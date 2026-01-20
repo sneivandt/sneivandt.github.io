@@ -43,13 +43,13 @@
   --focus-outline: 2px solid var(--color-primary);
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Subtle, diffused shadows */
-  --shadow-card: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+  --shadow-card:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
-    
+
   --shadow-img: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
 
   accent-color: var(--color-primary);
@@ -219,7 +219,7 @@ body::before {
   background: var(--color-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  
+
   padding: clamp(3rem, 8vh, 5rem) clamp(2rem, 6vw, 4rem);
   border-radius: 20px;
   /* Very subtle border */
@@ -230,7 +230,7 @@ body::before {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  
+
   /* Smooth entry */
   animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
@@ -248,7 +248,7 @@ body::before {
   /* Fluid sizing */
   width: clamp(100px, 15vw, 150px);
   height: clamp(100px, 15vw, 150px);
-  
+
   border-radius: 50%;
   overflow: hidden;
   box-shadow: var(--shadow-img);
@@ -309,7 +309,7 @@ h1 {
 .typed-container {
   min-height: 2em;
   margin-block: 0.25rem 0.5rem;
-  
+
   font-weight: 400;
   letter-spacing: 0.05em; /* Tracked out specific roles */
   text-transform: uppercase;
@@ -375,7 +375,7 @@ ul.social-links li {
 
   border-radius: 50%; /* Circle implies touch target */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   transform: translateZ(0);
 }
 
@@ -438,6 +438,76 @@ ul.social-links li {
   }
 }
 
+/* Floating Share Button --------------------------------------------- */
+.share-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+}
+
+@media (hover: hover) {
+  .share-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.share-btn:active {
+  transform: scale(0.95);
+}
+
+.share-btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 4px;
+}
+
+/* Toast Notification ------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+  z-index: 101;
+
+  background-color: #1e293b; /* Fallback */
+  background-color: var(--color-surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none; /* Let clicks pass through when hidden */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Print Styles ------------------------------------------------------- */
 @media print {
   body {
@@ -451,7 +521,9 @@ ul.social-links li {
   .skip-link,
   .typed-cursor,
   .source-link,
-  .site-footer {
+  .site-footer,
+  .share-btn,
+  .toast {
     display: none !important;
   }
 
