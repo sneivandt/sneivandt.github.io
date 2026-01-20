@@ -21,8 +21,7 @@ const PRECACHE_ASSETS = [
   './font/OpenSans/OpenSans-Regular.ttf',
   './img/favicon.svg',
   './img/stuart-neivandt.webp',
-  './manifest.json',
-  'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js'
+  './manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
@@ -97,14 +96,28 @@ self.addEventListener('fetch', (e) => {
 
       // 3. Other Assets (CSS, JS) - Stale-While-Revalidate
       const cachedResponse = await cache.match(e.request);
-      const fetchPromise = fetch(e.request).then((networkResponse) => {
+
+      if (cachedResponse) {
+        // Serve from cache, update in background
+        e.waitUntil(
+          fetch(e.request).then((networkResponse) => {
+            if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
+              return cache.put(e.request, networkResponse.clone());
+            }
+          }).catch(() => {})
+        );
+        return cachedResponse;
+      }
+
+      try {
+        const networkResponse = await fetch(e.request);
         if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
           cache.put(e.request, networkResponse.clone());
         }
         return networkResponse;
-      });
-
-      return cachedResponse || fetchPromise;
+      } catch (error) {
+        throw error;
+      }
     })()
   );
 });
