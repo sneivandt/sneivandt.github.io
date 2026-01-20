@@ -26,7 +26,7 @@ This repository hosts the source for my landing page / profile site. It is inten
 | Markup      | Plain HTML5 |
 | Styling     | CSS (no preprocessor) |
 | Scripting   | Vanilla JS |
-| Fonts       | Self-hosted Open Sans (subset could be a future optimization) |
+| Fonts       | Self-hosted Open Sans |
 | Effects     | Custom Typewriter (Vanilla JS) |
 | Hosting     | GitHub Pages |
 
@@ -44,7 +44,7 @@ Then visit: http://localhost:8000
 
 ## Deployment (GitHub Pages + Custom Domain) 🌐
 
-1. The repository is named `<username>.github.io`, so the `master` (or `main`) branch automatically serves at `https://<username>.github.io`.
+1. The repository is named `<username>.github.io`, so the `master` branch automatically serves at `https://<username>.github.io`.
 2. The `CNAME` file contains `stuartneivandt.com`; GitHub Pages uses this to configure the custom domain.
 3. DNS: An A/ALIAS/ANAME (or CNAME for `www`) record points the domain to GitHub Pages (already configured outside of this repo).
 4. GitHub automatically provisions HTTPS certificates via Let’s Encrypt.
