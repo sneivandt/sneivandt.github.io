@@ -16,10 +16,11 @@ const PRECACHE_ASSETS = [
   './css/style.css',
   './js/main.js',
   './js/particles-manager.js',
+  './js/share-button.js',
   './js/typewriter.js',
   './font/OpenSans/OpenSans-Regular.ttf',
   './img/favicon.svg',
-  './img/profile.webp',
+  './img/stuart-neivandt.webp',
   './manifest.json',
   'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js'
 ];

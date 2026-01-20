@@ -18,6 +18,7 @@ const getThemeColor = () => {
 
 /**
  * Loads the particles.js library dynamically.
+ * @returns {Promise<void>}
  */
 const loadLibrary = () => {
   // Check if already loaded
@@ -51,6 +52,7 @@ const loadLibrary = () => {
 
 /**
  * Initializes the particles effect.
+ * @returns {Promise<void>}
  */
 export const startParticles = async () => {
   const container = document.getElementById(PARTICLES_ID);

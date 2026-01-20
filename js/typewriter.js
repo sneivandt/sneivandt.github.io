@@ -1,13 +1,13 @@
 /**
  * Typewriter Effect
  * A lightweight, dependency-free typewriter effect.
+ * @class
  */
-
 export default class typewriter {
   /**
    * @param {HTMLElement} element - The DOM element to type into.
    * @param {string[]} strings - Array of strings to type.
-   * @param {Object} options - Configuration options.
+   * @param {Object} [options={}] - Configuration options.
    * @param {boolean} [options.loop=false] - Whether to loop the strings.
    * @param {number} [options.typeSpeed=50] - Typing speed in ms.
    * @param {number} [options.backSpeed=30] - Deleting speed in ms.
@@ -44,6 +44,10 @@ export default class typewriter {
     this.timeout = setTimeout(() => this.init(), startDelay);
   }
 
+  /**
+   * Initializes the typewriter and cursor element.
+   * @private
+   */
   init() {
     if (this.state.isPaused) return;
 
@@ -61,6 +65,10 @@ export default class typewriter {
     this.tick();
   }
 
+  /**
+   * Main animation loop that handles typing and deleting.
+   * @private
+   */
   tick() {
     if (this.state.isPaused) return;
 
@@ -106,6 +114,10 @@ export default class typewriter {
     this.timeout = setTimeout(() => this.tick(), delta);
   }
 
+  /**
+   * Stops the typewriter animation and cleans up resources.
+   * @public
+   */
   destroy() {
     this.state.isPaused = true;
     if (this.timeout) clearTimeout(this.timeout);
