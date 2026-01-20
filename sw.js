@@ -20,7 +20,9 @@ const PRECACHE_ASSETS = [
   './font/OpenSans/OpenSans-Regular.ttf',
   './img/favicon.svg',
   './img/stuart-neivandt.webp',
-  './manifest.json'
+  './manifest.json',
+  './img/icon-192.png',
+  './img/icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {
