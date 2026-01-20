@@ -8,8 +8,31 @@
 
 /* Font Face */
 @font-face {
-  font-family: 'OpenSans';
-  src: local('Open Sans'), local('OpenSans'), url('../font/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  font-family: 'Inter';
+  src: url('../font/Inter/Inter-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../font/Inter/Inter-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../font/Inter/Inter-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('../font/Inter/Inter-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -24,7 +47,7 @@
   --color-accent: #ffffff; /* Stark white interactions */
 
   /* Typography */
-  --font-main: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
   /* Scale */
   --font-size-h1: clamp(2.5rem, 6vw, 4.5rem);
@@ -210,6 +233,7 @@ h1 {
   line-height: 1.1;
   color: var(--color-accent);
   margin-bottom: 0.5rem;
+  text-wrap: balance;
 }
 
 .typed-container {
@@ -241,6 +265,7 @@ h1 {
   margin-bottom: 2rem;
   font-weight: 400;
   opacity: 0.9;
+  text-wrap: pretty;
 }
 
 /* Social Links Minimal ----------------------------------------------- */
@@ -268,9 +293,10 @@ h1 {
 }
 
 .social-icon:focus-visible {
-  outline: none;
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
   color: var(--color-accent);
-  border-bottom: 1px solid var(--color-accent);
+  border-bottom: none;
 }
 
 /* Share Button (Refined) --------------------------------------------- */
