@@ -1,26 +1,41 @@
 /**
- * Initializes the share button functionality.
+ * Handles share button functionality.
  * Uses native share API when available, falls back to clipboard.
- * @returns {void}
+ * @class
  */
-export function initShareButton() {
-  const btn = document.getElementById('share-btn');
-  const toast = document.getElementById('share-toast');
-  let toastTimeout;
+export class ShareButton {
+  constructor() {
+    this.btn = document.getElementById('share-btn');
+    this.toast = document.getElementById('share-toast');
+    this.toastTimeout = null;
+    this.shareData = {
+      title: 'Stuart Neivandt | Software Engineer',
+      text: 'Check out Stuart Neivandt\'s profile.',
+      url: window.location.href
+    };
 
-  if (!btn) return;
+    if (this.btn) {
+      this.init();
+    }
+  }
 
-  const shareData = {
-    title: 'Stuart Neivandt | Software Engineer',
-    text: 'Check out Stuart Neivandt\'s profile.',
-    url: window.location.href
-  };
+  /**
+   * Initialize event listeners
+   * @private
+   */
+  init() {
+    this.btn.addEventListener('click', () => this.handleShare());
+  }
 
-  btn.addEventListener('click', async () => {
+  /**
+   * Handle the share action
+   * @private
+   */
+  async handleShare() {
     // Try Native Share API first (Mobile/Supported Browsers)
     if (navigator.share) {
       try {
-        await navigator.share(shareData);
+        await navigator.share(this.shareData);
         return; // Success
       } catch (err) {
         // If user cancelled, do nothing. If error, fall through to clipboard
@@ -29,14 +44,22 @@ export function initShareButton() {
     }
 
     // Fallback: Clipboard API
+    this.copyToClipboard();
+  }
+
+  /**
+   * Access clipboard to copy link
+   * @private
+   */
+  async copyToClipboard() {
     try {
       // Smart Clipboard:
       // 1. Plain Text = URL only (better for address bars)
       // 2. HTML = Rich Link (better for documents/emails)
       if (typeof ClipboardItem !== 'undefined') {
-        const textBlob = new Blob([shareData.url], { type: 'text/plain' });
+        const textBlob = new Blob([this.shareData.url], { type: 'text/plain' });
         const htmlBlob = new Blob(
-          [`<a href="${shareData.url}">${shareData.title}</a>`],
+          [`<a href="${this.shareData.url}">${this.shareData.title}</a>`],
           { type: 'text/html' }
         );
 
@@ -48,43 +71,43 @@ export function initShareButton() {
         ]);
       } else {
         // Legacy fallback: Just simple URL
-        await navigator.clipboard.writeText(shareData.url);
+        await navigator.clipboard.writeText(this.shareData.url);
       }
 
-      showToast();
+      this.showToast();
     } catch (err) {
       console.warn('Rich copy failed, falling back to text', err);
       // Last resort: simple writeText if the complex write failed
       try {
-        await navigator.clipboard.writeText(shareData.url);
-        showToast();
+        await navigator.clipboard.writeText(this.shareData.url);
+        this.showToast();
       } catch (err2) {
         console.error('All copy methods failed', err2);
       }
     }
-  });
+  }
 
   /**
    * Displays the toast notification.
    * @private
    */
-  function showToast() {
-    if (!toast) return;
+  showToast() {
+    if (!this.toast) return;
 
     // Clear existing timeout to prevent premature hiding
-    if (toastTimeout) clearTimeout(toastTimeout);
+    if (this.toastTimeout) clearTimeout(this.toastTimeout);
 
     // Reset animation if needed
-    toast.classList.remove('visible');
+    this.toast.classList.remove('visible');
 
     // Force reflow
-    void toast.offsetWidth;
+    void this.toast.offsetWidth;
 
-    toast.classList.add('visible');
+    this.toast.classList.add('visible');
 
     // Auto hide
-    toastTimeout = setTimeout(() => {
-      toast.classList.remove('visible');
+    this.toastTimeout = setTimeout(() => {
+      this.toast.classList.remove('visible');
     }, 3000);
   }
 }

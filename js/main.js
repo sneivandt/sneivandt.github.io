@@ -6,7 +6,7 @@
  */
 
 import Typewriter from './typewriter.js';
-import { initShareButton } from './share-button.js';
+import { ShareButton } from './share-button.js';
 
 /* ------------------------------------------------------------
  * Environment + Element References
@@ -98,7 +98,7 @@ handleMotionPreference(mediaQuery);
 mediaQuery.addEventListener('change', handleMotionPreference);
 
 // Initialize Share Button
-initShareButton();
+new ShareButton();
 
 /* ------------------------------------------------------------
  * Service Worker Registration for PWA / Offline Support

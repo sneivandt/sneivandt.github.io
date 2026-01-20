@@ -72,6 +72,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
@@ -127,6 +128,7 @@ main {
   margin-top: auto;
   margin-bottom: auto;
   padding-bottom: 15vh;
+  padding-bottom: 15dvh;
 }
 
 /* Profile Section (Split Layout) ------------------------------------- */
@@ -146,6 +148,7 @@ main {
 
   main {
     margin-top: 10vh;
+    margin-top: 10dvh;
     margin-bottom: auto;
     padding-bottom: 0; /* Reset mobile offset */
   }
