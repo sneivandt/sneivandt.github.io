@@ -38,6 +38,7 @@ If a change would require a build step, reconsider the approach or propose it ex
 ### Accessibility Checklist
 - Logical heading order.
 - Labels / ARIA only where native semantics insufficient.
+- **Icon-only links**: Use `aria-label` for accessible names. Do NOT pair with a redundant `title` attribute, as this causes double-speak issues in some screen readers.
 - Sufficient color contrast.
 - Focus styles visible.
 
@@ -49,10 +50,6 @@ If a change would require a build step, reconsider the approach or propose it ex
 | JS        | Frameworks, transpiled syntax | Not needed for scope |
 | Fonts     | Many weights/formats | Increases transfer size |
 | Analytics | Heavy trackers | Privacy + performance cost |
-
-### Acceptable Lightweight Additions (If Justified)
-- Tiny (≤5KB) vanilla JS utilities for enhancement.
-- Inline SVG icons instead of icon fonts.
 
 ### Pull Request Requirements
 - **Always include screenshots of the site after changes.** This helps reviewers quickly understand the visual impact of modifications.

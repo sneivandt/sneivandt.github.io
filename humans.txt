@@ -1,10 +1,16 @@
 /* TEAM */
   Developer: Stuart Neivandt
   Site: stuartneivandt.com
+  GitHub: @sneivandt
   Location: Washington
   Focus: Simplicity, Performance, Accessibility
 
+  Assistant: GitHub Copilot
+  Role: AI Pair Programmer
+
 /* SITE */
+  Language: English
+  Doctype: HTML5
   Standards: HTML5, CSS3, ES6+
   Components: Vanilla JS, Service Worker
   Tools: VS Code, GitHub Pages

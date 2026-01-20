@@ -1,10 +1,4 @@
 /**
- * Share Button Module
- * Provides functionality for sharing the profile via
- * the Web Share API or clipboard fallback.
- */
-
-/**
  * Initializes the share button functionality.
  * Uses native share API when available, falls back to clipboard.
  * @returns {void}
@@ -12,6 +6,7 @@
 export function initShareButton() {
   const btn = document.getElementById('share-btn');
   const toast = document.getElementById('share-toast');
+  let toastTimeout;
 
   if (!btn) return;
 
@@ -76,6 +71,9 @@ export function initShareButton() {
   function showToast() {
     if (!toast) return;
 
+    // Clear existing timeout to prevent premature hiding
+    if (toastTimeout) clearTimeout(toastTimeout);
+
     // Reset animation if needed
     toast.classList.remove('visible');
 
@@ -85,7 +83,7 @@ export function initShareButton() {
     toast.classList.add('visible');
 
     // Auto hide
-    setTimeout(() => {
+    toastTimeout = setTimeout(() => {
       toast.classList.remove('visible');
     }, 3000);
   }

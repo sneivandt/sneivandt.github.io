@@ -3,7 +3,7 @@
  * A lightweight, dependency-free typewriter effect.
  * @class
  */
-export default class typewriter {
+export default class Typewriter {
   /**
    * @param {HTMLElement} element - The DOM element to type into.
    * @param {string[]} strings - Array of strings to type.

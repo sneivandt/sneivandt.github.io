@@ -5,7 +5,7 @@
  * Respects user preferences for reduced motion.
  */
 
-import typewriter from './typewriter.js';
+import Typewriter from './typewriter.js';
 import { initShareButton } from './share-button.js';
 
 /* ------------------------------------------------------------
@@ -47,7 +47,7 @@ const startTypewriter = () => {
       .filter(str => str.length > 0);
 
     if (strings.length > 0) {
-      typewriterInstance = new typewriter(typedTarget, strings, {
+      typewriterInstance = new Typewriter(typedTarget, strings, {
         loop: true,
         typeSpeed: 60,
         backSpeed: 30,

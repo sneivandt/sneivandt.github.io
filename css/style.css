@@ -171,7 +171,6 @@ main {
   position: relative;
   overflow: hidden;
   border-radius: 50%;
-  cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -207,7 +206,7 @@ h1 {
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: var(--color-accent);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .typed-container {
@@ -216,7 +215,7 @@ h1 {
   letter-spacing: 0.15em;
   font-weight: 600;
   color: var(--color-text-muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   min-height: 1.5em;
   display: flex;
   gap: 0.5rem;
@@ -228,6 +227,7 @@ h1 {
 
 .typed-cursor {
   color: var(--color-accent);
+  animation: blink 0.7s infinite;
 }
 
 .bio-text {
@@ -235,7 +235,7 @@ h1 {
   color: var(--color-text);
   line-height: 1.7;
   max-width: 40ch;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   font-weight: 400;
   opacity: 0.9;
 }
@@ -294,7 +294,7 @@ h1 {
 
 .toast {
   position: fixed;
-  bottom: 2rem;
+  bottom: 3.5rem;
   right: 6rem;
   background: var(--color-text);
   color: var(--color-bg);
@@ -304,13 +304,13 @@ h1 {
   font-size: 0.85rem;
   opacity: 0;
   pointer-events: none;
-  transform: translateX(10px);
+  transform: translate(10px, 50%);
   transition: opacity 0.3s, transform 0.3s;
 }
 
 .toast.visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translate(0, 50%);
 }
 
 /* Animations --------------------------------------------------------- */
@@ -331,8 +331,8 @@ h1 {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 /* Responsive Tweaks -------------------------------------------------- */
@@ -343,12 +343,6 @@ h1 {
 
   .container { padding: 2rem 1rem; }
   .profile-image { border-radius: 50%; width: 200px; }
-}
-
-@media (min-width: 800px) {
-  h1 { margin-bottom: 0.5rem; }
-  .typed-container { margin-bottom: 1.5rem; }
-  .bio-text { margin-bottom: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
