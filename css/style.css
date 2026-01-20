@@ -41,6 +41,7 @@
 
   /* Focus & Interactive */
   --focus-outline: 2px solid var(--color-primary);
+  --focus-outline-offset: 2px;
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -171,7 +172,7 @@ body::before {
 .skip-link:focus {
   inset-block-start: 10px;
   outline: var(--focus-outline);
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* Particles Background ----------------------------------------------- */
@@ -388,7 +389,7 @@ ul.social-links li {
 
 .social-icon:focus-visible {
   outline: var(--focus-outline);
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* Footer ------------------------------------------------------------- */
@@ -418,7 +419,7 @@ ul.social-links li {
 
 .source-link a:focus-visible {
   outline: var(--focus-outline);
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* Reduced Motion ----------------------------------------------------- */

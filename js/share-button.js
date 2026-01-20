@@ -4,6 +4,11 @@
  * the Web Share API or clipboard fallback.
  */
 
+/**
+ * Initializes the share button functionality.
+ * Uses native share API when available, falls back to clipboard.
+ * @returns {void}
+ */
 export function initShareButton() {
   const btn = document.getElementById('share-btn');
   const toast = document.getElementById('share-toast');
@@ -64,6 +69,10 @@ export function initShareButton() {
     }
   });
 
+  /**
+   * Displays the toast notification.
+   * @private
+   */
   function showToast() {
     if (!toast) return;
 
