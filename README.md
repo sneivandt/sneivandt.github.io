@@ -15,7 +15,7 @@ This repository hosts the source for my landing page / profile site. It is inten
     - Meta description, canonical link
     - Open Graph tags for rich link previews
     - JSON-LD structured data (Person schema)
-- Subtle visual enhancements: particle background + typing effect
+- Subtle visual enhancements: typing effect
 - Installable as a PWA (manifest)
 - Custom domain via `CNAME` (GitHub Pages)
 
@@ -27,7 +27,7 @@ This repository hosts the source for my landing page / profile site. It is inten
 | Styling     | CSS (no preprocessor) |
 | Scripting   | Vanilla JS |
 | Fonts       | Self-hosted Open Sans (subset could be a future optimization) |
-| Effects     | [particles.js](https://github.com/VincentGarreau/particles.js) (Classic), Custom Typewriter (Vanilla JS) |
+| Effects     | Custom Typewriter (Vanilla JS) |
 | Hosting     | GitHub Pages |
 
 ## Local Development 💻

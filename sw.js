@@ -15,7 +15,6 @@ const PRECACHE_ASSETS = [
   './index.html',
   './css/style.css',
   './js/main.js',
-  './js/particles-manager.js',
   './js/share-button.js',
   './js/typewriter.js',
   './font/OpenSans/OpenSans-Regular.ttf',

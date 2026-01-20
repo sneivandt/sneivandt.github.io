@@ -1,13 +1,11 @@
 /**
  * Progressive, dependency-free enhancements for the site:
  * - Typewriter effect for the header
- * - Particle background effect
  *
  * Respects user preferences for reduced motion.
  */
 
 import typewriter from './typewriter.js';
-import { startParticles, stopParticles } from './particles-manager.js';
 import { initShareButton } from './share-button.js';
 
 /* ------------------------------------------------------------
@@ -87,11 +85,9 @@ const handleMotionPreference = (e) => {
   if (e.matches) {
     // Reduced motion requested
     stopTypewriter();
-    stopParticles();
   } else {
     // Motion allowed
     startTypewriter();
-    startParticles();
   }
 };
 

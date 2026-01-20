@@ -52,7 +52,6 @@ If a change would require a build step, reconsider the approach or propose it ex
 
 ### Acceptable Lightweight Additions (If Justified)
 - Tiny (≤5KB) vanilla JS utilities for enhancement.
-- Single external script for a visual effect (already using particles / typed).
 - Inline SVG icons instead of icon fonts.
 
 ### Pull Request Requirements
