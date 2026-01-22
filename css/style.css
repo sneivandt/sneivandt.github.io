@@ -42,20 +42,22 @@
 
   /* Palette: Monochromatic High Contrast */
   --color-bg: #111111;
-  --color-text: #e5e5e5;
+  --color-bg-alt: #161616;
+  --color-text: #e6e6e6; /* Tasteful off-white */
   --color-text-muted: #888888;
-  --color-accent: #ffffff; /* Stark white interactions */
+  --color-accent: #f5f5f5; /* Brighter off-white */
+  --color-border: rgba(255, 255, 255, 0.15);
 
   /* Typography */
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
   /* Scale */
-  --font-size-h1: clamp(2.5rem, 6vw, 4.5rem);
-  --font-size-typed: clamp(0.85rem, 1.5vw, 0.95rem);
-  --font-size-bio: clamp(0.95rem, 1.5vw, 1.05rem);
+  --font-size-h1: clamp(2.5rem, 5vw, 4rem);
+  --font-size-typed: clamp(1rem, 1.5vw, 1.125rem);
+  --font-size-bio: clamp(1rem, 1.5vw, 1.125rem);
 
   /* Layout */
-  --container-width: min(90%, 900px);
+  --container-width: min(85%, 1000px);
   --header-height: clamp(2rem, 10vh, 6rem);
 
   /* Transitions */
@@ -86,11 +88,35 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-bg-alt);
+  border: 3px solid var(--color-bg);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-muted);
+}
+
 body {
   background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 85% 0%, var(--color-bg-alt), transparent 50%),
+    radial-gradient(circle at 0% 100%, var(--color-bg-alt), transparent 50%);
+  background-attachment: fixed;
   color: var(--color-text);
   font-family: var(--font-main);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -164,16 +190,17 @@ main {
 
 @media (min-width: 800px) {
   .profile-card {
-    grid-template-columns: 200px auto;
+    grid-template-columns: auto auto;
     justify-content: center;
-    gap: 4rem;
+    gap: 5rem;
+    padding-left: 2rem;
   }
 
   main {
-    margin-top: 10vh;
-    margin-top: 10dvh;
+    margin-top: 15vh;
+    margin-top: 15dvh;
     margin-bottom: auto;
-    padding-bottom: 0; /* Reset mobile offset */
+    padding-bottom: 0;
   }
 }
 
@@ -181,105 +208,131 @@ main {
 .profile-container {
   width: 100%;
   display: flex;
-  justify-content: center; /* Center on mobile */
+  justify-content: center;
 }
 
 @media (min-width: 800px) {
   .profile-container {
-    justify-content: flex-end; /* Align to gutter on desktop */
+    justify-content: flex-end;
   }
 }
 
 .profile-image {
   width: 100%;
-  max-width: 200px; /* Limits size on mobile */
-  aspect-ratio: 1 / 1; /* Force square ratio */
+  max-width: 240px;
+  aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow:
+    0 0 0 8px var(--color-bg),
+    0 0 0 9px var(--color-border),
+    0 20px 40px -10px rgba(0,0,0,0.5);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.5s ease;
 }
 
-.profile-image:active {
-  transform: scale(1.02) rotate(2deg);
+.profile-image:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 8px var(--color-bg),
+    0 0 0 9px rgba(255, 255, 255, 0.3),
+    0 30px 60px -12px rgba(0,0,0,0.6);
 }
 
 .profile-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.profile-image:hover img {
+  transform: scale(1.05);
 }
 
 /* Content Column */
 .profile-content {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center on mobile */
+  align-items: center;
   text-align: center;
 }
 
 @media (min-width: 800px) {
   .profile-content {
-    align-items: flex-start; /* Left align on desktop */
+    align-items: flex-start;
     text-align: left;
+  }
+
+  .profile-content h1 {
+    margin-left: -0.05em; /* Optical alignment */
   }
 }
 
 /* Typography --------------------------------------------------------- */
 h1 {
   font-size: var(--font-size-h1);
+  font-family: var(--font-main);
   font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
   color: var(--color-accent);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   text-wrap: balance;
 }
 
 .typed-container {
   font-size: var(--font-size-typed);
+  font-family: var(--font-main);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   font-weight: 600;
   color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
-  min-height: 1.5em;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  min-height: 1.6em;
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .typed {
-  color: var(--color-text); /* Highlight text */
+  color: var(--color-text);
 }
 
 .typed-cursor {
   color: var(--color-accent);
-  animation: blink 0.7s infinite;
+  animation: blink 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  font-weight: 300;
 }
 
 .bio-text {
   font-size: var(--font-size-bio);
   color: var(--color-text);
-  line-height: 1.7;
-  max-width: 40ch;
-  margin-bottom: 2rem;
-  font-weight: 400;
-  opacity: 0.9;
+  line-height: 1.8;
+  max-width: 45ch;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  opacity: 0.95;
   text-wrap: pretty;
 }
 
 /* Social Links Minimal ----------------------------------------------- */
 .social-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   list-style: none;
   padding: 0;
 }
 
 .social-icon {
-  color: var(--color-text-muted);
-  transition: color var(--transition-fast), transform var(--transition-fast);
+  color: var(--color-text);
+  opacity: 0.6;
+  transition: all 0.3s ease;
   display: block;
+  padding: 0.5rem;
+  margin: -0.5rem;
 }
 
 .social-icon svg {
@@ -288,15 +341,16 @@ h1 {
 }
 
 .social-icon:hover {
+  opacity: 1;
   color: var(--color-accent);
-  transform: translateY(-2px);
+  transform: scale(1.1);
 }
 
 .social-icon:focus-visible {
   outline: var(--focus-outline);
   outline-offset: var(--focus-outline-offset);
   color: var(--color-accent);
-  border-bottom: none;
+  opacity: 1;
 }
 
 /* Share Button (Refined) --------------------------------------------- */
@@ -304,21 +358,23 @@ h1 {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 3rem;
-  height: 3rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
-  background: var(--color-text); /* Invert */
+  background: var(--color-text);
   color: var(--color-bg);
   border: none;
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition-slow), box-shadow 0.3s ease;
   z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .share-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
 
 .toast {
@@ -345,23 +401,25 @@ h1 {
 /* Animations --------------------------------------------------------- */
 /* Fade in content on load */
 .profile-content > *, .profile-image {
-  animation: fadeIn 0.8s ease-out backwards;
+  /* Brief, snappy, minimal movement */
+  animation: fadeIn 0.6s ease-out backwards;
 }
 
-.profile-image { animation-delay: 0.1s; }
-.profile-content h1 { animation-delay: 0.15s; }
-.typed-container { animation-delay: 0.2s; }
-.bio-text { animation-delay: 0.25s; }
-.profile-content nav { animation-delay: 0.3s; }
+/* Very tight stagger, barely noticeable */
+.profile-image { animation-delay: 0ms; }
+.profile-content h1 { animation-delay: 0.05s; }
+.typed-container { animation-delay: 0.1s; }
+.bio-text { animation-delay: 0.15s; }
+.profile-content nav { animation-delay: 0.2s; }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* Responsive Tweaks -------------------------------------------------- */
