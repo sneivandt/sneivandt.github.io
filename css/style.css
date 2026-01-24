@@ -319,6 +319,10 @@ h1 {
   color: var(--color-accent);
   animation: blink 1s step-end infinite;
   font-weight: 700;
+  width: 0;
+  display: inline-block;
+  overflow: visible;
+  text-align: left;
 }
 
 .bio-text {
