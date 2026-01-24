@@ -76,7 +76,11 @@ export class Typewriter {
     this.cursor.ariaHidden = 'true';
     
     if (this.element.parentNode) {
-      this.element.parentNode.insertBefore(this.cursor, this.element.nextSibling);
+      if (this.element.nextSibling) {
+        this.element.parentNode.insertBefore(this.cursor, this.element.nextSibling);
+      } else {
+        this.element.parentNode.appendChild(this.cursor);
+      }
     }
     
     // Start the loop
