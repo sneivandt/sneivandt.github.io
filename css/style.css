@@ -332,6 +332,20 @@ h1 {
   text-wrap: pretty;
 }
 
+.last-updated {
+  opacity: 0.7;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--color-text-muted);
+}
+
+.site-footer {
+  width: 100%;
+  text-align: center;
+  padding-top: 2rem;
+  margin-top: auto;
+}
+
 /* Social Links Minimal ----------------------------------------------- */
 .social-links {
   display: flex;
@@ -421,6 +435,34 @@ h1 {
 .toast.visible {
   opacity: 1;
   transform: translate(0, 50%);
+}
+
+.offline-status {
+  position: fixed;
+  inset-block-start: 1rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.offline-status.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
 }
 
 /* Animations --------------------------------------------------------- */

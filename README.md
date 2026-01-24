@@ -4,37 +4,33 @@ Personal website for [stuartneivandt.com](https://stuartneivandt.com) — a mini
 
 ## Overview 🗺️
 
-This repository hosts the source for my landing page / profile site. It is intentionally simple: plain HTML, a single CSS file, a light vanilla JS enhancement layer, and a couple of small third-party libraries loaded from CDNs.
+This repository hosts the source for my landing page / profile site. It is intentionally simple: plain HTML, a single CSS file, and a light vanilla JS enhancement layer. **No build tools, no package managers, no dependencies.**
 
 ## Features 🚀
 
-- Fast first paint (no large framework, fonts preloaded)
-- Responsive layout (mobile-first, fluid typography)
-- Accessible markup (skip link, proper alt text, ARIA labels, reduced motion friendly)
-- SEO & Social:
-    - Meta description, canonical link
-    - Open Graph tags for rich link previews
-    - JSON-LD structured data (Person schema)
-- Subtle visual enhancements: typing effect
-- Installable as a PWA (manifest)
-- Custom domain via `CNAME` (GitHub Pages)
+| Category | Details |
+|----------|---------|
+| **Performance** | Fast first paint, fonts preloaded, no large frameworks |
+| **Responsive** | Mobile-first layout, fluid typography via `clamp()` |
+| **Accessible** | Skip link, proper alt text, ARIA labels, respects `prefers-reduced-motion` |
+| **SEO & Social** | Meta description, canonical link, Open Graph tags, JSON-LD Person schema |
+| **Progressive** | PWA installable via `manifest.json`, service worker for offline support |
+| **Effects** | Custom typewriter animation (vanilla JS, gracefully degrades) |
+| **Hosting** | GitHub Pages with custom domain via `CNAME` |
 
 ## Tech Stack 🧰
 
 | Area        | Choice |
 |-------------|--------|
-| Markup      | Plain HTML5 |
-| Styling     | CSS (no preprocessor) |
-| Scripting   | Vanilla JS |
-| Fonts       | Self-hosted Open Sans |
-| Effects     | Custom Typewriter (Vanilla JS) |
+| Markup      | Plain HTML5 (semantic elements) |
+| Styling     | Native CSS (custom properties, no preprocessor) |
+| Scripting   | Vanilla JS (ES modules, deferred loading) |
+| Fonts       | Self-hosted Inter |
 | Hosting     | GitHub Pages |
 
 ## Local Development 💻
 
-Because this is pure static content, you only need a simple HTTP server (avoids font / relative path issues that can occur when opening the file directly).
-
-Using the helper script (macOS/Linux):
+Because this is pure static content, you only need a simple HTTP server (avoids font / CORS issues that can occur when opening the file directly).
 
 ```bash
 ./serve.py
@@ -42,9 +38,35 @@ Using the helper script (macOS/Linux):
 
 Then visit: http://localhost:8000
 
-## Deployment (GitHub Pages + Custom Domain) 🌐
+Alternatively, use any static server:
 
-1. The repository is named `<username>.github.io`, so the `master` branch automatically serves at `https://<username>.github.io`.
-2. The `CNAME` file contains `stuartneivandt.com`; GitHub Pages uses this to configure the custom domain.
-3. DNS: An A/ALIAS/ANAME (or CNAME for `www`) record points the domain to GitHub Pages (already configured outside of this repo).
-4. GitHub automatically provisions HTTPS certificates via Let’s Encrypt.
+```bash
+python3 -m http.server 8000
+# or
+npx serve .
+```
+
+## CI/CD ⚙️
+
+Pull requests automatically run:
+
+- **HTML5 Validator** — validates HTML and CSS syntax
+- **JavaScript Syntax Check** — ensures all JS files parse correctly
+- **Link Checker** — detects broken internal/external links
+- **Lighthouse CI** — enforces minimum scores (90+) for performance, accessibility, best practices, and SEO
+
+## Deployment 🌐
+
+1. The repository is named `<username>.github.io`, so the `master` branch automatically deploys to `https://<username>.github.io`.
+2. The `CNAME` file configures the custom domain (`stuartneivandt.com`).
+3. DNS records point to GitHub Pages (configured externally).
+4. GitHub provisions HTTPS certificates via Let's Encrypt automatically.
+
+## Philosophy 🎯
+
+This site intentionally avoids complexity:
+
+- **No build step** — what you see in the repo is what gets served
+- **No dependencies** — zero `node_modules`, no version conflicts
+- **Progressive enhancement** — works without JS, improves with it
+- **Accessibility first** — semantic HTML, keyboard navigation, motion preferences

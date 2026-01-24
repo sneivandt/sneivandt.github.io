@@ -1,23 +1,28 @@
 /**
- * Progressive, dependency-free enhancements for the site:
- * - Typewriter effect for the header
- *
- * Respects user preferences for reduced motion.
+ * @file main.js
+ * @description Core entry point for the site's JavaScript. Handles initialization of all modules.
  */
 
-import Typewriter from './typewriter.js';
+import { Typewriter } from './typewriter.js';
 import { ShareButton } from './share-button.js';
+import { ConsoleBrand } from './console-brand.js';
+import { LastUpdated } from './last-updated.js';
+import { ConnectionStatus } from './connection-status.js';
 
 /* ------------------------------------------------------------
- * Environment + Element References
+ * DOM References
  * ------------------------------------------------------------ */
 const typedTarget = document.getElementById('typed');
 const stringsSrc = document.getElementById('typed-strings');
 
+/**
+ * Global Typewriter instance reference
+ * @type {Typewriter|null}
+ */
 let typewriterInstance = null;
 
 /* ------------------------------------------------------------
- * Feature Control Logic
+ * Typewriter Logic
  * ------------------------------------------------------------ */
 
 /**
@@ -25,7 +30,8 @@ let typewriterInstance = null;
  */
 const setFallbackText = () => {
   if (typedTarget) {
-    typedTarget.textContent = typedTarget.getAttribute('data-fallback') || 'Software Engineer';
+    const fallback = typedTarget.getAttribute('data-fallback');
+    typedTarget.textContent = fallback || 'Software Engineer';
   }
 };
 
@@ -33,7 +39,7 @@ const setFallbackText = () => {
  * Initializes the typewriter effect.
  */
 const startTypewriter = () => {
-  // Cleanup if exists (safety)
+  // Cleanup existing instance
   if (typewriterInstance) {
     typewriterInstance.destroy();
   }
@@ -41,7 +47,7 @@ const startTypewriter = () => {
   if (!typedTarget || !stringsSrc) return;
 
   try {
-    // Extract strings from the hidden container
+    // Parse strings from hidden DOM elements
     const strings = Array.from(stringsSrc.children)
       .map(el => el.textContent.trim())
       .filter(str => str.length > 0);
@@ -56,13 +62,13 @@ const startTypewriter = () => {
       });
     }
   } catch (e) {
-    console.warn('Typewriter init failed:', e);
+    console.warn('Typewriter initialization failed:', e);
     setFallbackText();
   }
 };
 
 /**
- * Stops the typewriter effect and sets fallback text.
+ * Stops the typewriter effect and displays static text.
  */
 const stopTypewriter = () => {
   if (typewriterInstance) {
@@ -73,42 +79,51 @@ const stopTypewriter = () => {
 };
 
 /* ------------------------------------------------------------
- * Orchestration
+ * Motion Preferences
  * ------------------------------------------------------------ */
 const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /**
- * Handles changes in reduced motion preference.
+ * Responds to changes in reduced motion preferences.
  * @param {MediaQueryListEvent|MediaQueryList} e
  */
 const handleMotionPreference = (e) => {
   if (e.matches) {
-    // Reduced motion requested
     stopTypewriter();
   } else {
-    // Motion allowed
     startTypewriter();
   }
 };
 
-// Initialize based on current state
+// Initial check and event listener
 handleMotionPreference(mediaQuery);
-
-// Listen for changes
 mediaQuery.addEventListener('change', handleMotionPreference);
 
-// Initialize Share Button
+/* ------------------------------------------------------------
+ * Module Initialization
+ * ------------------------------------------------------------ */
+
+// Share Button
 new ShareButton();
 
+// Console Branding
+new ConsoleBrand();
+
+// Last Updated Date
+new LastUpdated('last-updated-date');
+
+// Offline Indicator
+new ConnectionStatus('offline-status');
+
 /* ------------------------------------------------------------
- * Service Worker Registration for PWA / Offline Support
+ * Service Worker Registration
  * ------------------------------------------------------------ */
 if ('serviceWorker' in navigator) {
-  // Register after load to prioritize content rendering
   const registerSw = () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {
-      // Fail silently
-    });
+    navigator.serviceWorker.register('./sw.js')
+      .catch((err) => {
+        console.debug('ServiceWorker registration failed:', err);
+      });
   };
 
   if (document.readyState === 'complete') {
