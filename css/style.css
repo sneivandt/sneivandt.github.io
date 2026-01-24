@@ -14,6 +14,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Inter';
   src: url('../font/Inter/Inter-Regular.woff2') format('woff2');
@@ -21,6 +22,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Inter';
   src: url('../font/Inter/Inter-SemiBold.woff2') format('woff2');
@@ -28,6 +30,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'Inter';
   src: url('../font/Inter/Inter-Bold.woff2') format('woff2');
@@ -43,9 +46,11 @@
   /* Palette: Monochromatic High Contrast */
   --color-bg: #111111;
   --color-bg-alt: #161616;
-  --color-text: #e6e6e6; /* Tasteful off-white */
+  --color-text: #e6e6e6;
+  /* Tasteful off-white */
   --color-text-muted: #888888;
-  --color-accent: #f5f5f5; /* Brighter off-white */
+  --color-accent: #f5f5f5;
+  /* Brighter off-white */
   --color-border: rgba(255, 255, 255, 0.15);
 
   /* Typography */
@@ -70,13 +75,16 @@
 }
 
 /* Reset -------------------------------------------------------------- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
 }
@@ -96,14 +104,17 @@ html {
 ::-webkit-scrollbar {
   width: 12px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--color-bg);
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-bg-alt);
   border: 3px solid var(--color-bg);
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-text-muted);
 }
@@ -119,6 +130,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 
   min-height: 100vh;
   min-height: 100dvh;
@@ -165,7 +177,7 @@ body {
 /* Layout ------------------------------------------------------------- */
 .container {
   width: var(--container-width);
-  margin: 0 auto;
+  margin-inline: auto;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -193,12 +205,12 @@ main {
     grid-template-columns: auto auto;
     justify-content: center;
     gap: 5rem;
-    padding-left: 2rem;
+    padding-inline-start: 2rem;
   }
 
   main {
-    margin-top: 15vh;
-    margin-top: 15dvh;
+    margin-block-start: 15vh;
+    margin-block-start: 15dvh;
     margin-bottom: auto;
     padding-bottom: 0;
   }
@@ -227,17 +239,18 @@ main {
   box-shadow:
     0 0 0 8px var(--color-bg),
     0 0 0 9px var(--color-border),
-    0 20px 40px -10px rgba(0,0,0,0.5);
+    0 20px 40px -10px rgba(0, 0, 0, 0.5);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-              box-shadow 0.5s ease;
+    box-shadow 0.5s ease;
 }
 
 .profile-image:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow:
     0 0 0 8px var(--color-bg),
-    0 0 0 9px rgba(255, 255, 255, 0.3),
-    0 30px 60px -12px rgba(0,0,0,0.6);
+    0 0 0 10px var(--color-text),
+    0 0 30px rgba(255, 255, 255, 0.15),
+    0 30px 60px -12px rgba(0, 0, 0, 0.7);
 }
 
 .profile-image img {
@@ -266,7 +279,8 @@ main {
   }
 
   .profile-content h1 {
-    margin-left: -0.05em; /* Optical alignment */
+    margin-inline-start: -0.05em;
+    /* Optical alignment */
   }
 }
 
@@ -346,6 +360,11 @@ h1 {
   transform: scale(1.1);
 }
 
+.social-icon:active {
+  transform: scale(0.95);
+  transition-duration: 0.05s;
+}
+
 .social-icon:focus-visible {
   outline: var(--focus-outline);
   outline-offset: var(--focus-outline-offset);
@@ -356,8 +375,8 @@ h1 {
 /* Share Button (Refined) --------------------------------------------- */
 .share-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  inset-block-end: 2rem;
+  inset-inline-end: 2rem;
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 50%;
@@ -369,18 +388,24 @@ h1 {
   place-items: center;
   transition: transform var(--transition-slow), box-shadow 0.3s ease;
   z-index: 100;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .share-btn:hover {
   transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.share-btn:active {
+  transform: scale(0.95) rotate(90deg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.1s;
 }
 
 .toast {
   position: fixed;
-  bottom: 3.5rem;
-  right: 6rem;
+  inset-block-end: 3.5rem;
+  inset-inline-end: 6rem;
   background: var(--color-text);
   color: var(--color-bg);
   padding: 0.5rem 1rem;
@@ -400,26 +425,55 @@ h1 {
 
 /* Animations --------------------------------------------------------- */
 /* Fade in content on load */
-.profile-content > *, .profile-image {
+.profile-content>*,
+.profile-image {
   /* Brief, snappy, minimal movement */
   animation: fadeIn 0.6s ease-out backwards;
 }
 
 /* Very tight stagger, barely noticeable */
-.profile-image { animation-delay: 0ms; }
-.profile-content h1 { animation-delay: 0.05s; }
-.typed-container { animation-delay: 0.1s; }
-.bio-text { animation-delay: 0.15s; }
-.profile-content nav { animation-delay: 0.2s; }
+.profile-image {
+  animation-delay: 0ms;
+}
+
+.profile-content h1 {
+  animation-delay: 0.05s;
+}
+
+.typed-container {
+  animation-delay: 0.1s;
+}
+
+.bio-text {
+  animation-delay: 0.15s;
+}
+
+.profile-content nav {
+  animation-delay: 0.2s;
+}
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(3px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Responsive Tweaks -------------------------------------------------- */
@@ -428,12 +482,21 @@ h1 {
     --font-size-h1: 2.25rem;
   }
 
-  .container { padding: 2rem 1rem; }
-  .profile-image { border-radius: 50%; width: 200px; }
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .profile-image {
+    border-radius: 50%;
+    width: 200px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation: none !important;
     transition: none !important;
   }

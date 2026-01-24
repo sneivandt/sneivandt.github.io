@@ -37,7 +37,7 @@ Because this is pure static content, you only need a simple HTTP server (avoids 
 Using the helper script (macOS/Linux):
 
 ```bash
-./serve.sh
+./serve.py
 ```
 
 Then visit: http://localhost:8000

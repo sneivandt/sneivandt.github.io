@@ -1,6 +1,4 @@
-#!/bin/sh
-# Simple script to serve the site locally
-python3 -c "
+#!/usr/bin/env python3
 import http.server
 
 class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -17,4 +15,3 @@ if __name__ == '__main__':
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
-"
