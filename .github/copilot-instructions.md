@@ -17,22 +17,24 @@ This repository is intentionally **minimal, dependency-free, build-free static c
 ```
 .
 ├── index.html          # Main entry point (single-page site)
-├── css/style.css       # Global stylesheet (design tokens + components)
-├── js/
-│   ├── main.js         # Entry point, orchestration, service worker registration
-│   ├── connection-status.js # Network status handler
-│   ├── last-updated.js # GitHub API fetch for last updated time
-│   ├── typewriter.js   # Typewriter effect (self-contained module)
-│   ├── share-button.js # Share functionality (self-contained module)
-│   └── console-brand.js # Console branding (self-contained module)
-├── font/               # Self-hosted Inter font files (.woff2)
-├── img/                # Images (profile, favicons)
+├── assets/             # All static assets
+│   ├── css/style.css       # Global stylesheet (design tokens + components)
+│   ├── js/                 # JavaScript modules
+│   │   ├── main.js         # Entry point, orchestration, service worker registration
+│   │   ├── connection-status.js # Network status handler
+│   │   ├── last-updated.js # GitHub API fetch for last updated time
+│   │   ├── typewriter.js   # Typewriter effect (self-contained module)
+│   │   ├── share-button.js # Share functionality (self-contained module)
+│   │   └── console-brand.js # Console branding (self-contained module)
+│   ├── font/               # Self-hosted Inter font files (.woff2)
+│   └── img/                # Images (profile, favicons)
+├── scripts/
+│   └── serve.py            # Local development server script
 ├── CNAME               # Custom domain configuration
 ├── humans.txt          # Authors and site info
 ├── LICENSE             # License file
 ├── manifest.json       # PWA manifest
 ├── robots.txt          # Search engine directives
-├── serve.py            # Local development server script
 ├── sitemap.xml         # XML sitemap for SEO
 ├── sw.js               # Service worker for offline caching
 └── _config.yml         # Jekyll config (disables Jekyll processing)
@@ -62,7 +64,7 @@ Every HTML page should include:
 ## CSS Guidelines
 
 ### Architecture
-- **Single global stylesheet**: `css/style.css` for site-wide rules
+- **Single global stylesheet**: `assets/css/style.css` for site-wide rules
 - **Design tokens**: Use CSS custom properties (defined in `:root`) for colors, typography, spacing
 - **No preprocessors**: Native CSS only (no SCSS, Less, PostCSS, Tailwind)
 
@@ -83,7 +85,7 @@ Every HTML page should include:
 ### Module Pattern
 Each feature should be self-contained:
 ```javascript
-// js/feature.js
+// assets/js/feature.js
 export class Feature {
   constructor(element, options = {}) { ... }
   destroy() { ... }  // Cleanup method for stopping/removing
@@ -106,7 +108,7 @@ export class Feature {
 - Include `width` and `height` attributes for layout stability
 
 ### Fonts
-- Self-host fonts in `font/` directory (currently Inter)
+- Self-host fonts in `assets/font/` directory (currently Inter)
 - Use `.woff2` format only (best compression, broad support)
 - Preload critical font weights in HTML `<head>`
 - Limit to 2-3 weights to minimize transfer size

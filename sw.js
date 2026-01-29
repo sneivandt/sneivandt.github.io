@@ -18,22 +18,24 @@ const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
  */
 const PRECACHE_ASSETS = [
   './',
+  './assets/css/style.css',
+  './assets/font/Inter-Bold.woff2',
+  './assets/font/Inter-Light.woff2',
+  './assets/font/Inter-Regular.woff2',
+  './assets/font/Inter-SemiBold.woff2',
+  './assets/img/favicon.ico',
+  './assets/img/favicon.svg',
+  './assets/img/icon-192.png',
+  './assets/img/icon-512.png',
+  './assets/img/stuart-neivandt.webp',
   './index.html',
-  './css/style.css',
-  './js/main.js',
-  './js/share-button.js',
-  './js/typewriter.js',
-  './js/connection-status.js',
-  './font/Inter/Inter-Light.woff2',
-  './font/Inter/Inter-Regular.woff2',
-  './font/Inter/Inter-SemiBold.woff2',
-  './font/Inter/Inter-Bold.woff2',
-  './img/favicon.svg',
-  './img/favicon.ico',
-  './img/stuart-neivandt.webp',
-  './manifest.json',
-  './img/icon-192.png',
-  './img/icon-512.png'
+  './assets/js/connection-status.js',
+  './assets/js/console-brand.js',
+  './assets/js/last-updated.js',
+  './assets/js/main.js',
+  './assets/js/share-button.js',
+  './assets/js/typewriter.js',
+  './manifest.json'
 ];
 
 // Install Event
@@ -88,8 +90,8 @@ self.addEventListener('fetch', (e) => {
       // Strategy 2: Static Assets (Images, Fonts) -> Cache First
       if (
         url.pathname.match(/\.(webp|png|jpg|jpeg|svg|ttf|woff|woff2)$/i) ||
-        url.pathname.includes('/img/') ||
-        url.pathname.includes('/font/')
+        url.pathname.includes('/assets/img/') ||
+        url.pathname.includes('/assets/font/')
       ) {
         const cachedResponse = await cache.match(e.request);
         if (cachedResponse) return cachedResponse;

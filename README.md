@@ -33,7 +33,7 @@ This repository hosts the source for my landing page / profile site. It is inten
 Because this is pure static content, you only need a simple HTTP server (avoids font / CORS issues that can occur when opening the file directly).
 
 ```bash
-./serve.py
+./scripts/serve.py
 ```
 
 Then visit: http://localhost:8000
