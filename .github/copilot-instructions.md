@@ -168,6 +168,14 @@ Use `aria-label` for accessible names. **Do NOT pair with a redundant `title` at
 2. Keep changes focused and minimal
 3. Ensure CI passes before requesting review
 
+## Date Maintenance
+
+When making changes to the repository, update relevant dates if needed:
+
+1. **Copyright year** — Update `index.html` footer and `LICENSE` file if the year has changed
+2. **Sitemap lastmod** — Update `sitemap.xml` `<lastmod>` date to current date (YYYY-MM-DD format) when content changes
+3. **Last updated timestamp** — Automatically fetched from GitHub API via `last-updated.js`; no manual update needed
+
 ## FAQ
 
 **Why not add a build step for critical CSS or image pipelines?**
