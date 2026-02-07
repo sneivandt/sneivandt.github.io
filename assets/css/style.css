@@ -356,8 +356,26 @@ h1 {
   padding-top: 2rem;
   margin-top: auto;
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-separator {
+  opacity: 0.7;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+.copyright-wrapper {
+  display: inline;
+}
+
+.copyright-date {
+  display: inline;
 }
 
 /* Social Links Minimal ----------------------------------------------- */
