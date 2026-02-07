@@ -343,11 +343,21 @@ h1 {
   color: var(--color-text-muted);
 }
 
+.site-footer small {
+  opacity: 0.7;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--color-text-muted);
+}
+
 .site-footer {
   width: 100%;
   text-align: center;
   padding-top: 2rem;
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 /* Social Links Minimal ----------------------------------------------- */
