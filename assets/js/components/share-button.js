@@ -30,8 +30,10 @@ export class ShareButtonComponent extends HTMLElement {
     // Parse attributes
     this.parseAttributes();
     
-    // Create shadow DOM
-    this.attachShadow({ mode: 'open' });
+    // Create shadow DOM (only once)
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+    }
     
     // Render component
     this.render();
@@ -153,7 +155,7 @@ export class ShareButtonComponent extends HTMLElement {
         </svg>
       </button>
       
-      <div class="toast" role="status" aria-hidden="true">Link copied to clipboard</div>
+      <div class="toast" role="status" aria-live="polite" aria-hidden="true">Link copied to clipboard</div>
     `;
   }
   
@@ -217,14 +219,16 @@ export class ShareButtonComponent extends HTMLElement {
       clearTimeout(this.toastTimeout);
     }
     
-    // Reset animation
+    // Reset animation and make visible to screen readers
     toast.classList.remove('visible');
+    toast.setAttribute('aria-hidden', 'false');
     void toast.offsetWidth; // Force reflow
     toast.classList.add('visible');
     
     // Auto hide after 3 seconds
     this.toastTimeout = window.setTimeout(() => {
       toast.classList.remove('visible');
+      toast.setAttribute('aria-hidden', 'true');
     }, 3000);
   }
 }

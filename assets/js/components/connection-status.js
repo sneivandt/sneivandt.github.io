@@ -22,8 +22,10 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   connectedCallback() {
-    // Create shadow DOM
-    this.attachShadow({ mode: 'open' });
+    // Create shadow DOM (only once)
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+    }
     
     // Render component
     this.render();

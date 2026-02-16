@@ -13,6 +13,12 @@ export class LastUpdatedComponent extends HTMLElement {
     
     /** @type {string} */
     this.repo = 'sneivandt/sneivandt.github.io';
+    
+    /** @type {Function|null} */
+    this.resizeHandler = null;
+    
+    /** @type {number|null} */
+    this.wrapTimeout = null;
   }
   
   static get observedAttributes() {
@@ -23,8 +29,10 @@ export class LastUpdatedComponent extends HTMLElement {
     // Parse attributes
     this.parseAttributes();
     
-    // Create shadow DOM
-    this.attachShadow({ mode: 'open' });
+    // Create shadow DOM (only once)
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+    }
     
     // Render component
     this.render();
@@ -33,6 +41,17 @@ export class LastUpdatedComponent extends HTMLElement {
     this.showCurrentDate();
     this.init();
     this.setupWrapDetection();
+  }
+  
+  disconnectedCallback() {
+    // Clean up resize listener
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
+    // Clean up any pending timeouts
+    if (this.wrapTimeout) {
+      clearTimeout(this.wrapTimeout);
+    }
   }
   
   attributeChangedCallback(name, oldValue, newValue) {
@@ -63,7 +82,7 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   setupWrapDetection() {
-    const checkWrap = () => {
+    this.resizeHandler = () => {
       const copyright = document.querySelector('.copyright-wrapper');
       const separator = document.querySelector('.footer-separator');
       
@@ -81,9 +100,9 @@ export class LastUpdatedComponent extends HTMLElement {
     };
     
     // Check on load and resize
-    window.addEventListener('resize', checkWrap);
+    window.addEventListener('resize', this.resizeHandler);
     // Initial check after a short delay to ensure layout is complete
-    setTimeout(checkWrap, 100);
+    this.wrapTimeout = setTimeout(this.resizeHandler, 100);
   }
   
   showCurrentDate() {
@@ -167,21 +186,9 @@ export class LastUpdatedComponent extends HTMLElement {
     }
     
     // Re-check wrap status after content changes
-    setTimeout(() => {
-      const copyright = document.querySelector('.copyright-wrapper');
-      const separator = document.querySelector('.footer-separator');
-      
-      if (copyright && separator && this) {
-        const copyrightTop = copyright.offsetTop;
-        const thisTop = this.offsetTop;
-        
-        if (copyrightTop !== thisTop) {
-          separator.style.display = 'none';
-        } else {
-          separator.style.display = '';
-        }
-      }
-    }, 100);
+    if (this.resizeHandler) {
+      this.wrapTimeout = setTimeout(this.resizeHandler, 100);
+    }
   }
 }
 

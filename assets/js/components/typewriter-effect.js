@@ -58,39 +58,41 @@ export class TypewriterEffect extends HTMLElement {
     // Parse attributes
     this.parseAttributes();
     
-    // Create shadow DOM
-    this.attachShadow({ mode: 'open' });
-    
-    // Add styles
-    this.shadowRoot.innerHTML = `
-      <style>
-        :host {
-          display: inline;
-        }
-        
-        .typed-cursor {
-          animation: blink 1s infinite;
-          opacity: 1;
-          user-select: none;
-        }
-        
-        @keyframes blink {
-          0%, 49% { opacity: 1; }
-          50%, 100% { opacity: 0; }
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-          .typed-cursor {
-            animation: none;
-            opacity: 1;
+    // Create shadow DOM (only once)
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+      
+      // Add styles
+      this.shadowRoot.innerHTML = `
+        <style>
+          :host {
+            display: inline;
           }
-        }
-      </style>
-      <span class="typed-text" aria-live="polite"></span><span class="typed-cursor" aria-hidden="true">|</span>
-    `;
-    
-    this.textSpan = this.shadowRoot.querySelector('.typed-text');
-    this.cursor = this.shadowRoot.querySelector('.typed-cursor');
+          
+          .typed-cursor {
+            animation: blink 1s infinite;
+            opacity: 1;
+            user-select: none;
+          }
+          
+          @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+          }
+          
+          @media (prefers-reduced-motion: reduce) {
+            .typed-cursor {
+              animation: none;
+              opacity: 1;
+            }
+          }
+        </style>
+        <span class="typed-text" aria-hidden="true"></span><span class="typed-cursor" aria-hidden="true">|</span>
+      `;
+      
+      this.textSpan = this.shadowRoot.querySelector('.typed-text');
+      this.cursor = this.shadowRoot.querySelector('.typed-cursor');
+    }
     
     // Check for reduced motion preference
     this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -154,7 +156,10 @@ export class TypewriterEffect extends HTMLElement {
       this.destroy();
       this.setFallbackText();
     } else {
-      // Restart animation
+      // Restart animation - restore cursor visibility
+      if (this.cursor) {
+        this.cursor.style.display = '';
+      }
       this.state = {
         textIndex: 0,
         charIndex: 0,

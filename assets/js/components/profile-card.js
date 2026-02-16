@@ -30,7 +30,10 @@ export class ProfileCardComponent extends HTMLElement {
   
   render() {
     const name = this.getAttribute('name') || 'Stuart Neivandt';
-    const bio = this.getAttribute('bio') || 'Building secure distributed systems at Microsoft. Based in <span class="nowrap">Bellevue, WA.</span>';
+    const bioText = this.getAttribute('bio') || 'Building secure distributed systems at Microsoft. Based in Bellevue, WA.';
+    
+    // Add the nowrap span back in the component rendering
+    const bio = bioText.replace('Bellevue, WA.', '<span class="nowrap">Bellevue, WA.</span>');
     
     this.innerHTML = `
       <div class="profile-card">
@@ -59,7 +62,7 @@ export class ProfileCardComponent extends HTMLElement {
                 <li>Mediocre Investor</li>
               </ul>
             </div>
-            <span id="typed" class="typed" aria-live="polite">
+            <span id="typed" class="typed" aria-hidden="true">
               <typewriter-effect 
                 strings="Software Engineer,Music Enthusiast,Chess Player,Continuous Learner,Coffee Addict,Mediocre Investor"
                 loop="true"
