@@ -37,8 +37,7 @@ export class LastUpdatedComponent extends HTMLElement {
     // Render component
     this.render();
     
-    // Initialize
-    this.showCurrentDate();
+    // Fetch and display last updated date
     this.init();
     this.setupWrapDetection();
   }
@@ -83,7 +82,7 @@ export class LastUpdatedComponent extends HTMLElement {
   
   setupWrapDetection() {
     this.resizeHandler = () => {
-      const copyright = document.querySelector('.copyright-wrapper');
+      const copyright = document.querySelector('copyright-notice');
       const separator = document.querySelector('.footer-separator');
       
       if (copyright && separator && this) {
@@ -103,18 +102,6 @@ export class LastUpdatedComponent extends HTMLElement {
     window.addEventListener('resize', this.resizeHandler);
     // Initial check after a short delay to ensure layout is complete
     this.wrapTimeout = setTimeout(this.resizeHandler, 100);
-  }
-  
-  showCurrentDate() {
-    const copyrightDate = document.getElementById('copyright-date');
-    if (copyrightDate) {
-      const now = new Date();
-      const formatter = new Intl.DateTimeFormat('en-US', {
-        month: 'long',
-        day: 'numeric'
-      });
-      copyrightDate.textContent = ` ${formatter.format(now)}`;
-    }
   }
   
   async init() {
@@ -174,16 +161,6 @@ export class LastUpdatedComponent extends HTMLElement {
     });
     
     textSpan.textContent = `Last updated: ${formatter.format(date)}`;
-    
-    // Hide the copyright date and year once we have the last updated date
-    const copyrightDate = document.getElementById('copyright-date');
-    const copyrightYear = document.getElementById('copyright-year');
-    if (copyrightDate) {
-      copyrightDate.style.display = 'none';
-    }
-    if (copyrightYear) {
-      copyrightYear.style.display = 'none';
-    }
     
     // Re-check wrap status after content changes
     if (this.resizeHandler) {

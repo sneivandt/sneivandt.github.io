@@ -26,6 +26,7 @@ This repository is intentionally **minimal, dependency-free, build-free static c
 │   │   │   ├── share-button.js        # Share functionality with Shadow DOM
 │   │   │   ├── connection-status.js   # Network monitor with Shadow DOM
 │   │   │   ├── last-updated.js        # GitHub API with Shadow DOM
+│   │   │   ├── copyright-notice.js    # Copyright with current year (Shadow DOM)
 │   │   │   ├── console-brand.js       # Console branding
 │   │   │   ├── profile-card.js        # Profile container (no Shadow DOM)
 │   │   │   └── social-links.js        # Social links (no Shadow DOM)
@@ -89,7 +90,6 @@ Every HTML page should include:
 - **Web Components** — use native Custom Elements API for reusable components
 - **ES modules** — use `import`/`export` for modularity
 - **Deferred loading** — scripts must not block first paint (`type="module"` or `defer`)
-- **Graceful degradation** — if a script errors or JS is disabled, the page still communicates core content
 
 ### Web Components Pattern
 The site uses native Web Components (Custom Elements) for all interactive features:
@@ -132,7 +132,6 @@ customElements.define('example-component', ExampleComponent);
 - **Accessibility**: Use `aria-hidden="true"` for rapidly-updating animated content, not `aria-live`
 - **Shadow DOM usage**: Use Shadow DOM for components needing style encapsulation; skip for components requiring global CSS integration
 - **Attributes**: Pass plain text via attributes, handle HTML rendering inside components
-- **Progressive enhancement**: Provide noscript fallbacks for core content
 
 ### Best Practices
 - Keep logic modular and small (~200 lines max per file)
@@ -145,7 +144,7 @@ customElements.define('example-component', ExampleComponent);
 
 ### Current Components
 
-The site uses 7 native Web Components (Custom Elements):
+The site uses 8 native Web Components (Custom Elements):
 
 | Component | File | Shadow DOM | Purpose |
 |-----------|------|------------|---------|
@@ -153,6 +152,7 @@ The site uses 7 native Web Components (Custom Elements):
 | `<share-button>` | `components/share-button.js` | ✅ | Share with Web Share API / Clipboard fallback |
 | `<connection-status>` | `components/connection-status.js` | ✅ | Network connectivity indicator |
 | `<last-updated>` | `components/last-updated.js` | ✅ | GitHub API last commit date with caching |
+| `<copyright-notice>` | `components/copyright-notice.js` | ✅ | Copyright notice with current year |
 | `<console-brand>` | `components/console-brand.js` | ❌ | Browser console signature |
 | `<profile-card>` | `components/profile-card.js` | ❌ | Profile container (composes other components) |
 | `<social-links>` | `components/social-links.js` | ❌ | Social media navigation |
@@ -277,7 +277,6 @@ Use `aria-label` for accessible names. **Do NOT pair with a redundant `title` at
 - **Lighthouse CI** — enforces 90+ scores for performance, accessibility, best practices, SEO
 
 ### Manual Before Committing
-- Test with JavaScript disabled (content should still be readable)
 - Test with `prefers-reduced-motion: reduce` (animations should stop)
 - Test keyboard navigation (Tab, Enter, Escape)
 - Verify on mobile viewport
