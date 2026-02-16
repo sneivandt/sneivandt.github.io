@@ -42,7 +42,9 @@ export class ShareButtonComponent extends HTMLElement {
     this.render();
     
     // Clean up existing listener if any
-    const button = this.shadowRoot?.querySelector('.share-btn');
+    if (!this.shadowRoot) return;
+    
+    const button = this.shadowRoot.querySelector('.share-btn');
     if (button && this.handleShareBound) {
       button.removeEventListener('click', this.handleShareBound);
     }
@@ -57,9 +59,13 @@ export class ShareButtonComponent extends HTMLElement {
   disconnectedCallback() {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
+    
     // Clean up event listener
-    const button = this.shadowRoot?.querySelector('.share-btn');
+    if (!this.shadowRoot) return;
+    
+    const button = this.shadowRoot.querySelector('.share-btn');
     if (button && this.handleShareBound) {
       button.removeEventListener('click', this.handleShareBound);
     }
@@ -231,12 +237,15 @@ export class ShareButtonComponent extends HTMLElement {
   }
   
   showToast() {
-    const toast = this.shadowRoot?.querySelector('.toast');
+    if (!this.shadowRoot) return;
+    
+    const toast = this.shadowRoot.querySelector('.toast');
     if (!toast) return;
     
     // Clear existing timeout
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
     
     // Reset animation and make visible to screen readers

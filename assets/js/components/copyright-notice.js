@@ -55,6 +55,7 @@ export class CopyrightNoticeComponent extends HTMLElement {
   
   render() {
     const currentYear = new Date().getFullYear();
+    const escapedName = this.escapeHtml(this.copyrightName);
     
     this.shadowRoot.innerHTML = `
       <style>
@@ -66,8 +67,21 @@ export class CopyrightNoticeComponent extends HTMLElement {
           color: var(--color-text-muted, #888888);
         }
       </style>
-      <span>© ${currentYear} ${this.copyrightName}</span>
+      <span>© ${currentYear} ${escapedName}</span>
     `;
+  }
+  
+  /**
+   * Escape HTML to prevent XSS attacks
+   * @param {string} text - Text to escape
+   * @returns {string} Escaped text
+   */
+  escapeHtml(text) {
+    if (!this._escapeDiv) {
+      this._escapeDiv = document.createElement('div');
+    }
+    this._escapeDiv.textContent = text;
+    return this._escapeDiv.innerHTML;
   }
 }
 

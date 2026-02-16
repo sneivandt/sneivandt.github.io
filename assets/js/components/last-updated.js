@@ -108,22 +108,25 @@ export class LastUpdatedComponent extends HTMLElement {
       const copyright = document.querySelector('copyright-notice');
       const separator = document.querySelector('.footer-separator');
       
-      if (copyright && separator && this) {
-        // Check if items are on different lines by comparing vertical positions
-        const copyrightTop = copyright.offsetTop;
-        const thisTop = this.offsetTop;
-        
-        if (copyrightTop !== thisTop) {
-          separator.style.display = 'none';
-        } else {
-          separator.style.display = '';
-        }
+      if (!copyright || !separator || !this) return;
+      
+      // Check if items are on different lines by comparing vertical positions
+      const copyrightTop = copyright.offsetTop;
+      const thisTop = this.offsetTop;
+      
+      if (copyrightTop !== thisTop) {
+        separator.style.display = 'none';
+      } else {
+        separator.style.display = '';
       }
     };
     
     // Check on load and resize
     window.addEventListener('resize', this.resizeHandler);
     // Initial check after a short delay to ensure layout is complete
+    if (this.wrapTimeout) {
+      clearTimeout(this.wrapTimeout);
+    }
     this.wrapTimeout = setTimeout(this.resizeHandler, 100);
   }
   
@@ -189,6 +192,8 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   renderDate(date) {
+    if (!this.shadowRoot) return;
+    
     const textSpan = this.shadowRoot.querySelector('.last-updated-text');
     if (!textSpan) return;
     
@@ -201,9 +206,10 @@ export class LastUpdatedComponent extends HTMLElement {
     textSpan.textContent = `Last updated: ${formatter.format(date)}`;
     
     // Re-check wrap status after content changes
-    if (this.resizeHandler) {
-      this.wrapTimeout = setTimeout(this.resizeHandler, 100);
+    if (this.resizeHandler && this.wrapTimeout) {
+      clearTimeout(this.wrapTimeout);
     }
+    this.wrapTimeout = setTimeout(this.resizeHandler, 100);
   }
 }
 

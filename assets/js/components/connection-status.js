@@ -140,11 +140,16 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   show() {
-    const status = this.shadowRoot?.querySelector('.offline-status');
+    if (!this.shadowRoot) return;
+    
+    const status = this.shadowRoot.querySelector('.offline-status');
     if (!status) return;
     
     // Clear existing timer if any
-    if (this.timer) clearTimeout(this.timer);
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
     
     status.classList.add('visible');
     status.setAttribute('aria-hidden', 'false');
@@ -154,7 +159,9 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   hide() {
-    const status = this.shadowRoot?.querySelector('.offline-status');
+    if (!this.shadowRoot) return;
+    
+    const status = this.shadowRoot.querySelector('.offline-status');
     if (!status) return;
     
     if (this.timer) {
