@@ -137,7 +137,7 @@ export class ConnectionStatusComponent extends HTMLElement {
     status.setAttribute('aria-hidden', 'false');
     
     // Auto-hide after 5 seconds
-    this.timer = setTimeout(() => this.hide(), 5000);
+    this.timer = window.setTimeout(() => this.hide(), 5000);
   }
   
   hide() {

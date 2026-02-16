@@ -17,6 +17,10 @@ export class ConsoleBrandComponent extends HTMLElement {
     this.logSignature();
   }
   
+  disconnectedCallback() {
+    // No cleanup needed - console logs persist
+  }
+  
   logSignature() {
     const style = [
       'background: #222',
