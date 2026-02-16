@@ -14,7 +14,7 @@ export class ShareButtonComponent extends HTMLElement {
     /** @type {number|null} */
     this.toastTimeout = null;
     
-    /** @type {ShareData} */
+    /** @type {{title: string, text: string, url: string}} */
     this.shareData = {
       title: '',
       text: '',

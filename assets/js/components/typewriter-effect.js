@@ -29,7 +29,7 @@ export class TypewriterEffect extends HTMLElement {
     /** @type {number} */
     this.startDelay = 500;
     
-    /** @type {Object} */
+    /** @type {{textIndex: number, charIndex: number, isDeleting: boolean, isPaused: boolean}} */
     this.state = {
       textIndex: 0,
       charIndex: 0,

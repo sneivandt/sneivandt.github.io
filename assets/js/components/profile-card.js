@@ -59,7 +59,7 @@ export class ProfileCardComponent extends HTMLElement {
                 <li>Mediocre Investor</li>
               </ul>
             </div>
-            <span id="typed-placeholder" class="typed" aria-live="polite">
+            <span id="typed" class="typed" aria-live="polite">
               <typewriter-effect 
                 strings="Software Engineer,Music Enthusiast,Chess Player,Continuous Learner,Coffee Addict,Mediocre Investor"
                 loop="true"

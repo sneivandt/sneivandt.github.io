@@ -160,7 +160,6 @@ export class LastUpdatedComponent extends HTMLElement {
     const copyrightDate = document.getElementById('copyright-date');
     const copyrightYear = document.getElementById('copyright-year');
     if (copyrightDate) {
-      copyrightDate.textContent = '';
       copyrightDate.style.display = 'none';
     }
     if (copyrightYear) {
