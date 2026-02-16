@@ -15,7 +15,7 @@ This repository hosts the source for my landing page / profile site. It is inten
 | **Responsive** | Mobile-first layout, fluid typography via `clamp()` |
 | **Accessible** | Skip link, proper alt text, ARIA labels, respects `prefers-reduced-motion` |
 | **SEO & Social** | Meta description, canonical link, Open Graph tags, JSON-LD Person schema |
-| **Progressive** | PWA installable via `manifest.json`, service worker for offline support, noscript fallbacks |
+| **Progressive** | PWA installable via `manifest.json`, service worker for offline support |
 | **Effects** | Typewriter animation, share button, connection status (all as reusable Web Components) |
 | **Hosting** | GitHub Pages with custom domain via `CNAME` |
 
@@ -38,7 +38,6 @@ The site uses native Web Components (Custom Elements) for modular, encapsulated 
 - **Reusability**: Components work anywhere in the DOM
 - **Lifecycle**: Proper cleanup and event management
 - **Accessibility**: ARIA-compliant, screen reader support
-- **Progressive Enhancement**: Noscript fallbacks for core content
 
 ## Local Development 💻
 
@@ -80,5 +79,4 @@ This site intentionally avoids complexity:
 
 - **No build step** — what you see in the repo is what gets served
 - **No dependencies** — zero `node_modules`, no version conflicts
-- **Progressive enhancement** — works without JS, improves with it
 - **Accessibility first** — semantic HTML, keyboard navigation, motion preferences

@@ -353,14 +353,6 @@ h1 {
   line-height: 1;
 }
 
-.copyright-wrapper {
-  display: inline;
-}
-
-.copyright-date {
-  display: inline;
-}
-
 /* Social Links Minimal ----------------------------------------------- */
 .social-links {
   display: flex;

@@ -12,6 +12,7 @@ import './components/last-updated.js';
 import './components/console-brand.js';
 import './components/profile-card.js';
 import './components/social-links.js';
+import './components/copyright-notice.js';
 
 /* ------------------------------------------------------------
  * Service Worker Registration
