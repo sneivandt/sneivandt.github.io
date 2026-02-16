@@ -86,7 +86,12 @@ self.addEventListener('fetch', (e) => {
         } catch (error) {
           const cachedResponse = await cache.match(e.request);
           if (cachedResponse) return cachedResponse;
-          throw error;
+          // Return a basic offline page response instead of throwing
+          return new Response('Offline', {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: new Headers({ 'Content-Type': 'text/plain' })
+          });
         }
       }
 
@@ -106,8 +111,11 @@ self.addEventListener('fetch', (e) => {
           }
           return networkResponse;
         } catch (error) {
-          // If offline and image not in cache, fallback logic could go here
-          throw error;
+          // Return a basic error response for missing assets
+          return new Response('', {
+            status: 404,
+            statusText: 'Not Found'
+          });
         }
       }
 
@@ -134,7 +142,11 @@ self.addEventListener('fetch', (e) => {
         }
         return networkResponse;
       } catch (error) {
-        throw error;
+        // Return a basic error response when offline and not cached
+        return new Response('', {
+          status: 503,
+          statusText: 'Service Unavailable'
+        });
       }
     })()
   );

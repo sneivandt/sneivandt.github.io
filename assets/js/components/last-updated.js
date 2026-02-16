@@ -111,8 +111,15 @@ export class LastUpdatedComponent extends HTMLElement {
     
     try {
       // Check cache first
-      const cachedDate = localStorage.getItem(cacheKey);
-      const cachedTime = localStorage.getItem(cacheTimeKey);
+      let cachedDate = null;
+      let cachedTime = null;
+      
+      try {
+        cachedDate = localStorage.getItem(cacheKey);
+        cachedTime = localStorage.getItem(cacheTimeKey);
+      } catch (storageError) {
+        // localStorage may be unavailable or disabled
+      }
       
       if (cachedDate && cachedTime) {
         const age = Date.now() - parseInt(cachedTime, 10);
@@ -138,8 +145,12 @@ export class LastUpdatedComponent extends HTMLElement {
         const date = new Date(dateStr);
         
         // Cache the result
-        localStorage.setItem(cacheKey, dateStr);
-        localStorage.setItem(cacheTimeKey, Date.now().toString());
+        try {
+          localStorage.setItem(cacheKey, dateStr);
+          localStorage.setItem(cacheTimeKey, Date.now().toString());
+        } catch (storageError) {
+          // localStorage may be full or disabled - continue without caching
+        }
         
         this.renderDate(date);
       }

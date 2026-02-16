@@ -42,7 +42,7 @@ export class ShareButtonComponent extends HTMLElement {
     this.render();
     
     // Set up event listeners
-    const button = this.shadowRoot.querySelector('.share-btn');
+    const button = this.shadowRoot?.querySelector('.share-btn');
     if (button) {
       this.handleShareBound = () => this.handleShare();
       button.addEventListener('click', this.handleShareBound);
@@ -187,6 +187,12 @@ export class ShareButtonComponent extends HTMLElement {
   }
   
   async copyToClipboard() {
+    // Check if clipboard API is available
+    if (!navigator.clipboard) {
+      console.warn('Clipboard API not available');
+      return;
+    }
+    
     try {
       if (typeof ClipboardItem !== 'undefined') {
         // Modern approach: Write rich text (HTML) and plain text
@@ -220,7 +226,7 @@ export class ShareButtonComponent extends HTMLElement {
   }
   
   showToast() {
-    const toast = this.shadowRoot.querySelector('.toast');
+    const toast = this.shadowRoot?.querySelector('.toast');
     if (!toast) return;
     
     // Clear existing timeout

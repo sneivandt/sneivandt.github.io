@@ -127,7 +127,7 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   show() {
-    const status = this.shadowRoot.querySelector('.offline-status');
+    const status = this.shadowRoot?.querySelector('.offline-status');
     if (!status) return;
     
     // Clear existing timer if any
@@ -141,7 +141,7 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   hide() {
-    const status = this.shadowRoot.querySelector('.offline-status');
+    const status = this.shadowRoot?.querySelector('.offline-status');
     if (!status) return;
     
     if (this.timer) {
