@@ -3,6 +3,11 @@
  * @description A web component that monitors and displays network connection status.
  */
 
+// HTTP Status Codes
+const HTTP_STATUS = {
+  METHOD_NOT_ALLOWED: 405
+};
+
 /**
  * ConnectionStatus Web Component
  * Usage: <connection-status></connection-status>
@@ -123,7 +128,7 @@ export class ConnectionStatusComponent extends HTMLElement {
       });
       
       // Treat specific server errors as "connected" to avoid offline badge confusion
-      if (!response.ok && response.status !== 405) {
+      if (!response.ok && response.status !== HTTP_STATUS.METHOD_NOT_ALLOWED) {
         // e.g. 500 Internal Server Error means we are connected to the server
       }
       

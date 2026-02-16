@@ -13,6 +13,13 @@
 const CACHE_VERSION = 'v2';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
+// HTTP Status Codes
+const HTTP_STATUS = {
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  SERVICE_UNAVAILABLE: 503
+};
+
 /**
  * Assets to pre-fetch during installation to ensure basic site functionality offline.
  */
@@ -88,7 +95,7 @@ self.addEventListener('fetch', (e) => {
           if (cachedResponse) return cachedResponse;
           // Return a basic offline page response instead of throwing
           return new Response('Offline', {
-            status: 503,
+            status: HTTP_STATUS.SERVICE_UNAVAILABLE,
             statusText: 'Service Unavailable',
             headers: new Headers({ 'Content-Type': 'text/plain' })
           });
@@ -113,7 +120,7 @@ self.addEventListener('fetch', (e) => {
         } catch (error) {
           // Return a basic error response for missing assets
           return new Response('', {
-            status: 404,
+            status: HTTP_STATUS.NOT_FOUND,
             statusText: 'Not Found'
           });
         }
@@ -144,7 +151,7 @@ self.addEventListener('fetch', (e) => {
       } catch (error) {
         // Return a basic error response when offline and not cached
         return new Response('', {
-          status: 503,
+          status: HTTP_STATUS.SERVICE_UNAVAILABLE,
           statusText: 'Service Unavailable'
         });
       }

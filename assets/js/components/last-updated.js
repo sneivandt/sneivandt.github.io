@@ -144,10 +144,15 @@ export class LastUpdatedComponent extends HTMLElement {
       
       const data = await response.json();
       
-      if (data && data.length > 0 && data[0].commit) {
+      if (Array.isArray(data) && data.length > 0 && data[0]?.commit?.committer?.date) {
         // Use committer date for when the change was actually applied
         const dateStr = data[0].commit.committer.date;
         const date = new Date(dateStr);
+        
+        // Validate date
+        if (isNaN(date.getTime())) {
+          throw new Error('Invalid date received from API');
+        }
         
         // Cache the result
         try {
