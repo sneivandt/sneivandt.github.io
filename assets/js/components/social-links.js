@@ -11,6 +11,9 @@ export class SocialLinksComponent extends HTMLElement {
   constructor() {
     super();
     
+    /** @type {HTMLElement|null} */
+    this._escapeDiv = null;
+    
     // Default social links data
     this.socialLinks = [
       {

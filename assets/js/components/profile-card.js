@@ -10,6 +10,9 @@
 export class ProfileCardComponent extends HTMLElement {
   constructor() {
     super();
+    
+    /** @type {HTMLElement|null} */
+    this._escapeDiv = null;
   }
   
   static get observedAttributes() {

@@ -15,6 +15,9 @@ export class CopyrightNoticeComponent extends HTMLElement {
     
     /** @type {string} */
     this.copyrightName = CopyrightNoticeComponent.DEFAULT_NAME;
+    
+    /** @type {HTMLElement|null} */
+    this._escapeDiv = null;
   }
   
   static get observedAttributes() {
