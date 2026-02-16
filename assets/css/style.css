@@ -315,16 +315,6 @@ h1 {
   color: var(--color-text);
 }
 
-.typed-cursor {
-  color: var(--color-accent);
-  animation: blink 1s step-end infinite;
-  font-weight: 700;
-  width: 0;
-  display: inline-block;
-  overflow: visible;
-  text-align: left;
-}
-
 .bio-text {
   font-size: var(--font-size-bio);
   color: var(--color-text);
@@ -334,13 +324,6 @@ h1 {
   font-weight: 300;
   opacity: 0.95;
   text-wrap: pretty;
-}
-
-.last-updated {
-  opacity: 0.7;
-  font-size: 0.8rem;
-  font-weight: 300;
-  color: var(--color-text-muted);
 }
 
 .site-footer small {
@@ -418,85 +401,6 @@ h1 {
   opacity: 1;
 }
 
-/* Share Button (Refined) --------------------------------------------- */
-.share-btn {
-  position: fixed;
-  inset-block-end: 2rem;
-  inset-inline-end: 2rem;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  background: var(--color-text);
-  color: var(--color-bg);
-  border: none;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: transform var(--transition-slow), box-shadow 0.3s ease;
-  z-index: 100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.share-btn:hover {
-  transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-.share-btn:active {
-  transform: scale(0.95) rotate(90deg);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition-duration: 0.1s;
-}
-
-.toast {
-  position: fixed;
-  inset-block-end: 3.5rem;
-  inset-inline-end: 6rem;
-  background: var(--color-text);
-  color: var(--color-bg);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(10px, 50%);
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.toast.visible {
-  opacity: 1;
-  transform: translate(0, 50%);
-}
-
-.offline-status {
-  position: fixed;
-  inset-block-start: 1rem;
-  left: 1rem;
-  transform: translateY(-10px);
-  background: var(--color-bg-alt);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s, transform 0.3s;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.offline-status.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
 /* Animations --------------------------------------------------------- */
 /* Fade in content on load */
 .profile-content>*,
@@ -535,18 +439,6 @@ h1 {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes blink {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
   }
 }
 
