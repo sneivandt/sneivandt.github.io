@@ -114,7 +114,7 @@ export class LastUpdatedComponent extends HTMLElement {
       const copyright = document.querySelector('copyright-notice');
       const separator = document.querySelector('.footer-separator');
       
-      if (!copyright || !separator || !this) return;
+      if (!copyright || !separator) return;
       
       // Check if items are on different lines by comparing vertical positions
       const copyrightTop = copyright.offsetTop;
@@ -132,6 +132,7 @@ export class LastUpdatedComponent extends HTMLElement {
     // Initial check after a short delay to ensure layout is complete
     if (this.wrapTimeout) {
       clearTimeout(this.wrapTimeout);
+      this.wrapTimeout = null;
     }
     this.wrapTimeout = setTimeout(this.resizeHandler, 100);
   }
@@ -212,6 +213,7 @@ export class LastUpdatedComponent extends HTMLElement {
     if (this.resizeHandler) {
       if (this.wrapTimeout) {
         clearTimeout(this.wrapTimeout);
+        this.wrapTimeout = null;
       }
       this.wrapTimeout = setTimeout(this.resizeHandler, 100);
     }
