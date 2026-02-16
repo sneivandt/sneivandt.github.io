@@ -3,6 +3,11 @@
  * @description A web component that monitors and displays network connection status.
  */
 
+// HTTP Status Codes
+const HTTP_STATUS = {
+  METHOD_NOT_ALLOWED: 405
+};
+
 /**
  * ConnectionStatus Web Component
  * Usage: <connection-status></connection-status>
@@ -29,6 +34,14 @@ export class ConnectionStatusComponent extends HTMLElement {
     
     // Render component
     this.render();
+    
+    // Clean up any existing listeners before adding new ones
+    if (this.handleOnline) {
+      window.removeEventListener('online', this.handleOnline);
+    }
+    if (this.handleOffline) {
+      window.removeEventListener('offline', this.handleOffline);
+    }
     
     // Bind methods to preserve context
     this.handleOnline = this._handleOnline.bind(this);
@@ -115,7 +128,7 @@ export class ConnectionStatusComponent extends HTMLElement {
       });
       
       // Treat specific server errors as "connected" to avoid offline badge confusion
-      if (!response.ok && response.status !== 405) {
+      if (!response.ok && response.status !== HTTP_STATUS.METHOD_NOT_ALLOWED) {
         // e.g. 500 Internal Server Error means we are connected to the server
       }
       
@@ -127,7 +140,7 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   show() {
-    const status = this.shadowRoot.querySelector('.offline-status');
+    const status = this.shadowRoot?.querySelector('.offline-status');
     if (!status) return;
     
     // Clear existing timer if any
@@ -141,7 +154,7 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   hide() {
-    const status = this.shadowRoot.querySelector('.offline-status');
+    const status = this.shadowRoot?.querySelector('.offline-status');
     if (!status) return;
     
     if (this.timer) {

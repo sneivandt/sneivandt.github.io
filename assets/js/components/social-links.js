@@ -71,9 +71,11 @@ export class SocialLinksComponent extends HTMLElement {
    * @returns {string} Escaped text
    */
   escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    if (!this._escapeDiv) {
+      this._escapeDiv = document.createElement('div');
+    }
+    this._escapeDiv.textContent = text;
+    return this._escapeDiv.innerHTML;
   }
 }
 
