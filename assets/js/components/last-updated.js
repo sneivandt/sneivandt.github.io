@@ -1,0 +1,190 @@
+/**
+ * @module LastUpdatedComponent
+ * @description A web component that fetches and displays the last commit date for a GitHub repository.
+ */
+
+/**
+ * LastUpdated Web Component
+ * Usage: <last-updated repo="owner/repo"></last-updated>
+ */
+export class LastUpdatedComponent extends HTMLElement {
+  constructor() {
+    super();
+    
+    /** @type {string} */
+    this.repo = 'sneivandt/sneivandt.github.io';
+  }
+  
+  static get observedAttributes() {
+    return ['repo'];
+  }
+  
+  connectedCallback() {
+    // Parse attributes
+    this.parseAttributes();
+    
+    // Create shadow DOM
+    this.attachShadow({ mode: 'open' });
+    
+    // Render component
+    this.render();
+    
+    // Initialize
+    this.showCurrentDate();
+    this.init();
+    this.setupWrapDetection();
+  }
+  
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    
+    if (name === 'repo') {
+      this.repo = newValue || 'sneivandt/sneivandt.github.io';
+    }
+  }
+  
+  parseAttributes() {
+    this.repo = this.getAttribute('repo') || 'sneivandt/sneivandt.github.io';
+  }
+  
+  render() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host {
+          display: inline;
+          opacity: 0.7;
+          font-size: 0.8rem;
+          font-weight: 300;
+          color: var(--color-text-muted, #888888);
+        }
+      </style>
+      <span class="last-updated-text"></span>
+    `;
+  }
+  
+  setupWrapDetection() {
+    const checkWrap = () => {
+      const copyright = document.querySelector('.copyright-wrapper');
+      const separator = document.querySelector('.footer-separator');
+      
+      if (copyright && separator && this) {
+        // Check if items are on different lines by comparing vertical positions
+        const copyrightTop = copyright.offsetTop;
+        const thisTop = this.offsetTop;
+        
+        if (copyrightTop !== thisTop) {
+          separator.style.display = 'none';
+        } else {
+          separator.style.display = '';
+        }
+      }
+    };
+    
+    // Check on load and resize
+    window.addEventListener('resize', checkWrap);
+    // Initial check after a short delay to ensure layout is complete
+    setTimeout(checkWrap, 100);
+  }
+  
+  showCurrentDate() {
+    const copyrightDate = document.getElementById('copyright-date');
+    if (copyrightDate) {
+      const now = new Date();
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        month: 'long',
+        day: 'numeric'
+      });
+      copyrightDate.textContent = ` ${formatter.format(now)}`;
+    }
+  }
+  
+  async init() {
+    const cacheKey = `lastUpdated_${this.repo}`;
+    const cacheTimeKey = `${cacheKey}_time`;
+    const cacheExpiry = 60 * 60 * 1000; // 1 hour in milliseconds
+    
+    try {
+      // Check cache first
+      const cachedDate = localStorage.getItem(cacheKey);
+      const cachedTime = localStorage.getItem(cacheTimeKey);
+      
+      if (cachedDate && cachedTime) {
+        const age = Date.now() - parseInt(cachedTime, 10);
+        if (age < cacheExpiry) {
+          // Use cached data
+          this.renderDate(new Date(cachedDate));
+          return;
+        }
+      }
+      
+      // Fetch from API
+      const response = await fetch(`https://api.github.com/repos/${this.repo}/commits?per_page=1`);
+      
+      if (!response.ok) {
+        throw new Error(`GitHub API Error: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      if (data && data.length > 0 && data[0].commit) {
+        // Use committer date for when the change was actually applied
+        const dateStr = data[0].commit.committer.date;
+        const date = new Date(dateStr);
+        
+        // Cache the result
+        localStorage.setItem(cacheKey, dateStr);
+        localStorage.setItem(cacheTimeKey, Date.now().toString());
+        
+        this.renderDate(date);
+      }
+    } catch (error) {
+      console.warn('LastUpdated: Failed to fetch date.', error);
+      // Hide element on failure
+      this.style.display = 'none';
+    }
+  }
+  
+  renderDate(date) {
+    const textSpan = this.shadowRoot.querySelector('.last-updated-text');
+    if (!textSpan) return;
+    
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    
+    textSpan.textContent = `Last updated: ${formatter.format(date)}`;
+    
+    // Hide the copyright date and year once we have the last updated date
+    const copyrightDate = document.getElementById('copyright-date');
+    const copyrightYear = document.getElementById('copyright-year');
+    if (copyrightDate) {
+      copyrightDate.textContent = '';
+      copyrightDate.style.display = 'none';
+    }
+    if (copyrightYear) {
+      copyrightYear.style.display = 'none';
+    }
+    
+    // Re-check wrap status after content changes
+    setTimeout(() => {
+      const copyright = document.querySelector('.copyright-wrapper');
+      const separator = document.querySelector('.footer-separator');
+      
+      if (copyright && separator && this) {
+        const copyrightTop = copyright.offsetTop;
+        const thisTop = this.offsetTop;
+        
+        if (copyrightTop !== thisTop) {
+          separator.style.display = 'none';
+        } else {
+          separator.style.display = '';
+        }
+      }
+    }, 100);
+  }
+}
+
+// Register the custom element
+customElements.define('last-updated', LastUpdatedComponent);
