@@ -94,8 +94,11 @@ export class TypewriterEffectComponent extends HTMLElement {
       this.cursor = this.shadowRoot.querySelector('.typed-cursor');
     }
     
-    // Clean up any existing animation before starting a new one
-    this.destroy();
+    // Clean up any existing timeout before starting a new one
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
     
     // Check for reduced motion preference
     if (!this.motionQuery) {

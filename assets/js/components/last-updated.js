@@ -65,6 +65,24 @@ export class LastUpdatedComponent extends HTMLElement {
     this.repo = this.getAttribute('repo') || 'sneivandt/sneivandt.github.io';
   }
   
+  /**
+   * Validate GitHub API commit data structure
+   * @param {any} data - Data from GitHub API
+   * @returns {string|null} Commit date string if valid, null otherwise
+   */
+  extractCommitDate(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+    
+    const commit = data[0];
+    if (!commit?.commit?.committer?.date) {
+      return null;
+    }
+    
+    return commit.commit.committer.date;
+  }
+  
   render() {
     this.shadowRoot.innerHTML = `
       <style>
@@ -143,10 +161,9 @@ export class LastUpdatedComponent extends HTMLElement {
       }
       
       const data = await response.json();
+      const dateStr = this.extractCommitDate(data);
       
-      if (Array.isArray(data) && data.length > 0 && data[0]?.commit?.committer?.date) {
-        // Use committer date for when the change was actually applied
-        const dateStr = data[0].commit.committer.date;
+      if (dateStr) {
         const date = new Date(dateStr);
         
         // Validate date
