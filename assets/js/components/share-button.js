@@ -98,7 +98,7 @@ export class ShareButtonComponent extends HTMLElement {
           border-radius: 50%;
           border: 1px solid var(--color-border, rgba(255, 255, 255, 0.15));
           background: var(--color-bg-alt, #161616);
-          color: var(--color-text, #e6e6e6);
+          color: var(--color-accent, #f5f5f5);
           cursor: pointer;
           display: flex;
           align-items: center;
