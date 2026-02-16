@@ -8,11 +8,13 @@
  * Usage: <copyright-notice name="Stuart Neivandt"></copyright-notice>
  */
 export class CopyrightNoticeComponent extends HTMLElement {
+  static DEFAULT_NAME = 'Stuart Neivandt';
+  
   constructor() {
     super();
     
     /** @type {string} */
-    this.copyrightName = 'Stuart Neivandt';
+    this.copyrightName = CopyrightNoticeComponent.DEFAULT_NAME;
   }
   
   static get observedAttributes() {
@@ -36,7 +38,7 @@ export class CopyrightNoticeComponent extends HTMLElement {
     if (oldValue === newValue) return;
     
     if (name === 'name') {
-      this.copyrightName = newValue || 'Stuart Neivandt';
+      this.copyrightName = newValue || CopyrightNoticeComponent.DEFAULT_NAME;
       if (this.shadowRoot) {
         this.render();
       }
@@ -44,7 +46,7 @@ export class CopyrightNoticeComponent extends HTMLElement {
   }
   
   parseAttributes() {
-    this.copyrightName = this.getAttribute('name') || 'Stuart Neivandt';
+    this.copyrightName = this.getAttribute('name') || CopyrightNoticeComponent.DEFAULT_NAME;
   }
   
   render() {

@@ -37,7 +37,7 @@ export class LastUpdatedComponent extends HTMLElement {
     // Render component
     this.render();
     
-    // Initialize
+    // Fetch and display last updated date
     this.init();
     this.setupWrapDetection();
   }
