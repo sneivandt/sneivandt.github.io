@@ -29,25 +29,15 @@ This repository hosts the source for my landing page / profile site. It is inten
 | Fonts       | Self-hosted Inter |
 | Hosting     | GitHub Pages |
 
-## Web Components Architecture 🧩
+## Architecture 🧩
 
-The site uses 7 native Web Components for modular, encapsulated functionality:
-
-| Component | Purpose | Shadow DOM |
-|-----------|---------|------------|
-| `<typewriter-effect>` | Animated typing effect | ✅ Yes |
-| `<share-button>` | Share functionality with toast notifications | ✅ Yes |
-| `<connection-status>` | Network connectivity monitor | ✅ Yes |
-| `<last-updated>` | GitHub API integration for last commit date | ✅ Yes |
-| `<console-brand>` | Browser console branding | ❌ No |
-| `<profile-card>` | Main profile container | ❌ No (CSS integration) |
-| `<social-links>` | Social media navigation | ❌ No (CSS integration) |
+The site uses native Web Components (Custom Elements) for modular, encapsulated functionality with Shadow DOM where appropriate for style isolation.
 
 ### Key Benefits
 - **Encapsulation**: Shadow DOM prevents style conflicts
 - **Reusability**: Components work anywhere in the DOM
-- **Lifecycle**: Proper `connectedCallback` / `disconnectedCallback` management
-- **Accessibility**: Proper ARIA attributes, screen reader support
+- **Lifecycle**: Proper cleanup and event management
+- **Accessibility**: ARIA-compliant, screen reader support
 - **Progressive Enhancement**: Noscript fallbacks for core content
 
 ## Local Development 💻
