@@ -257,8 +257,11 @@ export class ShareButtonComponent extends HTMLElement {
     
     // Auto hide after 3 seconds
     this.toastTimeout = window.setTimeout(() => {
-      this.toastElement.classList.remove('visible');
-      this.toastElement.setAttribute('aria-hidden', 'true');
+      // Check element still exists before accessing
+      if (this.toastElement) {
+        this.toastElement.classList.remove('visible');
+        this.toastElement.setAttribute('aria-hidden', 'true');
+      }
     }, 3000);
   }
 }

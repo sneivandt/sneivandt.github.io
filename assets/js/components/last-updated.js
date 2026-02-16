@@ -209,10 +209,12 @@ export class LastUpdatedComponent extends HTMLElement {
     this.textElement.textContent = `Last updated: ${formatter.format(date)}`;
     
     // Re-check wrap status after content changes
-    if (this.resizeHandler && this.wrapTimeout) {
-      clearTimeout(this.wrapTimeout);
+    if (this.resizeHandler) {
+      if (this.wrapTimeout) {
+        clearTimeout(this.wrapTimeout);
+      }
+      this.wrapTimeout = setTimeout(this.resizeHandler, 100);
     }
-    this.wrapTimeout = setTimeout(this.resizeHandler, 100);
   }
 }
 
