@@ -73,7 +73,6 @@ export class ProfileCardComponent extends HTMLElement {
                 fallback="Software Engineer">
               </typewriter-effect>
             </span>
-            <noscript><span class="typed">Software Engineer</span></noscript>
           </div>
           <div class="bio-text">
             <p>${bio}</p>
