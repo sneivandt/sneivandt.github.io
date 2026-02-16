@@ -87,6 +87,8 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   render() {
+    if (!this.shadowRoot) return;
+    
     this.shadowRoot.innerHTML = `
       <style>
         :host {

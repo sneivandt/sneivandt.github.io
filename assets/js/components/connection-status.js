@@ -73,6 +73,8 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   render() {
+    if (!this.shadowRoot) return;
+    
     this.shadowRoot.innerHTML = `
       <style>
         :host {
