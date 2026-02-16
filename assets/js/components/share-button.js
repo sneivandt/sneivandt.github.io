@@ -23,6 +23,12 @@ export class ShareButtonComponent extends HTMLElement {
       text: '',
       url: window.location.href
     };
+    
+    /** @type {HTMLElement|null} */
+    this.buttonElement = null;
+    
+    /** @type {HTMLElement|null} */
+    this.toastElement = null;
   }
   
   static get observedAttributes() {
@@ -42,26 +48,26 @@ export class ShareButtonComponent extends HTMLElement {
     this.render();
     
     // Clean up existing listener if any
-    const button = this.shadowRoot?.querySelector('.share-btn');
-    if (button && this.handleShareBound) {
-      button.removeEventListener('click', this.handleShareBound);
+    if (this.buttonElement && this.handleShareBound) {
+      this.buttonElement.removeEventListener('click', this.handleShareBound);
     }
     
     // Set up event listeners
-    if (button) {
+    if (this.buttonElement) {
       this.handleShareBound = () => this.handleShare();
-      button.addEventListener('click', this.handleShareBound);
+      this.buttonElement.addEventListener('click', this.handleShareBound);
     }
   }
   
   disconnectedCallback() {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
+    
     // Clean up event listener
-    const button = this.shadowRoot?.querySelector('.share-btn');
-    if (button && this.handleShareBound) {
-      button.removeEventListener('click', this.handleShareBound);
+    if (this.buttonElement && this.handleShareBound) {
+      this.buttonElement.removeEventListener('click', this.handleShareBound);
     }
   }
   
@@ -88,6 +94,8 @@ export class ShareButtonComponent extends HTMLElement {
   }
   
   render() {
+    if (!this.shadowRoot) return;
+    
     this.shadowRoot.innerHTML = `
       <style>
         :host {
@@ -171,6 +179,10 @@ export class ShareButtonComponent extends HTMLElement {
       
       <div class="toast" role="status" aria-live="polite" aria-hidden="true">Link copied to clipboard</div>
     `;
+    
+    // Cache element references
+    this.buttonElement = this.shadowRoot.querySelector('.share-btn');
+    this.toastElement = this.shadowRoot.querySelector('.toast');
   }
   
   async handleShare() {
@@ -231,24 +243,27 @@ export class ShareButtonComponent extends HTMLElement {
   }
   
   showToast() {
-    const toast = this.shadowRoot?.querySelector('.toast');
-    if (!toast) return;
+    if (!this.toastElement) return;
     
     // Clear existing timeout
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
     
     // Reset animation and make visible to screen readers
-    toast.classList.remove('visible');
-    toast.setAttribute('aria-hidden', 'false');
-    void toast.offsetWidth; // Force reflow
-    toast.classList.add('visible');
+    this.toastElement.classList.remove('visible');
+    this.toastElement.setAttribute('aria-hidden', 'false');
+    void this.toastElement.offsetWidth; // Force reflow
+    this.toastElement.classList.add('visible');
     
     // Auto hide after 3 seconds
     this.toastTimeout = window.setTimeout(() => {
-      toast.classList.remove('visible');
-      toast.setAttribute('aria-hidden', 'true');
+      // Check element still exists before accessing
+      if (this.toastElement) {
+        this.toastElement.classList.remove('visible');
+        this.toastElement.setAttribute('aria-hidden', 'true');
+      }
     }, 3000);
   }
 }

@@ -19,6 +19,9 @@ export class LastUpdatedComponent extends HTMLElement {
     
     /** @type {number|null} */
     this.wrapTimeout = null;
+    
+    /** @type {HTMLElement|null} */
+    this.textElement = null;
   }
   
   static get observedAttributes() {
@@ -84,6 +87,8 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   render() {
+    if (!this.shadowRoot) return;
+    
     this.shadowRoot.innerHTML = `
       <style>
         :host {
@@ -96,6 +101,9 @@ export class LastUpdatedComponent extends HTMLElement {
       </style>
       <span class="last-updated-text"></span>
     `;
+    
+    // Cache the text element reference
+    this.textElement = this.shadowRoot.querySelector('.last-updated-text');
   }
   
   setupWrapDetection() {
@@ -108,22 +116,26 @@ export class LastUpdatedComponent extends HTMLElement {
       const copyright = document.querySelector('copyright-notice');
       const separator = document.querySelector('.footer-separator');
       
-      if (copyright && separator && this) {
-        // Check if items are on different lines by comparing vertical positions
-        const copyrightTop = copyright.offsetTop;
-        const thisTop = this.offsetTop;
-        
-        if (copyrightTop !== thisTop) {
-          separator.style.display = 'none';
-        } else {
-          separator.style.display = '';
-        }
+      if (!copyright || !separator) return;
+      
+      // Check if items are on different lines by comparing vertical positions
+      const copyrightTop = copyright.offsetTop;
+      const thisTop = this.offsetTop;
+      
+      if (copyrightTop !== thisTop) {
+        separator.style.display = 'none';
+      } else {
+        separator.style.display = '';
       }
     };
     
     // Check on load and resize
     window.addEventListener('resize', this.resizeHandler);
     // Initial check after a short delay to ensure layout is complete
+    if (this.wrapTimeout) {
+      clearTimeout(this.wrapTimeout);
+      this.wrapTimeout = null;
+    }
     this.wrapTimeout = setTimeout(this.resizeHandler, 100);
   }
   
@@ -189,8 +201,7 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   renderDate(date) {
-    const textSpan = this.shadowRoot.querySelector('.last-updated-text');
-    if (!textSpan) return;
+    if (!this.textElement) return;
     
     const formatter = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
@@ -198,10 +209,14 @@ export class LastUpdatedComponent extends HTMLElement {
       day: 'numeric'
     });
     
-    textSpan.textContent = `Last updated: ${formatter.format(date)}`;
+    this.textElement.textContent = `Last updated: ${formatter.format(date)}`;
     
     // Re-check wrap status after content changes
     if (this.resizeHandler) {
+      if (this.wrapTimeout) {
+        clearTimeout(this.wrapTimeout);
+        this.wrapTimeout = null;
+      }
       this.wrapTimeout = setTimeout(this.resizeHandler, 100);
     }
   }
