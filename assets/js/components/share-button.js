@@ -41,8 +41,13 @@ export class ShareButtonComponent extends HTMLElement {
     // Render component
     this.render();
     
-    // Set up event listeners
+    // Clean up existing listener if any
     const button = this.shadowRoot?.querySelector('.share-btn');
+    if (button && this.handleShareBound) {
+      button.removeEventListener('click', this.handleShareBound);
+    }
+    
+    // Set up event listeners
     if (button) {
       this.handleShareBound = () => this.handleShare();
       button.addEventListener('click', this.handleShareBound);

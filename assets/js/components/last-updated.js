@@ -81,6 +81,11 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   setupWrapDetection() {
+    // Clean up existing listener if any
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
+    
     this.resizeHandler = () => {
       const copyright = document.querySelector('copyright-notice');
       const separator = document.querySelector('.footer-separator');

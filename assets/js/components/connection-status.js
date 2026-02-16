@@ -30,6 +30,14 @@ export class ConnectionStatusComponent extends HTMLElement {
     // Render component
     this.render();
     
+    // Clean up any existing listeners before adding new ones
+    if (this.handleOnline) {
+      window.removeEventListener('online', this.handleOnline);
+    }
+    if (this.handleOffline) {
+      window.removeEventListener('offline', this.handleOffline);
+    }
+    
     // Bind methods to preserve context
     this.handleOnline = this._handleOnline.bind(this);
     this.handleOffline = this._handleOffline.bind(this);

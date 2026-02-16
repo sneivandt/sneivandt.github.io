@@ -94,9 +94,15 @@ export class TypewriterEffectComponent extends HTMLElement {
       this.cursor = this.shadowRoot.querySelector('.typed-cursor');
     }
     
+    // Clean up any existing animation before starting a new one
+    this.destroy();
+    
     // Check for reduced motion preference
-    this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    this.handleMotionPreference = this.handleMotionPreference.bind(this);
+    if (!this.motionQuery) {
+      this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      this.handleMotionPreference = this.handleMotionPreference.bind(this);
+      this.motionQuery.addEventListener('change', this.handleMotionPreference);
+    }
     
     if (this.motionQuery.matches) {
       this.setFallbackText();
@@ -104,8 +110,6 @@ export class TypewriterEffectComponent extends HTMLElement {
       // Start after delay
       this.timeout = window.setTimeout(() => this.tick(), this.startDelay);
     }
-    
-    this.motionQuery.addEventListener('change', this.handleMotionPreference);
   }
   
   disconnectedCallback() {
