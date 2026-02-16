@@ -24,6 +24,9 @@ export class ConnectionStatusComponent extends HTMLElement {
     
     /** @type {Function|null} */
     this.handleOffline = null;
+    
+    /** @type {HTMLElement|null} */
+    this.statusElement = null;
   }
   
   connectedCallback() {
@@ -103,6 +106,9 @@ export class ConnectionStatusComponent extends HTMLElement {
         Offline Mode
       </div>
     `;
+    
+    // Cache the status element reference
+    this.statusElement = this.shadowRoot.querySelector('.offline-status');
   }
   
   _handleOnline() {
@@ -140,10 +146,7 @@ export class ConnectionStatusComponent extends HTMLElement {
   }
   
   show() {
-    if (!this.shadowRoot) return;
-    
-    const status = this.shadowRoot.querySelector('.offline-status');
-    if (!status) return;
+    if (!this.statusElement) return;
     
     // Clear existing timer if any
     if (this.timer) {
@@ -151,26 +154,23 @@ export class ConnectionStatusComponent extends HTMLElement {
       this.timer = null;
     }
     
-    status.classList.add('visible');
-    status.setAttribute('aria-hidden', 'false');
+    this.statusElement.classList.add('visible');
+    this.statusElement.setAttribute('aria-hidden', 'false');
     
     // Auto-hide after 5 seconds
     this.timer = window.setTimeout(() => this.hide(), 5000);
   }
   
   hide() {
-    if (!this.shadowRoot) return;
-    
-    const status = this.shadowRoot.querySelector('.offline-status');
-    if (!status) return;
+    if (!this.statusElement) return;
     
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
     }
     
-    status.classList.remove('visible');
-    status.setAttribute('aria-hidden', 'true');
+    this.statusElement.classList.remove('visible');
+    this.statusElement.setAttribute('aria-hidden', 'true');
   }
 }
 

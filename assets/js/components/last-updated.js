@@ -19,6 +19,9 @@ export class LastUpdatedComponent extends HTMLElement {
     
     /** @type {number|null} */
     this.wrapTimeout = null;
+    
+    /** @type {HTMLElement|null} */
+    this.textElement = null;
   }
   
   static get observedAttributes() {
@@ -96,6 +99,9 @@ export class LastUpdatedComponent extends HTMLElement {
       </style>
       <span class="last-updated-text"></span>
     `;
+    
+    // Cache the text element reference
+    this.textElement = this.shadowRoot.querySelector('.last-updated-text');
   }
   
   setupWrapDetection() {
@@ -192,10 +198,7 @@ export class LastUpdatedComponent extends HTMLElement {
   }
   
   renderDate(date) {
-    if (!this.shadowRoot) return;
-    
-    const textSpan = this.shadowRoot.querySelector('.last-updated-text');
-    if (!textSpan) return;
+    if (!this.textElement) return;
     
     const formatter = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
@@ -203,7 +206,7 @@ export class LastUpdatedComponent extends HTMLElement {
       day: 'numeric'
     });
     
-    textSpan.textContent = `Last updated: ${formatter.format(date)}`;
+    this.textElement.textContent = `Last updated: ${formatter.format(date)}`;
     
     // Re-check wrap status after content changes
     if (this.resizeHandler && this.wrapTimeout) {
