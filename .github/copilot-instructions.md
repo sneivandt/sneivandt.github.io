@@ -20,12 +20,20 @@ This repository is intentionally **minimal, dependency-free, build-free static c
 ├── assets/             # All static assets
 │   ├── css/style.css       # Global stylesheet (design tokens + components)
 │   ├── js/                 # JavaScript modules
-│   │   ├── main.js         # Entry point, orchestration, service worker registration
-│   │   ├── connection-status.js # Network status handler
-│   │   ├── last-updated.js # GitHub API fetch for last updated time
-│   │   ├── typewriter.js   # Typewriter effect (self-contained module)
-│   │   ├── share-button.js # Share functionality (self-contained module)
-│   │   └── console-brand.js # Console branding (self-contained module)
+│   │   ├── main.js         # Entry point, component registration, service worker
+│   │   ├── components/     # Web Components (Custom Elements)
+│   │   │   ├── typewriter-effect.js   # Animated typing with Shadow DOM
+│   │   │   ├── share-button.js        # Share functionality with Shadow DOM
+│   │   │   ├── connection-status.js   # Network monitor with Shadow DOM
+│   │   │   ├── last-updated.js        # GitHub API with Shadow DOM
+│   │   │   ├── console-brand.js       # Console branding
+│   │   │   ├── profile-card.js        # Profile container (no Shadow DOM)
+│   │   │   └── social-links.js        # Social links (no Shadow DOM)
+│   │   ├── typewriter.js   # Legacy (kept for reference)
+│   │   ├── share-button.js # Legacy (kept for reference)
+│   │   ├── connection-status.js # Legacy (kept for reference)
+│   │   ├── last-updated.js # Legacy (kept for reference)
+│   │   └── console-brand.js # Legacy (kept for reference)
 │   ├── font/               # Self-hosted Inter font files (.woff2)
 │   └── img/                # Images (profile, favicons)
 ├── scripts/
@@ -78,25 +86,137 @@ Every HTML page should include:
 
 ### Architecture
 - **Vanilla JS only** — no frameworks (React, Vue, Svelte, Alpine, jQuery)
+- **Web Components** — use native Custom Elements API for reusable components
 - **ES modules** — use `import`/`export` for modularity
 - **Deferred loading** — scripts must not block first paint (`type="module"` or `defer`)
 - **Graceful degradation** — if a script errors or JS is disabled, the page still communicates core content
 
-### Module Pattern
-Each feature should be self-contained:
+### Web Components Pattern
+The site uses native Web Components (Custom Elements) for all interactive features:
+
 ```javascript
-// assets/js/feature.js
-export class Feature {
-  constructor(element, options = {}) { ... }
-  destroy() { ... }  // Cleanup method for stopping/removing
+// assets/js/components/example.js
+export class ExampleComponent extends HTMLElement {
+  constructor() {
+    super();
+    // Initialize state
+  }
+  
+  connectedCallback() {
+    // Guard against re-attachment
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+    }
+    this.render();
+    // Set up event listeners
+  }
+  
+  disconnectedCallback() {
+    // Clean up event listeners and timeouts
+  }
+  
+  render() {
+    this.shadowRoot.innerHTML = `
+      <style>/* Component styles */</style>
+      <!-- Component markup -->
+    `;
+  }
 }
+
+customElements.define('example-component', ExampleComponent);
 ```
+
+### Web Component Best Practices
+- **Shadow DOM guards**: Always check `if (!this.shadowRoot)` before attaching to prevent errors on reconnect/adoption
+- **Lifecycle management**: Implement `disconnectedCallback()` to clean up event listeners and timeouts
+- **Accessibility**: Use `aria-hidden="true"` for rapidly-updating animated content, not `aria-live`
+- **Shadow DOM usage**: Use Shadow DOM for components needing style encapsulation; skip for components requiring global CSS integration
+- **Attributes**: Pass plain text via attributes, handle HTML rendering inside components
+- **Progressive enhancement**: Provide noscript fallbacks for core content
 
 ### Best Practices
 - Keep logic modular and small (~200 lines max per file)
 - No ES module imports that suggest a future build pipeline
 - Use `matchMedia('(prefers-reduced-motion: reduce)')` for motion-sensitive features
 - Fail silently when features are unavailable (e.g., Clipboard API)
+- Always validate with `node --check` before committing
+
+## Web Components 🧩
+
+### Current Components
+
+The site uses 7 native Web Components (Custom Elements):
+
+| Component | File | Shadow DOM | Purpose |
+|-----------|------|------------|---------|
+| `<typewriter-effect>` | `components/typewriter-effect.js` | ✅ | Animated typing with motion preference support |
+| `<share-button>` | `components/share-button.js` | ✅ | Share with Web Share API / Clipboard fallback |
+| `<connection-status>` | `components/connection-status.js` | ✅ | Network connectivity indicator |
+| `<last-updated>` | `components/last-updated.js` | ✅ | GitHub API last commit date with caching |
+| `<console-brand>` | `components/console-brand.js` | ❌ | Browser console signature |
+| `<profile-card>` | `components/profile-card.js` | ❌ | Profile container (composes other components) |
+| `<social-links>` | `components/social-links.js` | ❌ | Social media navigation |
+
+### When to Use Shadow DOM
+
+✅ **Use Shadow DOM when:**
+- Component has self-contained styles that shouldn't leak
+- Component needs style isolation from page CSS
+- Component is truly independent (share-button, typewriter, etc.)
+
+❌ **Skip Shadow DOM when:**
+- Component needs to integrate with global CSS classes
+- Component is a composition/layout container
+- Component's children need page-level styles
+
+### Component Checklist
+
+When creating or modifying Web Components:
+
+- [ ] Guard shadow DOM attachment: `if (!this.shadowRoot) this.attachShadow(...)`
+- [ ] Implement `disconnectedCallback()` for cleanup
+- [ ] Remove event listeners in `disconnectedCallback()`
+- [ ] Clear timeouts/intervals in `disconnectedCallback()`
+- [ ] Use `aria-hidden="true"` for rapidly-updating animations
+- [ ] Toggle `aria-hidden` on status messages (with `aria-live="polite"`)
+- [ ] Accept plain text via attributes, render HTML in component
+- [ ] Support `prefers-reduced-motion` for animations
+- [ ] Validate with `node --check`
+
+### Example: Minimal Web Component
+
+```javascript
+export class MinimalComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.resizeHandler = null; // Store for cleanup
+  }
+  
+  connectedCallback() {
+    // Guard against re-attachment
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+      this.shadowRoot.innerHTML = `
+        <style>:host { display: block; }</style>
+        <slot></slot>
+      `;
+    }
+    
+    // Set up listeners
+    this.resizeHandler = () => console.log('resize');
+    window.addEventListener('resize', this.resizeHandler);
+  }
+  
+  disconnectedCallback() {
+    // Clean up
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler);
+    }
+  }
+}
+
+customElements.define('minimal-component', MinimalComponent);
+```
 
 ## Images & Fonts
 
