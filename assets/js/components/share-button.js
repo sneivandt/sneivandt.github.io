@@ -14,6 +14,9 @@ export class ShareButtonComponent extends HTMLElement {
     /** @type {number|null} */
     this.toastTimeout = null;
     
+    /** @type {Function|null} */
+    this.handleShareBound = null;
+    
     /** @type {{title: string, text: string, url: string}} */
     this.shareData = {
       title: '',
@@ -41,13 +44,19 @@ export class ShareButtonComponent extends HTMLElement {
     // Set up event listeners
     const button = this.shadowRoot.querySelector('.share-btn');
     if (button) {
-      button.addEventListener('click', () => this.handleShare());
+      this.handleShareBound = () => this.handleShare();
+      button.addEventListener('click', this.handleShareBound);
     }
   }
   
   disconnectedCallback() {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
+    }
+    // Clean up event listener
+    const button = this.shadowRoot?.querySelector('.share-btn');
+    if (button && this.handleShareBound) {
+      button.removeEventListener('click', this.handleShareBound);
     }
   }
   

@@ -1,5 +1,5 @@
 /**
- * @module TypewriterEffect
+ * @module TypewriterEffectComponent
  * @description A web component that provides a typewriter animation effect.
  */
 
@@ -7,7 +7,7 @@
  * TypewriterEffect Web Component
  * Usage: <typewriter-effect strings="Software Engineer,Music Enthusiast,Chess Player"></typewriter-effect>
  */
-export class TypewriterEffect extends HTMLElement {
+export class TypewriterEffectComponent extends HTMLElement {
   constructor() {
     super();
     
@@ -235,4 +235,4 @@ export class TypewriterEffect extends HTMLElement {
 }
 
 // Register the custom element
-customElements.define('typewriter-effect', TypewriterEffect);
+customElements.define('typewriter-effect', TypewriterEffectComponent);

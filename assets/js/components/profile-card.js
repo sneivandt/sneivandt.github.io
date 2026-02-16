@@ -22,6 +22,10 @@ export class ProfileCardComponent extends HTMLElement {
     this.render();
   }
   
+  disconnectedCallback() {
+    // No cleanup needed - static content only
+  }
+  
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue && this.isConnected) {
       this.render();
