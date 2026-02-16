@@ -51,9 +51,9 @@ export class SocialLinksComponent extends HTMLElement {
         <ul class="social-links">
           ${this.socialLinks.map(link => `
             <li>
-              <a href="${link.url}" 
+              <a href="${this.escapeHtml(link.url)}" 
                  class="social-icon" 
-                 aria-label="${link.label}" 
+                 aria-label="${this.escapeHtml(link.label)}" 
                  target="_blank" 
                  rel="me noopener noreferrer">
                 ${link.icon}
@@ -63,6 +63,17 @@ export class SocialLinksComponent extends HTMLElement {
         </ul>
       </nav>
     `;
+  }
+  
+  /**
+   * Escape HTML to prevent XSS attacks
+   * @param {string} text - Text to escape
+   * @returns {string} Escaped text
+   */
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 }
 

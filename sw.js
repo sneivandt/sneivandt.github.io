@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 /**
@@ -29,12 +29,15 @@ const PRECACHE_ASSETS = [
   './assets/img/icon-512.png',
   './assets/img/stuart-neivandt.webp',
   './index.html',
-  './assets/js/connection-status.js',
-  './assets/js/console-brand.js',
-  './assets/js/last-updated.js',
   './assets/js/main.js',
-  './assets/js/share-button.js',
-  './assets/js/typewriter.js',
+  './assets/js/components/typewriter-effect.js',
+  './assets/js/components/share-button.js',
+  './assets/js/components/connection-status.js',
+  './assets/js/components/last-updated.js',
+  './assets/js/components/console-brand.js',
+  './assets/js/components/profile-card.js',
+  './assets/js/components/social-links.js',
+  './assets/js/components/copyright-notice.js',
   './manifest.json'
 ];
 

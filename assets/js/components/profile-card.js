@@ -32,15 +32,15 @@ export class ProfileCardComponent extends HTMLElement {
     const name = this.getAttribute('name') || 'Stuart Neivandt';
     const bioText = this.getAttribute('bio') || 'Building secure distributed systems at Microsoft. Based in Bellevue, WA.';
     
-    // Add the nowrap span back in the component rendering
-    const bio = bioText.replace('Bellevue, WA.', '<span class="nowrap">Bellevue, WA.</span>');
+    // Escape HTML to prevent XSS
+    const escapedName = this.escapeHtml(name);
     
     this.innerHTML = `
       <div class="profile-card">
         <div class="profile-container">
           <div class="profile-image">
             <img src="assets/img/stuart-neivandt.webp" 
-                 alt="Portrait of ${name}" 
+                 alt="Portrait of ${escapedName}" 
                  id="profile-img" 
                  width="300" 
                  height="300" 
@@ -50,7 +50,7 @@ export class ProfileCardComponent extends HTMLElement {
           </div>
         </div>
         <div class="profile-content">
-          <h1>${name}</h1>
+          <h1>${escapedName}</h1>
           <div class="typed-container">
             <div class="visually-hidden" data-nosnippet>
               <ul id="typed-strings">
@@ -75,12 +75,40 @@ export class ProfileCardComponent extends HTMLElement {
             </span>
           </div>
           <div class="bio-text">
-            <p>${bio}</p>
+            <p class="bio-paragraph"></p>
           </div>
           <social-links></social-links>
         </div>
       </div>
     `;
+    
+    // Safely add bio text with nowrap span using DOM manipulation
+    const bioParagraph = this.querySelector('.bio-paragraph');
+    if (bioParagraph) {
+      // Split the bio text at "Bellevue, WA." to add nowrap span
+      const parts = bioText.split('Bellevue, WA.');
+      if (parts.length > 1) {
+        bioParagraph.textContent = parts[0];
+        const nowrapSpan = document.createElement('span');
+        nowrapSpan.className = 'nowrap';
+        nowrapSpan.textContent = 'Bellevue, WA.';
+        bioParagraph.appendChild(nowrapSpan);
+        bioParagraph.appendChild(document.createTextNode(parts.slice(1).join('Bellevue, WA.')));
+      } else {
+        bioParagraph.textContent = bioText;
+      }
+    }
+  }
+  
+  /**
+   * Escape HTML to prevent XSS attacks
+   * @param {string} text - Text to escape
+   * @returns {string} Escaped text
+   */
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 }
 
