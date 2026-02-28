@@ -62,6 +62,7 @@ export class ProfileCardComponent extends HTMLElement {
             <div class="visually-hidden" data-nosnippet>
               <ul id="typed-strings">
                 <li>Software Engineer</li>
+                <li>Husband</li>
                 <li>Music Enthusiast</li>
                 <li>Chess Player</li>
                 <li>Continuous Learner</li>
@@ -71,7 +72,7 @@ export class ProfileCardComponent extends HTMLElement {
             </div>
             <span id="typed" class="typed" aria-hidden="true">
               <typewriter-effect 
-                strings="Software Engineer,Music Enthusiast,Chess Player,Continuous Learner,Coffee Addict,Mediocre Investor"
+                strings="Software Engineer,Husband,Music Enthusiast,Chess Player,Continuous Learner,Coffee Addict,Mediocre Investor"
                 loop="true"
                 type-speed="60"
                 back-speed="30"
