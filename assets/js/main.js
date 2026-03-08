@@ -8,7 +8,6 @@
 import './components/typewriter-effect.js';
 import './components/share-button.js';
 import './components/connection-status.js';
-import './components/last-updated.js';
 import './components/console-brand.js';
 import './components/profile-card.js';
 import './components/social-links.js';

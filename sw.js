@@ -40,7 +40,6 @@ const PRECACHE_ASSETS = [
   './assets/js/components/typewriter-effect.js',
   './assets/js/components/share-button.js',
   './assets/js/components/connection-status.js',
-  './assets/js/components/last-updated.js',
   './assets/js/components/console-brand.js',
   './assets/js/components/profile-card.js',
   './assets/js/components/social-links.js',
