@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
@@ -34,6 +34,7 @@ const PRECACHE_ASSETS = [
   './assets/img/favicon.svg',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png',
+  './assets/img/seattle-bellevue-map.svg',
   './assets/img/stuart-neivandt.webp',
   './index.html',
   './assets/js/main.js',

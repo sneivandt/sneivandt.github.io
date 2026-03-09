@@ -131,12 +131,47 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-
+  isolation: isolate;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+body::before {
+  background-image:
+    radial-gradient(circle at 40% 58%, rgba(67, 87, 80, 0.16), transparent 20%),
+    radial-gradient(circle at 61% 41%, rgba(84, 107, 99, 0.14), transparent 18%),
+    url('../img/seattle-bellevue-map.svg');
+  background-position:
+    40% 58%,
+    61% 41%,
+    center 48%;
+  background-repeat: no-repeat;
+  background-size:
+    auto,
+    auto,
+    clamp(760px, 100vw, 1400px) auto;
+  filter: saturate(88%) contrast(110%);
+  opacity: 0.48;
+  transform: translateZ(0);
+}
+
+body::after {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 30%, rgba(17, 17, 17, 0.18) 100%),
+    linear-gradient(135deg, rgba(17, 17, 17, 0.08), transparent 42%, rgba(17, 17, 17, 0.3));
 }
 
 /* Helper Classes */
@@ -182,6 +217,8 @@ body {
   display: flex;
   flex-direction: column;
   padding: 2rem 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 main {

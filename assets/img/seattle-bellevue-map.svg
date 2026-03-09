@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" fill="none">
+  <title>Seattle area map centered on Bellevue and Microsoft</title>
+  <defs>
+    <linearGradient id="map-tint" x1="112" y1="160" x2="1040" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1f2624"/>
+      <stop offset="0.48" stop-color="#293430"/>
+      <stop offset="1" stop-color="#3b4e46"/>
+    </linearGradient>
+    <linearGradient id="route-tint" x1="180" y1="188" x2="860" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#27312e"/>
+      <stop offset="1" stop-color="#496058"/>
+    </linearGradient>
+    <radialGradient id="bellevue-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(479.8 530.5) rotate(90) scale(104)">
+      <stop offset="0" stop-color="#50685f" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#50685f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="microsoft-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(720.2 369.5) rotate(90) scale(98)">
+      <stop offset="0" stop-color="#5a746b" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#5a746b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <g opacity="0.94">
+    <path d="M212.4 127.5 242.4 187.5 268.7 262.5 287.4 337.5 302.4 417.5 317.4 507.5 328.7 587.5 336.2 672.5 347.4 757.5 358.7 837.5 587.4 837.5 572.4 752.5 553.7 662.5 538.7 577.5 527.4 492.5 508.7 402.5 486.2 327.5 459.9 257.5 429.9 192.5 399.9 127.5Z" fill="url(#map-tint)" fill-opacity="0.3" stroke="url(#route-tint)" stroke-opacity="0.48" stroke-width="2"/>
+    <path d="M383.7 655.5 408.7 638.5 444.9 646.5 459.9 686.5 444.9 731.5 412.4 750.5 381.2 735.5 366.2 690.5Z" fill="#111111" fill-opacity="0.75" stroke="#3d5049" stroke-opacity="0.4" stroke-width="1.5"/>
+
+    <path d="M474.9 127.5 489.9 217.5 504.9 302.5 516.2 392.5 519.9 477.5 519.9 552.5 508.7 642.5 489.9 732.5 474.9 817.5" stroke="url(#route-tint)" stroke-opacity="0.6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M156.2 372.5 249.9 377.5 336.2 377.5 422.4 377.5 489.9 382.5 561.2 382.5 636.2 382.5 707.4 377.5 786.2 372.5 876.2 367.5" stroke="url(#route-tint)" stroke-opacity="0.54" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M201.2 617.5 287.4 622.5 362.4 622.5 437.4 627.5 516.2 632.5 591.2 637.5 669.9 642.5 748.7 642.5 842.4 642.5" stroke="url(#route-tint)" stroke-opacity="0.48" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M613.7 342.5 673.7 362.5 729.9 382.5 793.7 407.5" stroke="#4a5f58" stroke-opacity="0.38" stroke-width="4" stroke-linecap="round"/>
+    <path d="M658.7 282.5 703.7 332.5 741.2 377.5 778.7 422.5" stroke="#4a5f58" stroke-opacity="0.34" stroke-width="4" stroke-linecap="round"/>
+    <path d="M677.4 332.5 722.4 312.5 763.7 337.5 771.2 387.5 752.4 427.5 707.4 437.5 673.7 402.5 677.4 332.5Z" stroke="#556d65" stroke-opacity="0.4" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <g stroke="#41544d" stroke-opacity="0.28" stroke-width="2" stroke-linecap="round">
+      <path d="M444.9 482.5 497.4 482.5 549.9 482.5"/>
+      <path d="M441.2 527.5 497.4 527.5 553.7 527.5"/>
+      <path d="M448.7 572.5 501.2 572.5 553.7 572.5"/>
+      <path d="M467.4 607.5 467.4 462.5"/>
+      <path d="M497.4 612.5 497.4 457.5"/>
+      <path d="M527.4 607.5 527.4 467.5"/>
+      <path d="M603.7 314.5 621.2 351.5 608.7 393.5 577.4 420.5"/>
+      <path d="M812.4 235.5 818.7 391.5 799.9 544.5"/>
+      <path d="M129.9 716.5 242.4 716.5 351.2 719.5"/>
+      <path d="M872.4 227.5 989.9 237.5 1082.4 259.5"/>
+    </g>
+
+    <path d="M479.8 530.5 720.2 369.5" stroke="#617b73" stroke-opacity="0.16" stroke-width="2.5" stroke-dasharray="8 12" stroke-linecap="round"/>
+
+    <circle cx="479.8" cy="530.5" r="104" fill="url(#bellevue-glow)"/>
+    <circle cx="720.2" cy="369.5" r="98" fill="url(#microsoft-glow)"/>
+
+    <g>
+      <circle cx="479.8" cy="530.5" r="28" fill="none" stroke="#5f7a71" stroke-opacity="0.42" stroke-width="2"/>
+      <circle cx="479.8" cy="530.5" r="12" fill="#607b72" fill-opacity="0.5"/>
+      <circle cx="479.8" cy="530.5" r="4.5" fill="#dce7e2" fill-opacity="0.8"/>
+    </g>
+    <g>
+      <circle cx="720.2" cy="369.5" r="24" fill="none" stroke="#648179" stroke-opacity="0.38" stroke-width="2"/>
+      <circle cx="720.2" cy="369.5" r="10" fill="#658179" fill-opacity="0.46"/>
+      <circle cx="720.2" cy="369.5" r="4" fill="#dce7e2" fill-opacity="0.76"/>
+    </g>
+
+    <g fill="#7f958d" fill-opacity="0.46" font-family="Inter, Arial, sans-serif" letter-spacing="0.24em" text-anchor="middle">
+      <text x="479.8" y="508" font-size="22">BELLEVUE</text>
+      <text x="720.2" y="347" font-size="19">MICROSOFT HQ</text>
+    </g>
+  </g>
+</svg>
