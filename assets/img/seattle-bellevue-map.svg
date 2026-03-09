@@ -1,68 +1,83 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" fill="none">
-  <title>Seattle area map centered on Bellevue and Microsoft</title>
+  <title>Seattle and Eastside map centered on Bellevue and Microsoft headquarters</title>
   <defs>
-    <linearGradient id="map-tint" x1="112" y1="160" x2="1040" y2="760" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#1f2624"/>
-      <stop offset="0.48" stop-color="#293430"/>
-      <stop offset="1" stop-color="#3b4e46"/>
+    <linearGradient id="water-fill" x1="220" y1="52" x2="1008" y2="860" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#24302d"/>
+      <stop offset="0.55" stop-color="#2a3734"/>
+      <stop offset="1" stop-color="#33433f"/>
     </linearGradient>
-    <linearGradient id="route-tint" x1="180" y1="188" x2="860" y2="720" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#27312e"/>
-      <stop offset="1" stop-color="#496058"/>
+    <linearGradient id="water-edge" x1="236" y1="18" x2="942" y2="860" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#607b73"/>
+      <stop offset="1" stop-color="#425750"/>
     </linearGradient>
-    <radialGradient id="bellevue-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(479.8 530.5) rotate(90) scale(104)">
-      <stop offset="0" stop-color="#50685f" stop-opacity="0.55"/>
-      <stop offset="1" stop-color="#50685f" stop-opacity="0"/>
+    <linearGradient id="highway" x1="146" y1="120" x2="932" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#536b63"/>
+      <stop offset="0.45" stop-color="#6e8b81"/>
+      <stop offset="1" stop-color="#597168"/>
+    </linearGradient>
+    <linearGradient id="local-road" x1="430" y1="290" x2="950" y2="510" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#445851"/>
+      <stop offset="1" stop-color="#556d65"/>
+    </linearGradient>
+    <radialGradient id="bellevue-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(615.6 548) rotate(90) scale(118)">
+      <stop offset="0" stop-color="#5a7269" stop-opacity="0.54"/>
+      <stop offset="1" stop-color="#5a7269" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="microsoft-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(720.2 369.5) rotate(90) scale(98)">
-      <stop offset="0" stop-color="#5a746b" stop-opacity="0.5"/>
-      <stop offset="1" stop-color="#5a746b" stop-opacity="0"/>
+    <radialGradient id="microsoft-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(882.9 390.5) rotate(90) scale(106)">
+      <stop offset="0" stop-color="#68867c" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#68867c" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <g opacity="0.94">
-    <path d="M212.4 127.5 242.4 187.5 268.7 262.5 287.4 337.5 302.4 417.5 317.4 507.5 328.7 587.5 336.2 672.5 347.4 757.5 358.7 837.5 587.4 837.5 572.4 752.5 553.7 662.5 538.7 577.5 527.4 492.5 508.7 402.5 486.2 327.5 459.9 257.5 429.9 192.5 399.9 127.5Z" fill="url(#map-tint)" fill-opacity="0.3" stroke="url(#route-tint)" stroke-opacity="0.48" stroke-width="2"/>
-    <path d="M383.7 655.5 408.7 638.5 444.9 646.5 459.9 686.5 444.9 731.5 412.4 750.5 381.2 735.5 366.2 690.5Z" fill="#111111" fill-opacity="0.75" stroke="#3d5049" stroke-opacity="0.4" stroke-width="1.5"/>
+  <g opacity="0.95">
+    <path d="M298.2 0 309.1 65 323.6 125 341.8 195 360 265 378.2 335 392.7 405 407.3 480 421.8 555 436.4 630 450.9 705 469.1 775 487.3 840 509.1 900 723.6 900 709.1 830 690.9 760 672.7 685 658.2 610 640 530 621.8 455 603.6 380 585.5 310 560 240 530.9 170 501.8 105 472.7 45 443.6 0Z" fill="url(#water-fill)" fill-opacity="0.34" stroke="url(#water-edge)" stroke-opacity="0.46" stroke-width="2.2"/>
+    <path d="M818.2 215 829.1 290 840 365 850.9 445 861.8 520 872.7 600 883.6 675 894.5 755 905.5 830 916.4 900 1054.5 900 1043.6 815 1032.7 730 1021.8 645 1010.9 560 1000 475 985.5 390 967.3 305 949.1 215Z" fill="url(#water-fill)" fill-opacity="0.22" stroke="url(#water-edge)" stroke-opacity="0.34" stroke-width="1.8"/>
+    <path d="M796.4 370 800 310 796.4 250 785.5 185 767.3 115 745.5 45" stroke="#50675f" stroke-opacity="0.28" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M796.4 370 800 310 796.4 250 785.5 185 767.3 115 745.5 45" stroke="#6f8c82" stroke-opacity="0.36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M425.5 595 465.5 630 516.4 640 567.3 610 589.1 540 581.8 465 541.8 405 487.3 390 440 425 418.2 505Z" fill="#111111" fill-opacity="0.8" stroke="#475d56" stroke-opacity="0.42" stroke-width="1.6"/>
 
-    <path d="M474.9 127.5 489.9 217.5 504.9 302.5 516.2 392.5 519.9 477.5 519.9 552.5 508.7 642.5 489.9 732.5 474.9 817.5" stroke="url(#route-tint)" stroke-opacity="0.6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M156.2 372.5 249.9 377.5 336.2 377.5 422.4 377.5 489.9 382.5 561.2 382.5 636.2 382.5 707.4 377.5 786.2 372.5 876.2 367.5" stroke="url(#route-tint)" stroke-opacity="0.54" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M201.2 617.5 287.4 622.5 362.4 622.5 437.4 627.5 516.2 632.5 591.2 637.5 669.9 642.5 748.7 642.5 842.4 642.5" stroke="url(#route-tint)" stroke-opacity="0.48" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M613.7 342.5 673.7 362.5 729.9 382.5 793.7 407.5" stroke="#4a5f58" stroke-opacity="0.38" stroke-width="4" stroke-linecap="round"/>
-    <path d="M658.7 282.5 703.7 332.5 741.2 377.5 778.7 422.5" stroke="#4a5f58" stroke-opacity="0.34" stroke-width="4" stroke-linecap="round"/>
-    <path d="M677.4 332.5 722.4 312.5 763.7 337.5 771.2 387.5 752.4 427.5 707.4 437.5 673.7 402.5 677.4 332.5Z" stroke="#556d65" stroke-opacity="0.4" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M127.3 0 130.9 75 134.5 150 138.2 225 141.8 300 145.5 375 149.1 450 149.1 525 149.1 600 145.5 675 141.8 750 134.5 825 127.3 900" stroke="url(#highway)" stroke-opacity="0.32" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M236.4 390 294.5 390 352.7 390 410.9 390 469.1 390 523.6 390 578.2 395 629.1 400 683.6 400 738.2 400 792.7 400 840 395 887.3 390 934.5 375" stroke="url(#highway)" stroke-opacity="0.6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M243.6 645 301.8 645 356.4 650 414.5 650 469.1 655 523.6 660 578.2 665 632.7 665 687.3 670 741.8 675 803.6 675 865.5 675 927.3 675" stroke="url(#highway)" stroke-opacity="0.5" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M603.6 75 610.9 145 621.8 215 632.7 290 643.6 360 650.9 435 654.5 510 654.5 585 647.3 660 632.7 730 618.2 800 603.6 870" stroke="url(#highway)" stroke-opacity="0.62" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 
-    <g stroke="#41544d" stroke-opacity="0.28" stroke-width="2" stroke-linecap="round">
-      <path d="M444.9 482.5 497.4 482.5 549.9 482.5"/>
-      <path d="M441.2 527.5 497.4 527.5 553.7 527.5"/>
-      <path d="M448.7 572.5 501.2 572.5 553.7 572.5"/>
-      <path d="M467.4 607.5 467.4 462.5"/>
-      <path d="M497.4 612.5 497.4 457.5"/>
-      <path d="M527.4 607.5 527.4 467.5"/>
-      <path d="M603.7 314.5 621.2 351.5 608.7 393.5 577.4 420.5"/>
-      <path d="M812.4 235.5 818.7 391.5 799.9 544.5"/>
-      <path d="M129.9 716.5 242.4 716.5 351.2 719.5"/>
-      <path d="M872.4 227.5 989.9 237.5 1082.4 259.5"/>
+    <g stroke="#7f9e93" stroke-opacity="0.26" stroke-width="2" stroke-linecap="round">
+      <path d="M469.1 390 523.6 390"/>
+      <path d="M578.2 395 629.1 400"/>
+      <path d="M469.1 655 523.6 660"/>
+      <path d="M578.2 665 632.7 665"/>
     </g>
 
-    <path d="M479.8 530.5 720.2 369.5" stroke="#617b73" stroke-opacity="0.16" stroke-width="2.5" stroke-dasharray="8 12" stroke-linecap="round"/>
+    <g stroke="url(#local-road)" stroke-opacity="0.34" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M643.6 465 694.5 455 745.5 440 796.4 420 843.6 400 890.9 375"/>
+      <path d="M861.8 230 905.5 235 949.1 225 992.7 205 1036.4 175"/>
+      <path d="M581.8 475 596.4 535 610.9 595 625.5 655"/>
+      <path d="M574.5 500 621.8 500 665.5 500 709.1 500"/>
+      <path d="M647.3 510 687.3 495 727.3 480 767.3 460"/>
+      <path d="M829.1 345 865.5 335 898.2 355 909.1 395 898.2 430 865.5 450 832.7 435 818.2 395 829.1 345Z"/>
+    </g>
 
-    <circle cx="479.8" cy="530.5" r="104" fill="url(#bellevue-glow)"/>
-    <circle cx="720.2" cy="369.5" r="98" fill="url(#microsoft-glow)"/>
+    <path d="M615.6 548 882.9 390.5" stroke="#7a968c" stroke-opacity="0.14" stroke-width="2.5" stroke-dasharray="8 12" stroke-linecap="round"/>
+
+    <circle cx="615.6" cy="548" r="118" fill="url(#bellevue-glow)"/>
+    <circle cx="882.9" cy="390.5" r="106" fill="url(#microsoft-glow)"/>
+
+    <g fill="#7d948b" fill-opacity="0.38" font-family="Inter, Arial, sans-serif" text-anchor="middle" letter-spacing="0.22em">
+      <text x="557" y="362" font-size="18">LAKE WASHINGTON</text>
+      <text x="935" y="545" font-size="16">LAKE SAMMAMISH</text>
+      <text x="615.6" y="524" font-size="22">BELLEVUE</text>
+      <text x="882.9" y="365" font-size="18">MICROSOFT HQ</text>
+    </g>
 
     <g>
-      <circle cx="479.8" cy="530.5" r="28" fill="none" stroke="#5f7a71" stroke-opacity="0.42" stroke-width="2"/>
-      <circle cx="479.8" cy="530.5" r="12" fill="#607b72" fill-opacity="0.5"/>
-      <circle cx="479.8" cy="530.5" r="4.5" fill="#dce7e2" fill-opacity="0.8"/>
+      <circle cx="615.6" cy="548" r="27" fill="none" stroke="#69847a" stroke-opacity="0.44" stroke-width="2"/>
+      <circle cx="615.6" cy="548" r="11" fill="#69847a" fill-opacity="0.48"/>
+      <circle cx="615.6" cy="548" r="4.5" fill="#e0ebe5" fill-opacity="0.8"/>
     </g>
     <g>
-      <circle cx="720.2" cy="369.5" r="24" fill="none" stroke="#648179" stroke-opacity="0.38" stroke-width="2"/>
-      <circle cx="720.2" cy="369.5" r="10" fill="#658179" fill-opacity="0.46"/>
-      <circle cx="720.2" cy="369.5" r="4" fill="#dce7e2" fill-opacity="0.76"/>
-    </g>
-
-    <g fill="#7f958d" fill-opacity="0.46" font-family="Inter, Arial, sans-serif" letter-spacing="0.24em" text-anchor="middle">
-      <text x="479.8" y="508" font-size="22">BELLEVUE</text>
-      <text x="720.2" y="347" font-size="19">MICROSOFT HQ</text>
+      <circle cx="882.9" cy="390.5" r="24" fill="none" stroke="#759287" stroke-opacity="0.4" stroke-width="2"/>
+      <circle cx="882.9" cy="390.5" r="10" fill="#759287" fill-opacity="0.48"/>
+      <circle cx="882.9" cy="390.5" r="4" fill="#e0ebe5" fill-opacity="0.78"/>
     </g>
   </g>
 </svg>
