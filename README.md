@@ -68,7 +68,7 @@ Pull requests automatically run:
 
 ## Deployment 🌐
 
-1. The repository is named `<username>.github.io`, so the `master` branch automatically deploys to `https://<username>.github.io`.
+1. The repository is named `<username>.github.io`, so GitHub Pages serves the configured publishing branch, typically `main`, at `https://<username>.github.io`.
 2. The `CNAME` file configures the custom domain (`stuartneivandt.com`).
 3. DNS records point to GitHub Pages (configured externally).
 4. GitHub provisions HTTPS certificates via Let's Encrypt automatically.
