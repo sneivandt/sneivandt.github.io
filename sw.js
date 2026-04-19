@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v7';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
@@ -37,6 +37,8 @@ const PRECACHE_ASSETS = [
   './assets/img/stuart-neivandt.webp',
   './index.html',
   './assets/js/main.js',
+  './assets/js/effects.js',
+  './assets/js/components/aurora-background.js',
   './assets/js/components/typewriter-effect.js',
   './assets/js/components/share-button.js',
   './assets/js/components/connection-status.js',

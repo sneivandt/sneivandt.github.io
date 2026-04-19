@@ -12,6 +12,12 @@ import './components/console-brand.js';
 import './components/profile-card.js';
 import './components/social-links.js';
 import './components/copyright-notice.js';
+import './components/aurora-background.js';
+
+// Progressive-enhancement micro-interactions (spotlight, magnetic icons,
+// profile tilt, letter reveal). Imported after components so the DOM the
+// effects target has already been rendered.
+import './effects.js';
 
 /* ------------------------------------------------------------
  * Service Worker Registration

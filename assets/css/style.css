@@ -94,6 +94,9 @@ html {
   height: 100%;
   font-size: 16px;
   scroll-behavior: smooth;
+  /* Solid fallback color sits on the root so the fixed aurora canvas
+     (z-index: -1) can render above it while the body remains transparent. */
+  background-color: var(--color-bg);
 }
 
 ::selection {
@@ -120,11 +123,7 @@ html {
 }
 
 body {
-  background-color: var(--color-bg);
-  background-image:
-    radial-gradient(circle at 85% 0%, var(--color-bg-alt), transparent 50%),
-    radial-gradient(circle at 0% 100%, var(--color-bg-alt), transparent 50%);
-  background-attachment: fixed;
+  background-color: transparent;
   color: var(--color-text);
   font-family: var(--font-main);
   line-height: 1.6;
@@ -137,6 +136,16 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Keep page content layered above the fixed background canvas. */
+.container,
+.site-footer,
+share-button,
+connection-status {
+  position: relative;
+  z-index: 1;
 }
 
 /* Helper Classes */
@@ -242,7 +251,19 @@ main {
     0 20px 40px -10px rgba(0, 0, 0, 0.5);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.5s ease;
+  /* 3D tilt support (driven by JS via --tilt-x / --tilt-y) */
+  transform-style: preserve-3d;
+  will-change: transform;
 }
+
+.profile-image.has-tilt {
+  transform: perspective(900px)
+    rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.18s ease-out, box-shadow 0.5s ease;
+}
+
+/* Specular sheen removed per design preference. */
 
 .profile-image:hover {
   transform: translateY(-4px) scale(1.02);
@@ -364,10 +385,11 @@ h1 {
 .social-icon {
   color: var(--color-text);
   opacity: 0.6;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   display: block;
   padding: 0.5rem;
   margin: -0.5rem;
+  will-change: transform;
 }
 
 .social-icon svg {
@@ -447,6 +469,34 @@ h1 {
   .profile-image {
     border-radius: 50%;
     width: 200px;
+  }
+}
+
+/* Letter reveal on the H1 -------------------------------------------- */
+.profile-content h1 .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  filter: blur(6px);
+  animation: charReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--char-delay, 0ms);
+  will-change: transform, opacity, filter;
+}
+
+@keyframes charReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-content h1 .char {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
   }
 }
 
