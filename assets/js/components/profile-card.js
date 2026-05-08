@@ -37,7 +37,7 @@ export class ProfileCardComponent extends HTMLElement {
   
   render() {
     const name = this.getAttribute('name') || 'Stuart Neivandt';
-    const bioText = this.getAttribute('bio') || 'Building secure distributed systems at Microsoft. Based in Bellevue, WA.';
+    const bioText = this.getAttribute('bio') || 'Building secure distributed systems at Microsoft. Based in Redmond, WA.';
     
     // Escape HTML to prevent XSS
     const escapedName = this.escapeHtml(name);
@@ -93,15 +93,15 @@ export class ProfileCardComponent extends HTMLElement {
     // Safely add bio text with nowrap span using DOM manipulation
     const bioParagraph = this.querySelector('.bio-paragraph');
     if (bioParagraph) {
-      // Split the bio text at "Bellevue, WA." to add nowrap span
-      const parts = bioText.split('Bellevue, WA.');
+      // Split the bio text at "Redmond, WA." to add nowrap span
+      const parts = bioText.split('Redmond, WA.');
       if (parts.length > 1) {
         bioParagraph.textContent = parts[0];
         const nowrapSpan = document.createElement('span');
         nowrapSpan.className = 'nowrap';
-        nowrapSpan.textContent = 'Bellevue, WA.';
+        nowrapSpan.textContent = 'Redmond, WA.';
         bioParagraph.appendChild(nowrapSpan);
-        bioParagraph.appendChild(document.createTextNode(parts.slice(1).join('Bellevue, WA.')));
+        bioParagraph.appendChild(document.createTextNode(parts.slice(1).join('Redmond, WA.')));
       } else {
         bioParagraph.textContent = bioText;
       }
