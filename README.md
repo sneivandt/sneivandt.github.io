@@ -1,82 +1,67 @@
-# sneivandt.github.io ✨
+# sneivandt.github.io
 
-Personal website for [stuartneivandt.com](https://stuartneivandt.com) — a minimalist, fast, accessible, no-framework static site built with native Web Components.
+Personal website for [stuartneivandt.com](https://stuartneivandt.com).
 
-## Overview 🗺️
+This repository is a small, dependency-free GitHub Pages site built with plain HTML, native CSS, and vanilla JavaScript Web Components. There is no build step, package manager, framework, or generated asset pipeline.
 
-This repository hosts the source for my landing page / profile site. It is intentionally simple: plain HTML, a single CSS file, and vanilla JS Web Components. **No build tools, no package managers, no dependencies.**
+## Overview
 
-## Features 🚀
+The site is intentionally simple: source files are served directly by GitHub Pages. The main page lives in `index.html`, global styles live in `assets/css/style.css`, and interactive behavior is split into small ES module Web Components under `assets/js/components/`.
 
-| Category | Details |
-|----------|---------|
-| **Architecture** | Native Web Components (Custom Elements) with Shadow DOM encapsulation |
-| **Performance** | Fast first paint, fonts preloaded, zero framework overhead |
-| **Responsive** | Mobile-first layout, fluid typography via `clamp()` |
-| **Accessible** | Skip link, proper alt text, ARIA labels, respects `prefers-reduced-motion` |
-| **SEO & Social** | Meta description, canonical link, Open Graph tags, JSON-LD Person schema |
-| **Progressive** | PWA installable via `manifest.json`, service worker for offline support |
-| **Effects** | Typewriter animation, share button, connection status (all as reusable Web Components) |
-| **Hosting** | GitHub Pages with custom domain via `CNAME` |
+## Features
 
-## Tech Stack 🧰
+| Area | Details |
+| --- | --- |
+| Architecture | Native Custom Elements, with Shadow DOM where style isolation helps |
+| Performance | No framework runtime, preloaded fonts, compact static assets |
+| Accessibility | Semantic markup, skip link, ARIA labels where needed, visible focus states |
+| Responsive design | Mobile-first layout with fluid typography using `clamp()` |
+| SEO and sharing | Canonical URL, Open Graph metadata, sitemap, robots file, JSON-LD |
+| Progressive enhancement | Web app manifest and service worker for offline support |
+| Hosting | GitHub Pages with a custom domain configured through `CNAME` |
 
-| Area        | Choice |
-|-------------|--------|
-| Markup      | Plain HTML5 (semantic elements + Web Components) |
-| Styling     | Native CSS (custom properties, Shadow DOM, no preprocessor) |
-| Scripting   | Vanilla JS (ES modules, Web Components API, deferred loading) |
-| Fonts       | Self-hosted Inter |
-| Hosting     | GitHub Pages |
+## Local development
 
-## Architecture 🧩
-
-The site uses native Web Components (Custom Elements) for modular, encapsulated functionality with Shadow DOM where appropriate for style isolation.
-
-### Key Benefits
-- **Encapsulation**: Shadow DOM prevents style conflicts
-- **Reusability**: Components work anywhere in the DOM
-- **Lifecycle**: Proper cleanup and event management
-- **Accessibility**: ARIA-compliant, screen reader support
-
-## Local Development 💻
-
-Because this is pure static content, you only need a simple HTTP server (avoids font / CORS issues that can occur when opening the file directly).
+Use the included static server:
 
 ```bash
 ./scripts/serve.py
 ```
 
-Then visit: http://localhost:8000
+Then open `http://localhost:8000`.
 
-Alternatively, use any static server:
+You can also use Python's built-in server:
 
 ```bash
 python3 -m http.server 8000
-# or
-npx serve .
 ```
 
-## CI/CD ⚙️
+Avoid opening `index.html` directly from the filesystem; local HTTP serving better matches GitHub Pages and avoids browser restrictions around fonts, modules, and service workers.
 
-Pull requests automatically run:
+## Validation
 
-- **HTML5 Validator** — validates HTML and CSS syntax
-- **JavaScript Syntax Check** — ensures all JS files parse correctly
-- **Link Checker** — detects broken internal/external links
-- **Lighthouse CI** — enforces minimum scores (90+) for performance, accessibility, best practices, and SEO
+Pull requests run automated checks for:
 
-## Deployment 🌐
+- HTML and CSS validation
+- JavaScript syntax with `node --check`
+- Broken links in HTML and Markdown
+- Valid `manifest.json`
+- Lighthouse scores for performance, accessibility, best practices, and SEO
 
-1. The repository is named `<username>.github.io`, so GitHub Pages serves the configured publishing branch, typically `main`, at `https://<username>.github.io`.
-2. The `CNAME` file configures the custom domain (`stuartneivandt.com`).
-3. DNS records point to GitHub Pages (configured externally).
-4. GitHub provisions HTTPS certificates via Let's Encrypt automatically.
+For local JavaScript syntax checks:
 
-## Philosophy 🎯
+```bash
+find . -name "*.js" -type f ! -path "./.git/*" -exec node --check {} \;
+```
 
-This site intentionally avoids complexity:
+## Deployment
 
-- **No build step** — what you see in the repo is what gets served
-- **No dependencies** — zero `node_modules`, no version conflicts
-- **Accessibility first** — semantic HTML, keyboard navigation, motion preferences
+GitHub Pages serves the configured publishing branch for this repository. The `CNAME` file maps the site to `stuartneivandt.com`, and DNS is configured outside the repository. HTTPS is provisioned automatically by GitHub Pages.
+
+## Maintenance principles
+
+- Keep the site dependency-free and build-free.
+- Prefer semantic HTML, native CSS, and small vanilla JavaScript modules.
+- Keep assets optimized before committing them.
+- Preserve keyboard access, visible focus states, and reduced-motion support.
+- Update `sitemap.xml` when content changes materially.
