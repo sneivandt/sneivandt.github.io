@@ -5,7 +5,6 @@
  */
 
 // Import and register web components
-import './components/typewriter-effect.js';
 import './components/share-button.js';
 import './components/connection-status.js';
 import './components/console-brand.js';

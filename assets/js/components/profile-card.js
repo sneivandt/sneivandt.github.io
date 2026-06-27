@@ -37,7 +37,7 @@ export class ProfileCardComponent extends HTMLElement {
   
   render() {
     const name = this.getAttribute('name') || 'Stuart Neivandt';
-    const bioText = this.getAttribute('bio') || 'Building secure distributed systems at Microsoft. Based in Redmond, WA.';
+    const bioText = this.getAttribute('bio') || 'I build secure, reliable distributed systems at Microsoft with a focus on cloud engineering and AI developer tools. Based in Redmond, WA.';
     
     // Escape HTML to prevent XSS
     const escapedName = this.escapeHtml(name);
@@ -58,33 +58,16 @@ export class ProfileCardComponent extends HTMLElement {
         </div>
         <div class="profile-content">
           <h1>${escapedName}</h1>
-          <div class="typed-container">
-            <div class="visually-hidden" data-nosnippet>
-              <ul id="typed-strings">
-                <li>Software Engineer</li>
-                <li>Husband</li>
-                <li>Music Enthusiast</li>
-                <li>Chess Player</li>
-                <li>Continuous Learner</li>
-                <li>Coffee Addict</li>
-                <li>Mediocre Investor</li>
-              </ul>
-            </div>
-            <span id="typed" class="typed" aria-hidden="true">
-              <typewriter-effect 
-                strings="Software Engineer,Husband,Music Enthusiast,Chess Player,Continuous Learner,Coffee Addict,Mediocre Investor"
-                loop="true"
-                type-speed="60"
-                back-speed="30"
-                back-delay="2000"
-                start-delay="500"
-                fallback="Software Engineer">
-              </typewriter-effect>
-            </span>
-          </div>
           <div class="bio-text">
             <p class="bio-paragraph"></p>
           </div>
+          <ul class="highlight-chips" aria-label="Profile highlights">
+            <li>Software Engineer</li>
+            <li>Agent Chaperone</li>
+            <li>Husband</li>
+            <li>Chess Player</li>
+            <li>Music Enthusiast</li>
+          </ul>
           <social-links></social-links>
         </div>
       </div>

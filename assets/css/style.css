@@ -58,7 +58,6 @@
 
   /* Scale */
   --font-size-h1: clamp(2.5rem, 5vw, 4rem);
-  --font-size-typed: clamp(1rem, 1.5vw, 1.125rem);
   --font-size-bio: clamp(1rem, 1.5vw, 1.125rem);
 
   /* Layout */
@@ -317,34 +316,44 @@ h1 {
   text-wrap: balance;
 }
 
-.typed-container {
-  font-size: var(--font-size-typed);
-  font-family: var(--font-main);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  margin-bottom: 2rem;
-  line-height: 1.6;
-  min-height: 1.6em;
-  display: flex;
-  gap: 0;
-  align-items: center;
-}
-
-.typed {
-  color: var(--color-text);
-}
-
 .bio-text {
   font-size: var(--font-size-bio);
   color: var(--color-text);
   line-height: 1.8;
   max-width: 45ch;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.25rem;
   font-weight: 300;
   opacity: 0.95;
   text-wrap: pretty;
+}
+
+.highlight-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  list-style: none;
+  max-width: 46ch;
+  margin-bottom: 2rem;
+}
+
+.highlight-chips li {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--color-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  padding: 0.55rem 0.75rem;
+  text-transform: uppercase;
+}
+
+@media (min-width: 800px) {
+  .highlight-chips {
+    justify-content: flex-start;
+  }
 }
 
 .site-footer small {
@@ -432,15 +441,15 @@ h1 {
   animation-delay: 0.05s;
 }
 
-.typed-container {
+.bio-text {
   animation-delay: 0.1s;
 }
 
-.bio-text {
+.highlight-chips {
   animation-delay: 0.15s;
 }
 
-.profile-content nav {
+.profile-content social-links {
   animation-delay: 0.2s;
 }
 

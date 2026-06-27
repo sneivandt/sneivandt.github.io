@@ -22,19 +22,13 @@ This repository is intentionally **minimal, dependency-free, build-free static c
 │   ├── js/                 # JavaScript modules
 │   │   ├── main.js         # Entry point, component registration, service worker
 │   │   ├── components/     # Web Components (Custom Elements)
-│   │   │   ├── typewriter-effect.js   # Animated typing with Shadow DOM
+│   │   │   ├── aurora-background.js   # Animated canvas background with Shadow DOM
 │   │   │   ├── share-button.js        # Share functionality with Shadow DOM
 │   │   │   ├── connection-status.js   # Network monitor with Shadow DOM
-│   │   │   ├── last-updated.js        # GitHub API with Shadow DOM
 │   │   │   ├── copyright-notice.js    # Copyright with current year (Shadow DOM)
 │   │   │   ├── console-brand.js       # Console branding
 │   │   │   ├── profile-card.js        # Profile container (no Shadow DOM)
 │   │   │   └── social-links.js        # Social links (no Shadow DOM)
-│   │   ├── typewriter.js   # Legacy (kept for reference)
-│   │   ├── share-button.js # Legacy (kept for reference)
-│   │   ├── connection-status.js # Legacy (kept for reference)
-│   │   ├── last-updated.js # Legacy (kept for reference)
-│   │   └── console-brand.js # Legacy (kept for reference)
 │   ├── font/               # Self-hosted Inter font files (.woff2)
 │   └── img/                # Images (profile, favicons)
 ├── scripts/
@@ -144,14 +138,13 @@ customElements.define('example-component', ExampleComponent);
 
 ### Current Components
 
-The site uses 8 native Web Components (Custom Elements):
+The site uses 7 native Web Components (Custom Elements):
 
 | Component | File | Shadow DOM | Purpose |
 |-----------|------|------------|---------|
-| `<typewriter-effect>` | `components/typewriter-effect.js` | ✅ | Animated typing with motion preference support |
+| `<aurora-background>` | `components/aurora-background.js` | ✅ | Animated geometric canvas background |
 | `<share-button>` | `components/share-button.js` | ✅ | Share with Web Share API / Clipboard fallback |
 | `<connection-status>` | `components/connection-status.js` | ✅ | Network connectivity indicator |
-| `<last-updated>` | `components/last-updated.js` | ✅ | GitHub API last commit date with caching |
 | `<copyright-notice>` | `components/copyright-notice.js` | ✅ | Copyright notice with current year |
 | `<console-brand>` | `components/console-brand.js` | ❌ | Browser console signature |
 | `<profile-card>` | `components/profile-card.js` | ❌ | Profile container (composes other components) |
@@ -162,7 +155,7 @@ The site uses 8 native Web Components (Custom Elements):
 ✅ **Use Shadow DOM when:**
 - Component has self-contained styles that shouldn't leak
 - Component needs style isolation from page CSS
-- Component is truly independent (share-button, typewriter, etc.)
+- Component is truly independent (share-button, connection-status, etc.)
 
 ❌ **Skip Shadow DOM when:**
 - Component needs to integrate with global CSS classes
@@ -293,7 +286,6 @@ When making changes to the repository, update relevant dates if needed:
 
 1. **Copyright year** — Update `index.html` footer and `LICENSE` file if the year has changed
 2. **Sitemap lastmod** — Update `sitemap.xml` `<lastmod>` date to current date (YYYY-MM-DD format) when content changes
-3. **Last updated timestamp** — Automatically fetched from GitHub API via `last-updated.js`; no manual update needed
 
 ## FAQ
 
