@@ -1,8 +1,8 @@
 /*
   ===================================================================
   Global Site Styles (sneivandt.github.io)
-  Design: Editorial Minimalist / Brutalist-Lite
-  Philosophy: Content-first, typography-led, flat design.
+  Design: Refined editorial profile
+  Philosophy: Content-first, typography-led, quietly dimensional.
   ===================================================================
 */
 
@@ -43,33 +43,33 @@
 :root {
   color-scheme: dark;
 
-  /* Palette: Monochromatic High Contrast */
-  --color-bg: #111111;
-  --color-bg-alt: #161616;
-  --color-text: #e6e6e6;
-  /* Tasteful off-white */
-  --color-text-muted: #888888;
-  --color-accent: #f5f5f5;
-  /* Brighter off-white */
-  --color-border: rgba(255, 255, 255, 0.15);
+  /* Palette */
+  --color-bg: #080b10;
+  --color-bg-alt: #111722;
+  --color-surface: rgba(15, 21, 31, 0.82);
+  --color-text: #e8edf5;
+  --color-text-muted: #98a4b3;
+  --color-accent: #8bdcff;
+  --color-accent-strong: #d7f3ff;
+  --color-border: rgba(176, 196, 222, 0.18);
+  --color-border-strong: rgba(139, 220, 255, 0.42);
 
   /* Typography */
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
   /* Scale */
-  --font-size-h1: clamp(2.5rem, 5vw, 4rem);
-  --font-size-bio: clamp(1rem, 1.5vw, 1.125rem);
+  --font-size-h1: clamp(2.75rem, 7vw, 5.5rem);
+  --font-size-bio: clamp(1rem, 1.5vw, 1.15rem);
 
   /* Layout */
-  --container-width: min(85%, 1000px);
-  --header-height: clamp(2rem, 10vh, 6rem);
+  --container-width: min(calc(100% - 2rem), 1120px);
 
   /* Transitions */
   --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: 0.2s ease-out;
 
   /* Components */
-  --focus-outline: 1px solid var(--color-accent);
+  --focus-outline: 2px solid var(--color-accent);
   --focus-outline-offset: 4px;
 }
 
@@ -122,7 +122,9 @@ html {
 }
 
 body {
-  background-color: transparent;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(81, 143, 181, 0.13), transparent 34rem),
+    radial-gradient(circle at 88% 85%, rgba(85, 97, 156, 0.11), transparent 32rem);
   color: var(--color-text);
   font-family: var(--font-main);
   line-height: 1.6;
@@ -173,7 +175,8 @@ connection-status {
   color: var(--color-bg);
   padding: 1rem 1.5rem;
   z-index: 999;
-  font-weight: bold;
+  border-radius: 0.5rem;
+  font-weight: 600;
   text-decoration: none;
   transition: top 0.3s;
 }
@@ -189,68 +192,56 @@ connection-status {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(1rem, 3vw, 2rem) 0;
 }
 
 main {
   width: 100%;
-  margin-top: auto;
-  margin-bottom: auto;
-  padding-bottom: 15vh;
-  padding-bottom: 15dvh;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(2rem, 8vh, 6rem);
 }
 
 /* Profile Section (Split Layout) ------------------------------------- */
 .profile-card {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: clamp(2.25rem, 6vw, 4.5rem);
   align-items: center;
+  width: 100%;
+  max-width: 980px;
+  margin-inline: auto;
 }
 
 @media (min-width: 800px) {
   .profile-card {
-    grid-template-columns: auto auto;
-    justify-content: center;
-    gap: 5rem;
-    padding-inline-start: 2rem;
-  }
-
-  main {
-    margin-block-start: 15vh;
-    margin-block-start: 15dvh;
-    margin-bottom: auto;
-    padding-bottom: 0;
+    grid-template-columns: minmax(230px, 0.75fr) minmax(0, 1.4fr);
   }
 }
 
 /* Image Column */
 .profile-container {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-@media (min-width: 800px) {
-  .profile-container {
-    justify-content: flex-end;
-  }
-}
-
 .profile-image {
-  width: 100%;
-  max-width: 240px;
+  width: min(72vw, 270px);
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
   box-shadow:
-    0 0 0 8px var(--color-bg),
-    0 0 0 9px var(--color-border),
-    0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    0 0 0 8px rgba(8, 11, 16, 0.78),
+    0 0 0 9px var(--color-border-strong),
+    0 26px 60px -18px rgba(0, 0, 0, 0.9);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.5s ease;
-  /* 3D tilt support (driven by JS via --tilt-x / --tilt-y) */
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -262,15 +253,12 @@ main {
   transition: transform 0.18s ease-out, box-shadow 0.5s ease;
 }
 
-/* Specular sheen removed per design preference. */
-
 .profile-image:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-5px) scale(1.015);
   box-shadow:
-    0 0 0 8px var(--color-bg),
-    0 0 0 10px var(--color-text),
-    0 0 30px rgba(255, 255, 255, 0.15),
-    0 30px 60px -12px rgba(0, 0, 0, 0.7);
+    0 0 0 8px rgba(8, 11, 16, 0.82),
+    0 0 0 10px var(--color-accent),
+    0 32px 70px -18px rgba(0, 0, 0, 0.95);
 }
 
 .profile-image img {
@@ -300,30 +288,38 @@ main {
 
   .profile-content h1 {
     margin-inline-start: -0.05em;
-    /* Optical alignment */
   }
 }
 
 /* Typography --------------------------------------------------------- */
+.profile-kicker {
+  margin-bottom: 0.75rem;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 h1 {
   font-size: var(--font-size-h1);
   font-family: var(--font-main);
-  font-weight: 300;
-  letter-spacing: -0.05em;
-  line-height: 1.05;
-  color: var(--color-accent);
-  margin-bottom: 0.75rem;
+  font-weight: 400;
+  letter-spacing: -0.065em;
+  line-height: 0.96;
+  color: var(--color-accent-strong);
+  margin-bottom: 1.25rem;
   text-wrap: balance;
 }
 
 .bio-text {
   font-size: var(--font-size-bio);
-  color: var(--color-text);
-  line-height: 1.8;
-  max-width: 45ch;
-  margin-bottom: 1.25rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  max-width: 48ch;
+  margin-bottom: 1.5rem;
   font-weight: 300;
-  opacity: 0.95;
   text-wrap: pretty;
 }
 
@@ -331,22 +327,22 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   list-style: none;
   max-width: 46ch;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
 .highlight-chips li {
   border: 1px solid var(--color-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
-  color: var(--color-text);
-  font-size: 0.72rem;
+  background: rgba(139, 220, 255, 0.045);
+  color: #c8d2df;
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   line-height: 1;
-  padding: 0.55rem 0.75rem;
+  padding: 0.6rem 0.8rem;
   text-transform: uppercase;
 }
 
@@ -357,7 +353,6 @@ h1 {
 }
 
 .site-footer small {
-  opacity: 0.7;
   font-size: 0.8rem;
   font-weight: 300;
   color: var(--color-text-muted);
@@ -366,7 +361,7 @@ h1 {
 .site-footer {
   width: 100%;
   text-align: center;
-  padding-top: 2rem;
+  padding: 0.5rem 1rem 0;
   margin-top: auto;
   display: flex;
   flex-wrap: wrap;
@@ -386,30 +381,35 @@ h1 {
 /* Social Links Minimal ----------------------------------------------- */
 .social-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.75rem;
   list-style: none;
   padding: 0;
 }
 
 .social-icon {
   color: var(--color-text);
-  opacity: 0.6;
-  transition: opacity 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-  display: block;
-  padding: 0.5rem;
-  margin: -0.5rem;
+  transition: border-color 0.25s ease, background-color 0.25s ease,
+    color 0.25s ease, transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.025);
   will-change: transform;
 }
 
 .social-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .social-icon:hover {
-  opacity: 1;
   color: var(--color-accent);
-  transform: scale(1.1);
+  border-color: var(--color-border-strong);
+  background: rgba(139, 220, 255, 0.08);
+  transform: translateY(-2px);
 }
 
 .social-icon:active {
@@ -421,7 +421,6 @@ h1 {
   outline: var(--focus-outline);
   outline-offset: var(--focus-outline-offset);
   color: var(--color-accent);
-  opacity: 1;
 }
 
 /* Animations --------------------------------------------------------- */
@@ -438,19 +437,19 @@ h1 {
 }
 
 .profile-content h1 {
-  animation-delay: 0.05s;
+  animation-delay: 0.08s;
 }
 
 .bio-text {
-  animation-delay: 0.1s;
+  animation-delay: 0.13s;
 }
 
 .highlight-chips {
-  animation-delay: 0.15s;
+  animation-delay: 0.18s;
 }
 
 .profile-content social-links {
-  animation-delay: 0.2s;
+  animation-delay: 0.23s;
 }
 
 @keyframes fadeIn {
@@ -468,16 +467,11 @@ h1 {
 /* Responsive Tweaks -------------------------------------------------- */
 @media (max-width: 400px) {
   :root {
-    --font-size-h1: 2.25rem;
-  }
-
-  .container {
-    padding: 2rem 1rem;
+    --font-size-h1: 2.5rem;
   }
 
   .profile-image {
-    border-radius: 50%;
-    width: 200px;
+    width: min(68vw, 210px);
   }
 }
 
