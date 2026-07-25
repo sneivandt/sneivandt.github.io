@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v18';
+const CACHE_VERSION = 'v23';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
@@ -39,10 +39,8 @@ const PRECACHE_ASSETS = [
   './assets/js/main.js',
   './assets/js/effects.js',
   './assets/js/components/aurora-background.js',
-  './assets/js/components/share-button.js',
   './assets/js/components/connection-status.js',
   './assets/js/components/console-brand.js',
-  './assets/js/components/profile-card.js',
   './assets/js/components/social-links.js',
   './assets/js/components/copyright-notice.js',
   './manifest.json'

@@ -5,10 +5,8 @@
  */
 
 // Import and register web components
-import './components/share-button.js';
 import './components/connection-status.js';
 import './components/console-brand.js';
-import './components/profile-card.js';
 import './components/social-links.js';
 import './components/copyright-notice.js';
 import './components/aurora-background.js';

@@ -136,7 +136,7 @@ function initProfileTilt() {
 /* Letter reveal on the H1                                         */
 /* --------------------------------------------------------------- */
 function initNameReveal() {
-  const h1 = document.querySelector('.profile-content h1');
+  const h1 = document.querySelector('.hero-copy h1');
   if (!h1 || h1.dataset.split === 'true') return;
 
   const text = h1.textContent.trim();
@@ -173,9 +173,7 @@ function boot() {
   initProfileTilt();
 }
 
-// The profile-card component renders synchronously in connectedCallback,
-// so by the time main.js evaluates this module the DOM is already in place.
-// Still, fall back to DOMContentLoaded just in case scripts load earlier.
+// Fall back to DOMContentLoaded if the module evaluates before the page is ready.
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot, { once: true });
 } else {

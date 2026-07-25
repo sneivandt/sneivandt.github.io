@@ -1,14 +1,14 @@
 {
   "name": "Stuart Neivandt",
   "short_name": "Stuart",
-  "description": "Portfolio of Stuart Neivandt, Software Engineer.",
+  "description": "Stuart Neivandt, Principal Software Engineer building secure systems, reliable platforms, and developer tooling.",
   "lang": "en-US",
   "id": "/",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#111111",
-  "theme_color": "#111111",
+  "background_color": "#080b10",
+  "theme_color": "#080b10",
   "categories": ["education", "portfolio", "productivity"],
   "icons": [
     {
