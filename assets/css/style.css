@@ -369,6 +369,10 @@ h1 {
   scroll-margin-top: 2rem;
 }
 
+.hero + .content-section {
+  border-top: none;
+}
+
 .section-header {
   display: grid;
   gap: 1rem;
