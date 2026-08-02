@@ -2,7 +2,7 @@
   Developer: Stuart Neivandt
   Site: stuartneivandt.com
   GitHub: @sneivandt
-  Location: Washington
+  Location: Redmond, Washington
   Focus: Simplicity, Performance, Accessibility
 
   Assistant: GitHub Copilot

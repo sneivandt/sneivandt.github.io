@@ -43,7 +43,10 @@
   <meta property="og:image:height" content="400">
   <meta property="og:image:alt" content="Portrait of Stuart Neivandt">
   <meta property="og:url" content="https://stuartneivandt.com/">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="profile">
+  <meta property="profile:first_name" content="Stuart">
+  <meta property="profile:last_name" content="Neivandt">
+  <meta property="profile:username" content="sneivandt">
   <meta property="og:site_name" content="Stuart Neivandt">
   <meta property="og:locale" content="en_US">
 
@@ -68,7 +71,7 @@
     "name": "Stuart Neivandt | Principal Software Engineer",
     "description": "Principal Software Engineer at Microsoft building secure distributed systems, reliable cloud platforms, and developer tooling.",
     "dateCreated": "2018-08-27T00:00:00-07:00",
-    "dateModified": "2026-07-25T00:00:00-07:00",
+    "dateModified": "2026-08-02T00:00:00-07:00",
     "mainEntity": {
       "@type": "Person",
       "@id": "https://stuartneivandt.com/#person",
@@ -98,9 +101,9 @@
       "sameAs": [
         "https://www.linkedin.com/in/stuartneivandt",
         "https://github.com/sneivandt",
-        "https://x.stuartneivandt.com/"
+        "https://x.com/stuartneivandt"
       ],
-      "knowsAbout": ["Software Engineering", "Distributed Systems", "Cloud Reliability", "Developer Platforms", "AI-Assisted Engineering", "Rust", "Security"]
+      "knowsAbout": ["Software Engineering", "Distributed Systems", "Cloud Reliability", "Developer Platforms", "AI-Assisted Engineering", "Rust", "C++", "Systems Programming", "Linux", "Security"]
     }
   }
   </script>
@@ -150,14 +153,15 @@
 
     <article class="project-card">
       <div class="project-copy">
-        <p class="project-label">My environment / Rust</p>
+        <p class="project-label">Rust / Linux + Windows</p>
         <h3>dotfiles</h3>
-        <p>My dotfiles repository is where I continuously refine my development environment. It gives me a repeatable setup, captures hard-won preferences, and provides a practical place to experiment with Rust, automation, and agent-assisted workflows.</p>
+        <p>A Rust CLI that holds my Linux and Windows machines to a state I declare in TOML: packages, symlinks, services, shell, editors, and the sensitive files that need exact permissions. One install command converges a machine, and running it again changes nothing. Every command takes a dry run first, so I read the plan before anything touches disk.</p>
       </div>
       <ul class="project-facts" aria-label="Project highlights">
-        <li>Built for my workflow</li>
-        <li>Cross-platform</li>
-        <li>Always evolving</li>
+        <li>Rust CLI</li>
+        <li>Linux + Windows</li>
+        <li>Declarative TOML</li>
+        <li>Idempotent</li>
       </ul>
       <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
         Explore my dotfiles <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
@@ -175,17 +179,17 @@
       <article>
         <p class="focus-number" aria-hidden="true">01</p>
         <h3>Make security structural</h3>
-        <p>I prefer systems where authorization, correctness, and safe operation are designed in from the start.</p>
+        <p>A control that depends on someone remembering it will eventually be forgotten. I would rather spend an extra week making a mistake impossible in the types, the API, or the defaults than catch it in review forever.</p>
       </article>
       <article>
         <p class="focus-number" aria-hidden="true">02</p>
         <h3>Build for other engineers</h3>
-        <p>I care about platforms and tools that remove friction, clarify intent, and make reliable paths the easiest paths.</p>
+        <p>A platform earns its trust on someone's worst day, not their first. If the safe path is slower than the shortcut, people take the shortcut, so the reliable option has to also be the easy one.</p>
       </article>
       <article>
         <p class="focus-number" aria-hidden="true">03</p>
         <h3>Use AI with discipline</h3>
-        <p>I experiment with agents, tool integration, and evaluation to understand where AI meaningfully improves engineering work.</p>
+        <p>I run agents against my own repositories, where a bad result costs me and nobody else. It is the only way I have found to tell durable leverage from a convincing demo.</p>
       </article>
     </div>
   </section>
