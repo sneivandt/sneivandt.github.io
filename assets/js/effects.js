@@ -5,6 +5,7 @@
  *   - Magnetic pull on social icons
  *   - 3D parallax tilt on the profile image
  *   - Letter-by-letter reveal on the H1 name
+ *   - Scroll reveal for below-the-fold sections
  *
  * All effects no-op under prefers-reduced-motion or when the relevant DOM is
  * absent. Pointer-only effects are skipped on coarse pointers (touch).
@@ -166,11 +167,42 @@ function initNameReveal() {
 }
 
 /* --------------------------------------------------------------- */
+/* Scroll reveal                                                   */
+/* --------------------------------------------------------------- */
+function initScrollReveal() {
+  if (reduced() || !('IntersectionObserver' in window)) return;
+
+  const targets = document.querySelectorAll('[data-reveal]');
+  if (!targets.length) return;
+
+  const io = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+  targets.forEach((el) => {
+    // Siblings inside the same group stagger; groups restart the count.
+    const siblings = el.parentElement
+      ? Array.from(el.parentElement.querySelectorAll(':scope > [data-reveal]'))
+      : [el];
+    const index = Math.max(0, siblings.indexOf(el));
+    el.style.setProperty('--reveal-delay', (index * 80) + 'ms');
+    // Added by JS so the content stays visible when JS or IO is unavailable.
+    el.classList.add('will-reveal');
+    io.observe(el);
+  });
+}
+
+/* --------------------------------------------------------------- */
 /* Bootstrap                                                       */
 /* --------------------------------------------------------------- */
 function boot() {
   initNameReveal();
   initProfileTilt();
+  initScrollReveal();
 }
 
 // Fall back to DOMContentLoaded if the module evaluates before the page is ready.

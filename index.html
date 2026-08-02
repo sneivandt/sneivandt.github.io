@@ -146,51 +146,68 @@
   </section>
 
   <section class="content-section" id="work" aria-labelledby="work-title">
-    <header class="section-header">
+    <header class="section-header" data-reveal>
       <p class="section-kicker">Personal tooling</p>
-      <h2 id="work-title">Refining the way I work.</h2>
+      <h2 id="work-title">One setup, everywhere I work.</h2>
     </header>
 
-    <article class="project-card">
-      <div class="project-copy">
-        <p class="project-label">Rust / Linux + Windows</p>
-        <h3>dotfiles</h3>
-        <p>A Rust CLI that holds my Linux and Windows machines to a state I declare in TOML: packages, symlinks, services, shell, editors, and the sensitive files that need exact permissions. One install command converges a machine, and running it again changes nothing. Every command takes a dry run first, so I read the plan before anything touches disk.</p>
+    <article class="project-card" data-reveal>
+      <div class="project-body">
+        <div class="project-copy">
+          <p class="project-label">Rust / Linux + Windows</p>
+          <h3>dotfiles</h3>
+          <p class="project-lead">Every machine I use is described in code and rebuilt with a single command.</p>
+          <p>Every change to how my machines work goes through a diff first. The rule hasn't changed. What changed is that I describe the change in a sentence and spend my attention entirely on whether it's right.</p>
+        </div>
+
+        <div class="project-rail">
+          <p class="project-terminal"><span class="project-prompt" aria-hidden="true">$</span> dotfiles install<span class="project-caret" aria-hidden="true"></span></p>
+          <ul class="project-facts" aria-label="Project highlights">
+            <li>Cross-platform</li>
+            <li>Adaptive</li>
+            <li>Declarative</li>
+            <li>Idempotent</li>
+          </ul>
+        </div>
       </div>
-      <ul class="project-facts" aria-label="Project highlights">
-        <li>Rust CLI</li>
-        <li>Linux + Windows</li>
-        <li>Declarative TOML</li>
-        <li>Idempotent</li>
-      </ul>
+
       <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
         Explore my dotfiles <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
       </a>
     </article>
+
+    <dl class="stat-strip" data-reveal>
+      <div class="stat">
+        <dt class="stat-value">2014</dt>
+        <dd class="stat-label">First commit</dd>
+      </div>
+      <div class="stat">
+        <dt class="stat-value">25+</dt>
+        <dd class="stat-label">Moving parts it owns</dd>
+      </div>
+      <div class="stat">
+        <dt class="stat-value">1</dt>
+        <dd class="stat-label">Repo behind every machine I use</dd>
+      </div>
+    </dl>
   </section>
 
-  <section class="content-section" id="focus" aria-labelledby="focus-title">
-    <header class="section-header">
-      <p class="section-kicker">What I care about</p>
-      <h2 id="focus-title">The principles behind my work.</h2>
-    </header>
+  <section class="content-section content-section--tinted content-section--statement" id="focus" aria-label="Engineering philosophy">
+    <blockquote class="pull-quote" data-reveal>
+      <p>Most of engineering is the work of making the right thing the easiest thing to do.</p>
+    </blockquote>
+  </section>
 
-    <div class="focus-grid">
-      <article>
-        <p class="focus-number" aria-hidden="true">01</p>
-        <h3>Make security structural</h3>
-        <p>A control that depends on someone remembering it will eventually be forgotten. I would rather spend an extra week making a mistake impossible in the types, the API, or the defaults than catch it in review forever.</p>
-      </article>
-      <article>
-        <p class="focus-number" aria-hidden="true">02</p>
-        <h3>Build for other engineers</h3>
-        <p>A platform earns its trust on someone's worst day, not their first. If the safe path is slower than the shortcut, people take the shortcut, so the reliable option has to also be the easy one.</p>
-      </article>
-      <article>
-        <p class="focus-number" aria-hidden="true">03</p>
-        <h3>Use AI with discipline</h3>
-        <p>I run agents against my own repositories, where a bad result costs me and nobody else. It is the only way I have found to tell durable leverage from a convincing demo.</p>
-      </article>
+  <section class="content-section content-section--closing" id="contact" aria-labelledby="contact-title">
+    <div class="closing-block" data-reveal>
+      <p class="section-kicker">Get in touch</p>
+      <h2 id="contact-title">Always up for a hard problem.</h2>
+      <p class="closing-copy">I'm in Redmond, Washington. LinkedIn is the best way to reach me, and I read everything that comes in there.</p>
+      <div class="closing-actions">
+        <a class="text-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="noopener noreferrer">
+          Message me on LinkedIn <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </div>
     </div>
   </section>
 </main>
