@@ -6,7 +6,7 @@
   <title>Stuart Neivandt | Principal Software Engineer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="author" content="Stuart Neivandt">
-  <meta name="description" content="Stuart Neivandt is a Principal Software Engineer at Microsoft building secure distributed systems, reliable cloud platforms, and developer tooling.">
+  <meta name="description" content="Stuart Neivandt is a Principal Software Engineer at Microsoft focused on dependable distributed systems, cloud platforms, developer tools, and thoughtful engineering workflows.">
   <meta name="theme-color" content="#080b10">
   <meta name="color-scheme" content="dark">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -35,7 +35,7 @@
 
   <!-- Open Graph Meta Tags for social media sharing -->
   <meta property="og:title" content="Stuart Neivandt | Principal Software Engineer">
-  <meta property="og:description" content="Principal Software Engineer at Microsoft building secure distributed systems, reliable cloud platforms, and developer tooling.">
+  <meta property="og:description" content="Principal Software Engineer at Microsoft focused on dependable systems, developer tools, and better ways to work.">
   <meta property="og:image" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
   <meta property="og:image:secure_url" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
   <meta property="og:image:type" content="image/png">
@@ -53,7 +53,7 @@
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Stuart Neivandt | Principal Software Engineer">
-  <meta name="twitter:description" content="Principal Software Engineer at Microsoft building secure distributed systems, reliable cloud platforms, and developer tooling.">
+  <meta name="twitter:description" content="Principal Software Engineer at Microsoft focused on dependable systems, developer tools, and better ways to work.">
   <meta name="twitter:image" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
   <meta name="twitter:image:alt" content="Portrait of Stuart Neivandt">
   <meta name="twitter:creator" content="@stuartneivandt">
@@ -69,9 +69,9 @@
     "@id": "https://stuartneivandt.com/#profile-page",
     "url": "https://stuartneivandt.com/",
     "name": "Stuart Neivandt | Principal Software Engineer",
-    "description": "Principal Software Engineer at Microsoft building secure distributed systems, reliable cloud platforms, and developer tooling.",
+    "description": "Principal Software Engineer at Microsoft focused on dependable distributed systems, cloud platforms, developer tools, and thoughtful engineering workflows.",
     "dateCreated": "2018-08-27T00:00:00-07:00",
-    "dateModified": "2026-08-02T00:00:00-07:00",
+    "dateModified": "2026-08-15T00:00:00-07:00",
     "mainEntity": {
       "@type": "Person",
       "@id": "https://stuartneivandt.com/#person",
@@ -86,7 +86,7 @@
         "height": 400
       },
       "jobTitle": "Principal Software Engineer",
-      "description": "Principal Software Engineer at Microsoft building secure distributed systems, reliable cloud platforms, and developer tooling.",
+      "description": "Principal Software Engineer at Microsoft focused on dependable distributed systems, cloud platforms, developer tools, and thoughtful engineering workflows.",
       "worksFor": {
         "@type": "Organization",
         "name": "Microsoft",
@@ -118,94 +118,120 @@
 <div class="container">
 
 <main class="main-content" id="main-content">
-  <section class="hero" aria-labelledby="intro-title">
-    <div class="profile-container">
-      <div class="profile-image">
-        <img src="assets/img/stuart-neivandt.webp"
-             alt="Portrait of Stuart Neivandt"
-             width="300"
-             height="300"
-             decoding="async"
-             loading="eager"
-             fetchpriority="high">
-      </div>
-    </div>
-
+  <section class="hero" id="about" aria-labelledby="intro-title">
     <div class="hero-copy">
-      <p class="profile-kicker">Principal Software Engineer at Microsoft</p>
+      <p class="profile-kicker"><span aria-hidden="true"></span> Principal Software Engineer at Microsoft</p>
       <h1 id="intro-title">Hi, I'm Stuart.</h1>
       <div class="intro-copy">
-        <p>I build systems and tools engineers can trust, with a focus on secure distributed systems, cloud reliability, and the platforms engineers use to build and operate software.</p>
-        <p>Outside work, I refine my development environment far beyond what is reasonable, build tooling in Rust, and experiment with AI-assisted engineering workflows.</p>
+        <p>At Microsoft, I work on secure distributed systems, cloud platforms, and developer tools. I care about the unglamorous details that make software easier to operate, understand, and trust.</p>
       </div>
       <div class="hero-actions">
-        <a class="text-link" href="#work">My tooling <span aria-hidden="true">&darr;</span></a>
+        <a class="button-link" href="#work">See what I build <span aria-hidden="true">&darr;</span></a>
         <social-links></social-links>
       </div>
     </div>
+
+    <div class="portrait-card">
+      <img class="profile-image"
+           src="assets/img/stuart-neivandt.webp"
+           alt="Portrait of Stuart Neivandt"
+           width="300"
+           height="300"
+           decoding="async"
+           loading="eager"
+           fetchpriority="high">
+    </div>
   </section>
 
-  <section class="content-section" id="work" aria-labelledby="work-title">
+  <section class="content-section content-section--approach" id="approach" aria-labelledby="approach-title">
     <header class="section-header" data-reveal>
-      <p class="section-kicker">Personal tooling</p>
-      <h2 id="work-title">One setup, everywhere I work.</h2>
+      <p class="section-kicker">What I care about</p>
+      <h2 id="approach-title">Bring clarity to complicated work.</h2>
+      <p class="section-intro">The best engineering work is rarely loud. It removes uncertainty, gives people sensible defaults, and keeps paying off after the original problem is gone.</p>
+    </header>
+
+    <div class="principle-grid">
+      <article class="principle-card" data-reveal>
+        <span class="principle-number" aria-hidden="true">01</span>
+        <h3>Systems that hold up</h3>
+        <p>Reliability and security should come from the design, not from hoping every user remembers every rule.</p>
+      </article>
+      <article class="principle-card" data-reveal>
+        <span class="principle-number" aria-hidden="true">02</span>
+        <h3>Tools that earn trust</h3>
+        <p>Good tools explain themselves, behave predictably, and leave room for the person using them to stay in control.</p>
+      </article>
+      <article class="principle-card" data-reveal>
+        <span class="principle-number" aria-hidden="true">03</span>
+        <h3>Workflows that compound</h3>
+        <p>Automation is most valuable when it captures judgment and makes tomorrow's work a little easier than today's.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="content-section content-section--work" id="work" aria-labelledby="work-title">
+    <header class="section-header section-header--split" data-reveal>
+      <div>
+        <p class="section-kicker">A practical example</p>
+        <h2 id="work-title">My setup is software, too.</h2>
+      </div>
+      <p class="section-intro">I've kept my development environment in one public repository since 2014. It gives every machine a familiar starting point without pretending every machine is the same.</p>
     </header>
 
     <article class="project-card" data-reveal>
       <div class="project-body">
         <div class="project-copy">
-          <p class="project-label">Rust / Linux + Windows</p>
+          <p class="project-label">Rust <span aria-hidden="true">/</span> Linux + Windows</p>
           <h3>dotfiles</h3>
-          <p class="project-lead">Every machine I use is described in code and rebuilt with a single command.</p>
-          <p>Every change to how my machines work goes through a diff first. The rule hasn't changed. What changed is that I describe the change in a sentence and spend my attention entirely on whether it's right.</p>
+          <p class="project-lead">One repository turns a fresh machine into a place that feels like mine.</p>
+          <p>The interesting part is not the configuration itself. It is the feedback loop: every improvement is reviewable, repeatable, and ready for the next machine.</p>
+          <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
+            Explore the repository <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
         </div>
 
         <div class="project-rail">
-          <p class="project-terminal"><span class="project-prompt" aria-hidden="true">$</span> dotfiles install<span class="project-caret" aria-hidden="true"></span></p>
+          <div class="project-terminal" aria-label="Example dotfiles installation command">
+            <div class="terminal-bar" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <p><span class="project-prompt" aria-hidden="true">$</span> dotfiles install<span class="project-caret" aria-hidden="true"></span></p>
+            <p class="terminal-result"><span aria-hidden="true">&check;</span> Environment ready</p>
+          </div>
           <ul class="project-facts" aria-label="Project highlights">
-            <li>Cross-platform</li>
-            <li>Adaptive</li>
-            <li>Declarative</li>
-            <li>Idempotent</li>
+            <li><span aria-hidden="true"></span> Cross-platform</li>
+            <li><span aria-hidden="true"></span> Adaptive</li>
+            <li><span aria-hidden="true"></span> Declarative</li>
+            <li><span aria-hidden="true"></span> Idempotent</li>
           </ul>
         </div>
       </div>
-
-      <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
-        Explore my dotfiles <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
-      </a>
     </article>
 
     <dl class="stat-strip" data-reveal>
       <div class="stat">
         <dt class="stat-value">2014</dt>
-        <dd class="stat-label">First commit</dd>
+        <dd class="stat-label">The first commit</dd>
       </div>
       <div class="stat">
         <dt class="stat-value">25+</dt>
-        <dd class="stat-label">Moving parts it owns</dd>
+        <dd class="stat-label">Tools and settings managed</dd>
       </div>
       <div class="stat">
         <dt class="stat-value">1</dt>
-        <dd class="stat-label">Repo behind every machine I use</dd>
+        <dd class="stat-label">Command to rebuild my setup</dd>
       </div>
     </dl>
   </section>
 
-  <section class="content-section content-section--tinted content-section--statement" id="focus" aria-label="Engineering philosophy">
-    <blockquote class="pull-quote" data-reveal>
-      <p>Most of engineering is the work of making the right thing the easiest thing to do.</p>
-    </blockquote>
-  </section>
-
   <section class="content-section content-section--closing" id="contact" aria-labelledby="contact-title">
     <div class="closing-block" data-reveal>
-      <p class="section-kicker">Get in touch</p>
-      <h2 id="contact-title">Always up for a hard problem.</h2>
-      <p class="closing-copy">I'm in Redmond, Washington. LinkedIn is the best way to reach me, and I read everything that comes in there.</p>
+      <p class="section-kicker">Say hello</p>
+      <h2 id="contact-title">Have a problem worth thinking about?</h2>
+      <p class="closing-copy">I am always glad to meet thoughtful people working on difficult systems, useful tools, or better engineering practices. LinkedIn is the simplest way to reach me.</p>
       <div class="closing-actions">
-        <a class="text-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="noopener noreferrer">
-          Message me on LinkedIn <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+        <a class="button-link button-link--light" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="noopener noreferrer">
+          Start a conversation <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
         </a>
       </div>
     </div>

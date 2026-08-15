@@ -3,7 +3,6 @@
  * @description Progressive-enhancement micro-interactions:
  *   - Cursor spotlight (CSS variables on body)
  *   - Magnetic pull on social icons
- *   - 3D parallax tilt on the profile image
  *   - Letter-by-letter reveal on the H1 name
  *   - Scroll reveal for below-the-fold sections
  *
@@ -94,46 +93,6 @@ function initMagneticIcons() {
 }
 
 /* --------------------------------------------------------------- */
-/* Profile image 3D tilt                                           */
-/* --------------------------------------------------------------- */
-function initProfileTilt() {
-  if (!finePointer.matches || reduced()) return;
-
-  const wrap = document.querySelector('.profile-image');
-  if (!wrap) return;
-
-  const MAX = 8; // degrees
-  let raf = null;
-
-  const onMove = (e) => {
-    const rect = wrap.getBoundingClientRect();
-    const dx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-    const dy = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-    const cdx = Math.max(-1, Math.min(1, dx));
-    const cdy = Math.max(-1, Math.min(1, dy));
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      wrap.style.setProperty('--tilt-x', (cdy * -MAX).toFixed(2) + 'deg');
-      wrap.style.setProperty('--tilt-y', (cdx * MAX).toFixed(2) + 'deg');
-      wrap.style.setProperty('--tilt-gx', ((cdx + 1) * 50).toFixed(1) + '%');
-      wrap.style.setProperty('--tilt-gy', ((cdy + 1) * 50).toFixed(1) + '%');
-    });
-  };
-
-  const reset = () => {
-    if (raf) cancelAnimationFrame(raf);
-    wrap.style.removeProperty('--tilt-x');
-    wrap.style.removeProperty('--tilt-y');
-    wrap.style.removeProperty('--tilt-gx');
-    wrap.style.removeProperty('--tilt-gy');
-  };
-
-  wrap.classList.add('has-tilt');
-  wrap.addEventListener('pointermove', onMove);
-  wrap.addEventListener('pointerleave', reset);
-}
-
-/* --------------------------------------------------------------- */
 /* Letter reveal on the H1                                         */
 /* --------------------------------------------------------------- */
 function initNameReveal() {
@@ -146,23 +105,30 @@ function initNameReveal() {
   h1.textContent = '';
 
   const frag = document.createDocumentFragment();
+  const words = text.split(/\s+/);
   let visibleIdx = 0;
-  for (const ch of text) {
-    if (ch === ' ') {
-      // Preserve real space for line wrapping
+
+  words.forEach((word, wordIndex) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'word';
+    wordSpan.setAttribute('aria-hidden', 'true');
+
+    for (const ch of word) {
+      const charSpan = document.createElement('span');
+      charSpan.className = 'char';
+      charSpan.textContent = ch;
+      if (!reduced()) {
+        charSpan.style.setProperty('--char-delay', (visibleIdx * 35) + 'ms');
+      }
+      wordSpan.appendChild(charSpan);
+      visibleIdx++;
+    }
+
+    frag.appendChild(wordSpan);
+    if (wordIndex < words.length - 1) {
       frag.appendChild(document.createTextNode(' '));
-      continue;
     }
-    const span = document.createElement('span');
-    span.className = 'char';
-    span.setAttribute('aria-hidden', 'true');
-    span.textContent = ch;
-    if (!reduced()) {
-      span.style.setProperty('--char-delay', (visibleIdx * 35) + 'ms');
-    }
-    frag.appendChild(span);
-    visibleIdx++;
-  }
+  });
   h1.appendChild(frag);
 }
 
@@ -201,7 +167,6 @@ function initScrollReveal() {
 /* --------------------------------------------------------------- */
 function boot() {
   initNameReveal();
-  initProfileTilt();
   initScrollReveal();
 }
 

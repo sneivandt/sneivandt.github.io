@@ -12,8 +12,8 @@ import './components/copyright-notice.js';
 import './components/aurora-background.js';
 
 // Progressive-enhancement micro-interactions (spotlight, magnetic icons,
-// profile tilt, letter reveal). Imported after components so the DOM the
-// effects target has already been rendered.
+// letter reveal). Imported after components so the DOM the effects target
+// has already been rendered.
 import './effects.js';
 
 /* ------------------------------------------------------------
