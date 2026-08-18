@@ -1,20 +1,10 @@
 /**
  * @file main.js
  * @description Core entry point for the site's JavaScript. 
- * Registers web components and initializes the service worker.
+ * Registers the footer component and initializes the service worker.
  */
 
-// Import and register web components
-import './components/connection-status.js';
-import './components/console-brand.js';
-import './components/social-links.js';
 import './components/copyright-notice.js';
-import './components/aurora-background.js';
-
-// Progressive-enhancement micro-interactions (spotlight, magnetic icons,
-// letter reveal). Imported after components so the DOM the effects target
-// has already been rendered.
-import './effects.js';
 
 /* ------------------------------------------------------------
  * Service Worker Registration

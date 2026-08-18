@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v26';
+const CACHE_VERSION = 'v29';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
@@ -26,8 +26,6 @@ const HTTP_STATUS = {
 const PRECACHE_ASSETS = [
   './',
   './assets/css/style.css',
-  './assets/font/Inter-Bold.woff2',
-  './assets/font/Inter-Light.woff2',
   './assets/font/Inter-Regular.woff2',
   './assets/font/Inter-SemiBold.woff2',
   './assets/img/favicon.ico',
@@ -37,11 +35,6 @@ const PRECACHE_ASSETS = [
   './assets/img/stuart-neivandt.webp',
   './index.html',
   './assets/js/main.js',
-  './assets/js/effects.js',
-  './assets/js/components/aurora-background.js',
-  './assets/js/components/connection-status.js',
-  './assets/js/components/console-brand.js',
-  './assets/js/components/social-links.js',
   './assets/js/components/copyright-notice.js',
   './manifest.json'
 ];

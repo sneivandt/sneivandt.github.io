@@ -6,13 +6,13 @@
   <title>Stuart Neivandt | Principal Software Engineer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="author" content="Stuart Neivandt">
-  <meta name="description" content="Stuart Neivandt is a Principal Software Engineer at Microsoft focused on dependable distributed systems, cloud platforms, developer tools, and thoughtful engineering workflows.">
-  <meta name="theme-color" content="#080b10">
+  <meta name="description" content="Stuart Neivandt is a Principal Software Engineer at Microsoft working on dependable distributed systems, cloud platforms, and developer tools.">
+  <meta name="theme-color" content="#0b0f14">
   <meta name="color-scheme" content="dark">
   <meta name="robots" content="index, follow, max-image-preview:large">
 
   <!-- Security: Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.github.com; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://stuartneivandt.com/">
@@ -30,12 +30,12 @@
   <link type="text/plain" rel="author" href="humans.txt">
 
   <!-- Performance: Preload critical fonts -->
-  <link rel="preload" href="assets/font/Inter-Light.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/font/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/font/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Open Graph Meta Tags for social media sharing -->
   <meta property="og:title" content="Stuart Neivandt | Principal Software Engineer">
-  <meta property="og:description" content="Principal Software Engineer at Microsoft focused on dependable systems, developer tools, and better ways to work.">
+  <meta property="og:description" content="Principal Software Engineer at Microsoft working on dependable distributed systems, cloud platforms, and developer tools.">
   <meta property="og:image" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
   <meta property="og:image:secure_url" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
   <meta property="og:image:type" content="image/png">
@@ -53,7 +53,7 @@
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Stuart Neivandt | Principal Software Engineer">
-  <meta name="twitter:description" content="Principal Software Engineer at Microsoft focused on dependable systems, developer tools, and better ways to work.">
+  <meta name="twitter:description" content="Principal Software Engineer at Microsoft working on dependable distributed systems, cloud platforms, and developer tools.">
   <meta name="twitter:image" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
   <meta name="twitter:image:alt" content="Portrait of Stuart Neivandt">
   <meta name="twitter:creator" content="@stuartneivandt">
@@ -69,9 +69,9 @@
     "@id": "https://stuartneivandt.com/#profile-page",
     "url": "https://stuartneivandt.com/",
     "name": "Stuart Neivandt | Principal Software Engineer",
-    "description": "Principal Software Engineer at Microsoft focused on dependable distributed systems, cloud platforms, developer tools, and thoughtful engineering workflows.",
+    "description": "Principal Software Engineer at Microsoft working on dependable distributed systems, cloud platforms, and developer tools.",
     "dateCreated": "2018-08-27T00:00:00-07:00",
-    "dateModified": "2026-08-15T00:00:00-07:00",
+    "dateModified": "2026-08-17T00:00:00-07:00",
     "mainEntity": {
       "@type": "Person",
       "@id": "https://stuartneivandt.com/#person",
@@ -86,7 +86,7 @@
         "height": 400
       },
       "jobTitle": "Principal Software Engineer",
-      "description": "Principal Software Engineer at Microsoft focused on dependable distributed systems, cloud platforms, developer tools, and thoughtful engineering workflows.",
+      "description": "Principal Software Engineer at Microsoft working on dependable distributed systems, cloud platforms, and developer tools.",
       "worksFor": {
         "@type": "Organization",
         "name": "Microsoft",
@@ -109,29 +109,31 @@
   </script>
 </head>
 
-<body>
+<body id="top">
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
-
-<aurora-background></aurora-background>
 
 <div class="container">
 
 <main class="main-content" id="main-content">
   <section class="hero" id="about" aria-labelledby="intro-title">
     <div class="hero-copy">
-      <p class="profile-kicker"><span aria-hidden="true"></span> Principal Software Engineer at Microsoft</p>
-      <h1 id="intro-title">Hi, I'm Stuart.</h1>
-      <div class="intro-copy">
-        <p>At Microsoft, I work on secure distributed systems, cloud platforms, and developer tools. I care about the unglamorous details that make software easier to operate, understand, and trust.</p>
+      <p class="profile-kicker">Principal Software Engineer <span aria-hidden="true">&middot;</span> Microsoft</p>
+      <h1 id="intro-title">Stuart Neivandt</h1>
+      <div class="hero-intro">
+        <p>At Microsoft, I work on distributed systems, cloud infrastructure, and developer tools. I focus on making complex software reliable, secure, and easier for engineers to operate.</p>
       </div>
       <div class="hero-actions">
-        <a class="button-link" href="#work">See what I build <span aria-hidden="true">&darr;</span></a>
-        <social-links></social-links>
+        <a class="text-link" href="https://github.com/sneivandt" target="_blank" rel="me noopener noreferrer">
+          View GitHub <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+        <a class="text-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="me noopener noreferrer">
+          Connect on LinkedIn <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
       </div>
     </div>
 
-    <div class="portrait-card">
+    <figure class="portrait">
       <img class="profile-image"
            src="assets/img/stuart-neivandt.webp"
            alt="Portrait of Stuart Neivandt"
@@ -140,115 +142,49 @@
            decoding="async"
            loading="eager"
            fetchpriority="high">
-    </div>
+    </figure>
   </section>
 
-  <section class="content-section content-section--approach" id="approach" aria-labelledby="approach-title">
-    <header class="section-header" data-reveal>
-      <p class="section-kicker">What I care about</p>
-      <h2 id="approach-title">Bring clarity to complicated work.</h2>
-      <p class="section-intro">The best engineering work is rarely loud. It removes uncertainty, gives people sensible defaults, and keeps paying off after the original problem is gone.</p>
+  <section class="content-section work-section" id="work" aria-labelledby="work-title">
+    <header class="work-header">
+      <div class="section-heading">
+        <p class="section-label">Project showcase</p>
+        <h2 id="work-title">dotfiles</h2>
+      </div>
+      <p class="work-intro">The tools and configuration I use to get productive quickly on any machine.</p>
     </header>
 
-    <div class="principle-grid">
-      <article class="principle-card" data-reveal>
-        <span class="principle-number" aria-hidden="true">01</span>
-        <h3>Systems that hold up</h3>
-        <p>Reliability and security should come from the design, not from hoping every user remembers every rule.</p>
-      </article>
-      <article class="principle-card" data-reveal>
-        <span class="principle-number" aria-hidden="true">02</span>
-        <h3>Tools that earn trust</h3>
-        <p>Good tools explain themselves, behave predictably, and leave room for the person using them to stay in control.</p>
-      </article>
-      <article class="principle-card" data-reveal>
-        <span class="principle-number" aria-hidden="true">03</span>
-        <h3>Workflows that compound</h3>
-        <p>Automation is most valuable when it captures judgment and makes tomorrow's work a little easier than today's.</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="content-section content-section--work" id="work" aria-labelledby="work-title">
-    <header class="section-header section-header--split" data-reveal>
-      <div>
-        <p class="section-kicker">A practical example</p>
-        <h2 id="work-title">My setup is software, too.</h2>
-      </div>
-      <p class="section-intro">I've kept my development environment in one public repository since 2014. It gives every machine a familiar starting point without pretending every machine is the same.</p>
-    </header>
-
-    <article class="project-card" data-reveal>
-      <div class="project-body">
-        <div class="project-copy">
-          <p class="project-label">Rust <span aria-hidden="true">/</span> Linux + Windows</p>
-          <h3>dotfiles</h3>
-          <p class="project-lead">One repository turns a fresh machine into a place that feels like mine.</p>
-          <p>The interesting part is not the configuration itself. It is the feedback loop: every improvement is reviewable, repeatable, and ready for the next machine.</p>
-          <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
-            Explore the repository <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
-          </a>
-        </div>
-
-        <div class="project-rail">
-          <div class="project-terminal" aria-label="Example dotfiles installation command">
-            <div class="terminal-bar" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-            <p><span class="project-prompt" aria-hidden="true">$</span> dotfiles install<span class="project-caret" aria-hidden="true"></span></p>
-            <p class="terminal-result"><span aria-hidden="true">&check;</span> Environment ready</p>
-          </div>
-          <ul class="project-facts" aria-label="Project highlights">
-            <li><span aria-hidden="true"></span> Cross-platform</li>
-            <li><span aria-hidden="true"></span> Adaptive</li>
-            <li><span aria-hidden="true"></span> Declarative</li>
-            <li><span aria-hidden="true"></span> Idempotent</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <dl class="stat-strip" data-reveal>
-      <div class="stat">
-        <dt class="stat-value">2014</dt>
-        <dd class="stat-label">The first commit</dd>
-      </div>
-      <div class="stat">
-        <dt class="stat-value">25+</dt>
-        <dd class="stat-label">Tools and settings managed</dd>
-      </div>
-      <div class="stat">
-        <dt class="stat-value">1</dt>
-        <dd class="stat-label">Command to rebuild my setup</dd>
-      </div>
-    </dl>
-  </section>
-
-  <section class="content-section content-section--closing" id="contact" aria-labelledby="contact-title">
-    <div class="closing-block" data-reveal>
-      <p class="section-kicker">Say hello</p>
-      <h2 id="contact-title">Have a problem worth thinking about?</h2>
-      <p class="closing-copy">I am always glad to meet thoughtful people working on difficult systems, useful tools, or better engineering practices. LinkedIn is the simplest way to reach me.</p>
-      <div class="closing-actions">
-        <a class="button-link button-link--light" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="noopener noreferrer">
-          Start a conversation <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+    <article class="project">
+      <div class="project-copy">
+        <p>I started keeping my dotfiles in Git in 2014 because I was tired of rebuilding the same setup by hand. Over time, the repository grew into a command-line tool that looks after the whole environment, not just a few configuration files.</p>
+        <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
+          Explore the repository <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
         </a>
       </div>
-    </div>
+
+      <div class="project-notes">
+        <ul class="project-highlights">
+          <li>
+            <strong>One source of truth</strong>
+            <span>The setup stays readable, reviewable, and under version control.</span>
+          </li>
+          <li>
+            <strong>No surprises</strong>
+            <span>A dry run shows me what the tool intends to change before it does anything.</span>
+          </li>
+        </ul>
+
+      </div>
+    </article>
   </section>
 </main>
 
 <footer class="site-footer">
   <copyright-notice name="Stuart Neivandt"></copyright-notice>
-  <span class="footer-separator" aria-hidden="true">/</span>
   <small>Redmond, Washington</small>
 </footer>
 
 </div>
-
-<connection-status></connection-status>
-
-<console-brand></console-brand>
 
 <script src="assets/js/main.js" type="module"></script>
 
