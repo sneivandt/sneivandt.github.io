@@ -71,7 +71,7 @@
     "name": "Stuart Neivandt | Principal Software Engineer",
     "description": "Principal Software Engineer at Microsoft working on dependable distributed systems, cloud platforms, and developer tools.",
     "dateCreated": "2018-08-27T00:00:00-07:00",
-    "dateModified": "2026-08-17T00:00:00-07:00",
+    "dateModified": "2026-09-04T00:00:00-07:00",
     "mainEntity": {
       "@type": "Person",
       "@id": "https://stuartneivandt.com/#person",
@@ -117,64 +117,68 @@
 
 <main class="main-content" id="main-content">
   <section class="hero" id="about" aria-labelledby="intro-title">
-    <div class="hero-copy">
+    <div class="hero-heading">
       <p class="profile-kicker">Principal Software Engineer <span aria-hidden="true">&middot;</span> Microsoft</p>
-      <h1 id="intro-title">Stuart Neivandt</h1>
-      <div class="hero-intro">
-        <p>At Microsoft, I work on distributed systems, cloud infrastructure, and developer tools. I focus on making complex software reliable, secure, and easier for engineers to operate.</p>
-      </div>
-      <div class="hero-actions">
-        <a class="text-link" href="https://github.com/sneivandt" target="_blank" rel="me noopener noreferrer">
-          View GitHub <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
-        </a>
-        <a class="text-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="me noopener noreferrer">
-          Connect on LinkedIn <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
-        </a>
-      </div>
+      <h1 id="intro-title">Stuart <span>Neivandt</span></h1>
     </div>
 
     <figure class="portrait">
       <img class="profile-image"
            src="assets/img/stuart-neivandt.webp"
            alt="Portrait of Stuart Neivandt"
-           width="300"
-           height="300"
+           width="400"
+           height="400"
            decoding="async"
            loading="eager"
            fetchpriority="high">
     </figure>
+
+    <div class="hero-intro">
+      <p>At Microsoft, I work on distributed systems, cloud infrastructure, and developer tools. I focus on making complex software reliable, secure, and easier for engineers to operate.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="text-link" href="https://github.com/sneivandt" target="_blank" rel="me noopener noreferrer">
+        View GitHub
+        <svg class="link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M4 12 12 4M4 4h8v8"/></svg>
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+      <a class="text-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="me noopener noreferrer">
+        Connect on LinkedIn
+        <svg class="link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M4 12 12 4M4 4h8v8"/></svg>
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </div>
   </section>
 
   <section class="content-section work-section" id="work" aria-labelledby="work-title">
     <header class="work-header">
       <div class="section-heading">
-        <p class="section-label">Project showcase</p>
+        <p class="section-label">Personal project</p>
         <h2 id="work-title">dotfiles</h2>
       </div>
-      <p class="work-intro">The tools and configuration I use to get productive quickly on any machine.</p>
+      <p class="work-intro">From a fresh machine to a familiar workspace.</p>
     </header>
 
     <article class="project">
       <div class="project-copy">
-        <p>I started keeping my dotfiles in Git in 2014 because I was tired of rebuilding the same setup by hand. Over time, the repository grew into a command-line tool that looks after the whole environment, not just a few configuration files.</p>
-        <a class="project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
-          Explore the repository <span aria-hidden="true">&nearr;</span><span class="visually-hidden"> (opens in a new tab)</span>
+        <p>What started as a collection of configuration files is now a Rust tool for setting up my Arch Linux, Windows, and WSL machines. It manages shells, editors, packages, and AI coding tools from a shared configuration kept in Git.</p>
+        <a class="text-link project-link" href="https://github.com/sneivandt/dotfiles" target="_blank" rel="noopener noreferrer">
+          Explore the repository
+          <svg class="link-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M4 12 12 4M4 4h8v8"/></svg>
+          <span class="visually-hidden"> (opens in a new tab)</span>
         </a>
       </div>
 
-      <div class="project-notes">
-        <ul class="project-highlights">
-          <li>
-            <strong>One source of truth</strong>
-            <span>The setup stays readable, reviewable, and under version control.</span>
-          </li>
-          <li>
-            <strong>No surprises</strong>
-            <span>A dry run shows me what the tool intends to change before it does anything.</span>
-          </li>
-        </ul>
-
-      </div>
+      <ul class="project-highlights" role="list">
+        <li>
+          <strong>Server and desktop profiles</strong>
+          <span>A base profile covers servers and WSL. The desktop profile adds workstation apps and services, with settings for Linux and Windows.</span>
+        </li>
+        <li>
+          <strong>Copilot and Codex configuration</strong>
+          <span>My AI tool settings live in Git alongside my shell and editor configuration. The installer also manages agent skills and plugins.</span>
+        </li>
+      </ul>
     </article>
   </section>
 </main>
