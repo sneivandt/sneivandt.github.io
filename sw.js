@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v31';
+const CACHE_VERSION = 'v32';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes

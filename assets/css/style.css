@@ -122,25 +122,18 @@ a:focus-visible {
   grid-area: heading;
 }
 
-.profile-kicker,
-.section-label {
+.profile-kicker {
   color: var(--color-text-muted);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.025em;
 }
 
-.section-label {
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .profile-kicker span {
   margin-inline: 0.35rem;
 }
 
-h1,
-h2 {
+h1 {
   text-wrap: balance;
 }
 
@@ -220,87 +213,6 @@ h1 span {
   filter: saturate(0.9);
 }
 
-.content-section {
-  padding-block: var(--section-space);
-  border-top: 1px solid var(--color-border);
-  scroll-margin-top: 2rem;
-}
-
-.work-header,
-.project {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--column-gap);
-}
-
-.work-header {
-  align-items: end;
-}
-
-h2 {
-  margin-top: 1rem;
-  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
-  font-weight: 400;
-  letter-spacing: -0.045em;
-  line-height: 1.1;
-}
-
-.work-intro {
-  max-width: 36ch;
-  color: var(--color-text-soft);
-  font-size: 1rem;
-  line-height: 1.7;
-  text-wrap: pretty;
-}
-
-.project {
-  margin-top: 2.5rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.project-copy {
-  display: grid;
-  gap: 1.25rem;
-  align-content: start;
-  color: var(--color-text-soft);
-  font-size: 1rem;
-  line-height: 1.75;
-  text-wrap: pretty;
-}
-
-.project-link {
-  margin-top: 0.25rem;
-}
-
-.project-highlights {
-  list-style: none;
-}
-
-.project-highlights li {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.project-highlights li + li {
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.project-highlights strong {
-  color: var(--color-text);
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
-
-.project-highlights span {
-  color: var(--color-text-muted);
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  text-wrap: pretty;
-}
-
 .site-footer {
   display: flex;
   flex-wrap: wrap;
@@ -372,28 +284,6 @@ h2 {
   .hero-actions {
     justify-content: center;
     gap: 0.25rem 1.25rem;
-  }
-
-  .work-header,
-  .project {
-    grid-template-columns: 1fr;
-  }
-
-  .work-header {
-    justify-items: center;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .project {
-    row-gap: 2rem;
-    margin-top: 2rem;
-    padding-top: 2rem;
-  }
-
-  .project-highlights {
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
   }
 
   .site-footer {
