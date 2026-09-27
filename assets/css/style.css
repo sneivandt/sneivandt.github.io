@@ -46,6 +46,9 @@ html {
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-main);
@@ -105,6 +108,13 @@ a:focus-visible {
 .container {
   width: var(--container-width);
   margin-inline: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
 }
 
 .hero {
@@ -215,24 +225,18 @@ h1 span {
 
 .site-footer {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-block: 1.75rem 2.5rem;
+  justify-content: center;
+  padding-block: 1.25rem 1.5rem;
   border-top: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  color: var(--color-text-soft);
+  text-align: center;
 }
 
-.site-footer small,
 .site-footer copyright-notice {
   color: inherit;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 400;
-}
-
-.site-footer copyright-notice {
-  opacity: 1;
 }
 
 @media (max-width: 700px) {
@@ -245,6 +249,7 @@ h1 span {
     grid-template-columns: 1fr;
     grid-template-areas: "portrait" "heading" "intro" "actions";
     padding-top: 2.5rem;
+    padding-bottom: 2rem;
   }
 
   .hero-heading {
@@ -284,13 +289,6 @@ h1 span {
   .hero-actions {
     justify-content: center;
     gap: 0.25rem 1.25rem;
-  }
-
-  .site-footer {
-    align-items: center;
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
   }
 }
 

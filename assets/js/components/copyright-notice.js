@@ -64,10 +64,6 @@ export class CopyrightNoticeComponent extends HTMLElement {
       <style>
         :host {
           display: inline;
-          opacity: 0.7;
-          font-size: 0.8rem;
-          font-weight: 300;
-          color: var(--color-text-muted, #888888);
         }
       </style>
       <span>© ${currentYear} ${escapedName}</span>
