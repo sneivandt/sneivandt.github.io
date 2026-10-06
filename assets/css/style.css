@@ -228,7 +228,7 @@ h1 span {
   align-items: center;
   justify-content: center;
   padding-block: 1.25rem 1.5rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid transparent;
   color: var(--color-text-soft);
   text-align: center;
 }
