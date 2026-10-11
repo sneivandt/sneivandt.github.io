@@ -1,159 +1,52 @@
-# GitHub Copilot Guidance for `sneivandt.github.io`
+# Agent guidance
 
-This repository is intentionally **minimal, dependency-free, build-free static content**. All contributions should preserve that philosophy.
+This is a small personal website served directly by GitHub Pages. Keep changes simple, readable, fast, and accessible.
 
-## Core Principles
+## Constraints
 
-1. **Pure static hosting** — GitHub Pages serves raw files directly
-2. **No build tools** — no bundlers, transpilers, task runners, or preprocessors (no Webpack, Vite, Gulp, Babel, SCSS, Tailwind, etc.)
-3. **No package managers** — no `package.json`, `node_modules`, Python deps, etc.
-4. **Vanilla HTML/CSS/JS only** — small, CDN-loaded third-party scripts are acceptable if they are optional enhancements
-5. **Performance + accessibility first** — fast first paint, semantic markup, keyboard + reduced-motion friendly
+- Use plain HTML, native CSS, and vanilla JavaScript. No frameworks, preprocessors, bundlers, package manifests, or dependency installation.
+- Preserve direct static hosting: no build step, generated asset pipeline, server-side routing, or rewrites.
+- Keep changes focused. Reuse existing patterns and helpers instead of introducing speculative abstractions.
+- Keep core content and navigation usable without JavaScript. Optional enhancements must respect the page's Content Security Policy.
+- Do not add heavy analytics, trackers, or unnecessary third-party assets.
 
-> If a change would require a build step, reconsider the approach or propose it explicitly before implementing.
+## Implementation
 
-## File Organization
+- Keep markup shallow and semantic, with one `h1` and logical heading order.
+- Keep metadata and JSON-LD inline and consistent with visible content, the canonical URL, and social previews.
+- Reuse global CSS custom properties; keep selectors shallow and prefer fluid sizing with `clamp()`.
+- Preserve keyboard access and visible focus styles. Use native semantics before ARIA.
+- Maintain contrast of at least 4.5:1 for normal text and 3:1 for large text.
+- Label icon-only links with `aria-label`, without a redundant `title`. Hide decorative icons and animation from assistive technology.
+- Respect `prefers-reduced-motion` in CSS and JavaScript.
+- Use small, relative ES modules loaded with `type="module"` or `defer`.
+- Use native Web Components for reusable UI only when needed. Guard Shadow DOM creation, clean up listeners/timers/observers on disconnect, and support reconnection.
+- Treat component attributes as plain text; escape values or use `textContent` rather than inserting raw input into HTML.
+- Optimize images before committing. Prefer WebP with fallback when needed, provide appropriate alt text, and include image dimensions.
+- Keep fonts self-hosted as WOFF2, preload critical weights, and limit the site to two or three weights.
 
-- `index.html` is the single-page entry point.
-- `assets/css/style.css` holds global CSS and design tokens.
-- `assets/js/main.js` imports and registers vanilla Web Components from `assets/js/components/`.
-- `assets/font/` and `assets/img/` hold self-hosted fonts and images.
-- `manifest.json`, `robots.txt`, `sitemap.xml`, `sw.js`, `CNAME`, and `_config.yml` support GitHub Pages, SEO, and PWA behavior.
-- `scripts/serve.py` is the local static development server.
+## Task-specific skills
 
----
+Use the relevant skill under `.agents/skills/`:
 
-## HTML Guidelines
+- `static-site-maintainer`: content, layout, styling, JavaScript, components, assets, and documentation.
+- `github-pages-seo-pwa`: metadata, structured data, publishing configuration, crawling files, and service worker caching.
 
-### Page Layout Conventions
-- Keep each page self-explanatory with minimal DOM depth
-- Prefer semantic elements: `<main>`, `<header>`, `<nav>`, `<section>`, `<footer>`
-- Only one `<h1>` per page; descending heading order thereafter
-- Inline critical meta tags and structured data directly in the HTML (no external JSON fetch)
+Inspect the current source before assuming a feature is active. The JavaScript entry point currently only registers the service worker.
 
-### Required Meta Tags
-Every HTML page should include:
-- `<meta charset="UTF-8">`
-- `<meta name="viewport" content="width=device-width, initial-scale=1">`
-- `<meta name="description" content="...">`
-- `<link rel="canonical" href="...">`
-- Open Graph tags for social sharing
-- JSON-LD structured data when appropriate
+## Validation
 
----
+- Preview with `./serve.py` from the repository root at `http://localhost:8000/`.
+- If local assets appear stale, unregister the service worker and clear this origin's Cache Storage; no-cache HTTP headers do not bypass it.
+- Run `node --check` on touched JavaScript files and `python3 -m json.tool manifest.json` when changing the manifest.
+- For visual or interactive changes, check mobile layout, keyboard navigation, and reduced-motion behavior. Include screenshots in the pull request.
+- Pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, manifest JSON validation, and Lighthouse audits requiring at least 90 in all four categories.
+- Documentation-only changes need accurate commands and links, not a site audit.
 
-## CSS Guidelines
+## Maintenance
 
-### Architecture
-- **Single global stylesheet**: `assets/css/style.css` for site-wide rules
-- **Design tokens**: Use CSS custom properties (defined in `:root`) for colors, typography, spacing
-- **No preprocessors**: Native CSS only (no SCSS, Less, PostCSS, Tailwind)
-
-### Best Practices
-- Keep selectors shallow; avoid specificity wars
-- Prefer utility-like light classes if repetition appears
-- Use `prefers-reduced-motion` for animations and keep them subtle
-- Use `clamp()` for fluid typography instead of breakpoint-heavy approaches
-
-## JavaScript Guidelines
-
-### Architecture
-- **Vanilla JS only** — no frameworks (React, Vue, Svelte, Alpine, jQuery)
-- **Web Components** — use native Custom Elements API for reusable components
-- **ES modules** — use `import`/`export` for modularity
-- **Deferred loading** — scripts must not block first paint (`type="module"` or `defer`)
-
-### Web Components
-- Put reusable UI in `assets/js/components/` and import it from `assets/js/main.js`.
-- Guard Shadow DOM attachment with `if (!this.shadowRoot)` when using `attachShadow()`.
-- Clean up listeners, timers, and observers in `disconnectedCallback()`.
-- Use Shadow DOM for standalone encapsulated components; skip it for layout/composition components that rely on global CSS.
-- Pass plain text through attributes and render any needed markup inside the component.
-- Respect `prefers-reduced-motion`; use `aria-hidden="true"` for decorative rapidly updating animation.
-
-### Best Practices
-- Keep logic modular and small (~200 lines max per file)
-- No ES module imports that suggest a future build pipeline
-- Use `matchMedia('(prefers-reduced-motion: reduce)')` for motion-sensitive features
-- Degrade gracefully when optional browser APIs are unavailable, using existing fallback patterns.
-- Run `node --check` on touched JavaScript files.
-
-## Images & Fonts
-
-### Images
-- Optimize images manually before committing (no automated pipeline)
-- Prefer WebP format with PNG/JPG fallback when critical
-- Use descriptive `alt` text for meaningful images
-- Use empty `alt=""` for decorative images
-- Include `width` and `height` attributes for layout stability
-
-### Fonts
-- Self-host fonts in `assets/font/` directory (currently Inter)
-- Use `.woff2` format only (best compression, broad support)
-- Preload critical font weights in HTML `<head>`
-- Limit to 2-3 weights to minimize transfer size
-
-## Accessibility Requirements
-
-### Checklist
-- [ ] Logical heading order (`h1` → `h2` → `h3`, no skipping)
-- [ ] Labels / ARIA only where native semantics insufficient
-- [ ] Sufficient color contrast (4.5:1 for normal text, 3:1 for large text)
-- [ ] Focus styles visible (never `outline: none` without replacement)
-- [ ] `prefers-reduced-motion` respected for animations
-
-### Icon-Only Links
-Use `aria-label` for accessible names. **Do NOT pair with a redundant `title` attribute** — this causes double-speak issues in some screen readers.
-
-```html
-<!-- ✓ Correct -->
-<a href="..." aria-label="GitHub profile (opens in a new tab)">
-  <svg aria-hidden="true">...</svg>
-</a>
-
-<!-- ✗ Avoid -->
-<a href="..." aria-label="GitHub" title="GitHub">
-  <svg>...</svg>
-</a>
-```
-
-## Things to Avoid
-
-| Category | Avoid | Rationale |
-|----------|-------|-----------|
-| Tooling | `package.json`, bundlers, npm scripts | Adds complexity & build step |
-| CSS | SCSS, Tailwind, large resets | Overhead vs. small scale benefit |
-| JS | Frameworks, transpiled syntax, polyfills | Not needed for scope |
-| Fonts | Many weights/formats, variable fonts | Increases transfer size |
-| Analytics | Heavy trackers, Google Analytics | Privacy + performance cost |
-| Images | Unoptimized PNGs, GIFs for photos | Performance cost |
-
-## Testing & Validation
-
-### Automated (CI)
-- **HTML5 Validator** — validates HTML and CSS syntax
-- **JavaScript Syntax Check** — `node --check` on all JS files
-- **Link Checker** — detects broken internal/external links
-- **Lighthouse CI** — enforces 90+ scores for performance, accessibility, best practices, SEO
-
-### Manual Before Committing
-- Test with `prefers-reduced-motion: reduce` (animations should stop)
-- Test keyboard navigation (Tab, Enter, Escape)
-- Verify on mobile viewport
-
-## Pull Request Guidelines
-
-1. **Always include screenshots** of the site after changes (helps reviewers understand visual impact)
-2. Keep changes focused and minimal
-3. Ensure CI passes before requesting review
-
-## Date Maintenance
-
-When making changes to the repository, update relevant dates if needed:
-
-1. **Sitemap lastmod** — Update `sitemap.xml` `<lastmod>` when content changes materially.
-2. **Copyright year** — Keep `LICENSE` current when the copyright year changes; the footer year is generated by `copyright-notice`.
-
----
-
-Keep it simple, fast, and human-readable. If in doubt, choose the option that requires the fewest moving parts.
+- Bump `CACHE_VERSION` in `sw.js` when changing cached site files. Update precache references when adding or removing essential offline assets.
+- For material published page-content changes, update sitemap `lastmod` and JSON-LD `dateModified`. Do not change those dates for documentation or skill edits alone.
+- Keep the copyright year in `LICENSE` current.
+- Preserve the custom domain unless a domain change is requested. Do not change DNS or repository publishing settings without explicit authorization.
+- Update directly related documentation when behavior or maintenance instructions change.

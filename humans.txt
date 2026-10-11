@@ -1,16 +1,10 @@
 /* TEAM */
-  Developer: Stuart Neivandt
-  Site: stuartneivandt.com
-  GitHub: @sneivandt
+  Creator: Stuart Neivandt
+  Website: https://stuartneivandt.com/
+  GitHub: https://github.com/sneivandt
   Location: Redmond, Washington
-  Focus: Simplicity, Performance, Accessibility
-
-  Assistant: GitHub Copilot
-  Role: AI Pair Programmer
 
 /* SITE */
   Language: English
-  Doctype: HTML5
-  Standards: HTML5, CSS3, ES6+
-  Components: Vanilla JS, Service Worker
-  Tools: VS Code, GitHub Pages
+  Purpose: A personal introduction and a place to connect.
+  Values: Simplicity, accessibility, and respect for your time.

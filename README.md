@@ -1,67 +1,70 @@
 # sneivandt.github.io
 
-Personal website for [stuartneivandt.com](https://stuartneivandt.com).
+Source for [stuartneivandt.com](https://stuartneivandt.com/), Stuart Neivandt's personal website.
 
-This repository is a small, dependency-free GitHub Pages site built with plain HTML, native CSS, and vanilla JavaScript Web Components. There is no build step, package manager, framework, or generated asset pipeline.
+A single-page profile built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
 
-## Overview
+## Preview locally
 
-The site is intentionally simple: source files are served directly by GitHub Pages. The main page lives in `index.html`, global styles live in `assets/css/style.css`, and interactive behavior is split into small ES module Web Components under `assets/js/components/`.
-
-## Features
-
-| Area | Details |
-| --- | --- |
-| Architecture | Native Custom Elements, with Shadow DOM where style isolation helps |
-| Performance | No framework runtime, preloaded fonts, compact static assets |
-| Accessibility | Semantic markup, skip link, ARIA labels where needed, visible focus states, touch-friendly profile buttons with reduced-motion support |
-| Responsive design | Mobile-first layout with fluid typography using `clamp()` |
-| SEO and sharing | Canonical URL, Open Graph metadata, sitemap, robots file, JSON-LD |
-| Progressive enhancement | Web app manifest and service worker for offline support |
-| Hosting | GitHub Pages with a custom domain configured through `CNAME` |
-
-## Local development
-
-Use the included static server:
+With Python 3 installed, run this from the repository root:
 
 ```bash
-./scripts/serve.py
+./serve.py
 ```
 
-Then open `http://localhost:8000`.
+Open [localhost:8000](http://localhost:8000/). Edit the source files and refresh the browser; there is nothing to compile. Stop the server with `Ctrl+C`.
 
-You can also use Python's built-in server:
+The included server sends no-cache HTTP headers. A basic alternative is:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Avoid opening `index.html` directly from the filesystem; local HTTP serving better matches GitHub Pages and avoids browser restrictions around fonts, modules, and service workers.
+Serve over HTTP rather than opening `index.html` as a file so ES modules and service worker registration work correctly.
 
-## Validation
+**Seeing stale assets?** The service worker caches files independently of the server's HTTP headers. During development, unregister it and clear the site's Cache Storage in your browser's developer tools, then reload.
 
-Pull requests run automated checks for:
+## Making changes
 
-- HTML and CSS validation
-- JavaScript syntax with `node --check`
-- Broken links in HTML and Markdown
-- Valid `manifest.json`
-- Lighthouse scores for performance, accessibility, best practices, and SEO
+Keep the site small, readable, and directly publishable:
 
-For local JavaScript syntax checks:
+- Keep visible content, page descriptions, social tags, and structured data consistent.
+- Reuse existing CSS custom properties for colors, spacing, and typography.
+- Use vanilla JavaScript and native Web Components when interaction is needed. Keep the profile usable without JavaScript.
+- Optimize images before committing, include image dimensions, and keep fonts self-hosted.
+- Preserve semantic headings, keyboard navigation, visible focus styles, touch-friendly buttons, and reduced-motion support.
+- Update the sitemap's `lastmod` and structured data's `dateModified` when published page content changes materially.
+
+When changing cached site files, bump `CACHE_VERSION` in `sw.js` so the next service worker installation refreshes the precache. Add new essential offline assets to `PRECACHE_ASSETS` as needed. HTML uses network-first caching, images and fonts use cache-first caching, and other assets use stale-while-revalidate.
+
+See [`AGENTS.md`](AGENTS.md) for detailed repository conventions.
+
+## Checks
+
+Pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. [Lighthouse CI](.lighthouserc.json) requires scores of at least **90** in performance, accessibility, best practices, and SEO.
+
+For local JavaScript syntax checks, with Node.js installed:
 
 ```bash
-find . -name "*.js" -type f ! -path "./.git/*" -exec node --check {} \;
+for file in sw.js assets/js/*.js; do
+  node --check "$file" || exit 1
+done
 ```
+
+Check the manifest with Python's standard library:
+
+```bash
+python3 -m json.tool manifest.json > /dev/null
+```
+
+For visual or interactive changes, also check a mobile viewport, keyboard navigation, and reduced-motion preferences. Include screenshots of the updated site in the pull request.
 
 ## Deployment
 
-GitHub Pages serves the configured publishing branch for this repository. The `CNAME` file maps the site to `stuartneivandt.com`, and DNS is configured outside the repository. HTTPS is provisioned automatically by GitHub Pages.
+GitHub Pages publishes the repository's configured source without a frontend build. The custom domain is declared in `CNAME`; DNS, the publishing source, and HTTPS settings are managed outside these source files.
 
-## Maintenance principles
+The workflows in this repository validate pull requests; they do not deploy the site.
 
-- Keep the site dependency-free and build-free.
-- Prefer semantic HTML, native CSS, and small vanilla JavaScript modules.
-- Keep assets optimized before committing them.
-- Preserve keyboard access, visible focus states, and reduced-motion support.
-- Update `sitemap.xml` when content changes materially.
+## License
+
+[MIT](LICENSE) &copy; Stuart Neivandt.
