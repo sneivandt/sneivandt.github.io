@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v33';
+const CACHE_VERSION = 'v38';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
@@ -30,12 +30,12 @@ const PRECACHE_ASSETS = [
   './assets/font/Inter-SemiBold.woff2',
   './assets/img/favicon.ico',
   './assets/img/favicon.svg',
+  './assets/img/apple-touch-icon.png',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png',
   './assets/img/stuart-neivandt.webp',
   './index.html',
   './assets/js/main.js',
-  './assets/js/components/copyright-notice.js',
   './manifest.json'
 ];
 

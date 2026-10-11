@@ -1,10 +1,8 @@
 /**
  * @file main.js
  * @description Core entry point for the site's JavaScript. 
- * Registers the footer component and initializes the service worker.
+ * Initializes the service worker.
  */
-
-import './components/copyright-notice.js';
 
 /* ------------------------------------------------------------
  * Service Worker Registration
