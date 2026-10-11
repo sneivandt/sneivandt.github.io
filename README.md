@@ -37,24 +37,21 @@ Keep the site small, readable, and directly publishable:
 
 When changing cached site files, bump `CACHE_VERSION` in `sw.js` so the next service worker installation refreshes the precache. Add new essential offline assets to `PRECACHE_ASSETS` as needed. HTML uses network-first caching, images and fonts use cache-first caching, and other assets use stale-while-revalidate.
 
-See [`AGENTS.md`](AGENTS.md) for detailed repository conventions.
-
 ## Checks
 
 Pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. [Lighthouse CI](.lighthouserc.json) requires scores of at least **90** in performance, accessibility, best practices, and SEO.
 
-For local JavaScript syntax checks, with Node.js installed:
+Check JavaScript syntax with Node.js:
 
 ```bash
-for file in sw.js assets/js/*.js; do
-  node --check "$file" || exit 1
-done
+node --check sw.js
+node --check assets/js/main.js
 ```
 
 Check the manifest with Python's standard library:
 
 ```bash
-python3 -m json.tool manifest.json > /dev/null
+python3 -m json.tool manifest.json
 ```
 
 For visual or interactive changes, also check a mobile viewport, keyboard navigation, and reduced-motion preferences. Include screenshots of the updated site in the pull request.
@@ -64,7 +61,3 @@ For visual or interactive changes, also check a mobile viewport, keyboard naviga
 GitHub Pages publishes the repository's configured source without a frontend build. The custom domain is declared in `CNAME`; DNS, the publishing source, and HTTPS settings are managed outside these source files.
 
 The workflows in this repository validate pull requests; they do not deploy the site.
-
-## License
-
-[MIT](LICENSE) &copy; Stuart Neivandt.
