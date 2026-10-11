@@ -24,6 +24,8 @@
   --color-accent: #91bcea;
   --color-accent-glow: rgb(145 188 234 / 7%);
   --color-link-underline: rgb(145 188 234 / 35%);
+  --color-button-bg: rgb(145 188 234 / 6%);
+  --color-button-hover: rgb(145 188 234 / 12%);
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --container-width: min(calc(100% - clamp(2rem, 8vw, 6rem)), 960px);
   --section-space: clamp(3.5rem, 7vw, 5rem);
@@ -178,7 +180,7 @@ h1 span {
   grid-area: actions;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 2rem;
+  gap: 0.75rem;
   margin-top: 1.5rem;
 }
 
@@ -205,26 +207,41 @@ h1 span {
 }
 
 .button-link {
-  padding: 0.5rem 0.875rem;
+  min-height: 48px;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.125rem;
   border: 1px solid var(--color-link-underline);
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
+  background: var(--color-button-bg);
+  color: var(--color-text-soft);
+  line-height: 1.4;
   text-decoration: none;
-  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
 
 .button-link:hover,
 .button-link:focus-visible {
   border-color: var(--color-accent);
-  background: var(--color-accent-glow);
+  background: var(--color-button-hover);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 16%);
 }
 
-.link-arrow {
-  flex: none;
-  transition: transform 160ms ease;
+.button-link-primary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
-.text-link:hover .link-arrow {
-  transform: translate(2px, -2px);
+.button-link-primary:hover,
+.button-link-primary:focus-visible {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.button-link:active {
+  box-shadow: none;
 }
 
 .portrait {
@@ -312,12 +329,7 @@ h1 span {
     scroll-behavior: auto;
   }
 
-  .text-link,
-  .link-arrow {
+  .text-link {
     transition: none;
-  }
-
-  .text-link:hover .link-arrow {
-    transform: none;
   }
 }

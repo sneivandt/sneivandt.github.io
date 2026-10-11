@@ -14,7 +14,7 @@ The site is intentionally simple: source files are served directly by GitHub Pag
 | --- | --- |
 | Architecture | Native Custom Elements, with Shadow DOM where style isolation helps |
 | Performance | No framework runtime, preloaded fonts, compact static assets |
-| Accessibility | Semantic markup, skip link, ARIA labels where needed, visible focus states |
+| Accessibility | Semantic markup, skip link, ARIA labels where needed, visible focus states, touch-friendly profile buttons with reduced-motion support |
 | Responsive design | Mobile-first layout with fluid typography using `clamp()` |
 | SEO and sharing | Canonical URL, Open Graph metadata, sitemap, robots file, JSON-LD |
 | Progressive enhancement | Web app manifest and service worker for offline support |
