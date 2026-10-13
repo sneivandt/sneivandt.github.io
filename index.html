@@ -109,6 +109,7 @@
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
+
 <div class="container">
 
 <main class="main-content" id="main-content">
@@ -119,6 +120,38 @@
     </div>
 
     <figure class="portrait">
+      <!-- A quiet nod to distributed systems; purely decorative. -->
+      <div class="network-scene" aria-hidden="true">
+        <svg class="network" viewBox="0 0 800 700" fill="none" focusable="false">
+          <defs>
+            <pattern id="network-grid" width="64" height="64" patternUnits="userSpaceOnUse">
+              <path d="M64 0H0V64" stroke="currentColor" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect class="network-grid" width="800" height="700" fill="url(#network-grid)"/>
+          <g class="network-lines">
+            <rect x="200" y="110" width="400" height="480" rx="40"/>
+            <path d="M80 250H140Q160 250 160 230V190Q160 170 180 170H280"/>
+            <path d="M400 50V110M600 230H660Q680 230 680 250V350H740"/>
+            <path d="M80 470H140Q160 470 160 490V510Q160 530 180 530H280"/>
+            <path d="M400 590V650M600 470H640Q660 470 660 490V550H740"/>
+            <path d="M280 170H400Q420 170 420 190V350H600"/>
+            <path d="M280 530H360Q380 530 380 510V350H200"/>
+          </g>
+          <g class="network-nodes">
+            <circle cx="160" cy="250" r="4"/>
+            <circle cx="280" cy="170" r="4"/>
+            <circle cx="400" cy="110" r="4"/>
+            <circle cx="600" cy="230" r="4"/>
+            <circle cx="680" cy="350" r="4"/>
+            <circle cx="160" cy="470" r="4"/>
+            <circle cx="280" cy="530" r="4"/>
+            <circle cx="400" cy="590" r="4"/>
+            <circle cx="600" cy="470" r="4"/>
+            <circle cx="660" cy="550" r="4"/>
+          </g>
+        </svg>
+      </div>
       <img class="profile-image"
            src="assets/img/stuart-neivandt.webp"
            alt="Portrait of Stuart Neivandt"
@@ -136,10 +169,12 @@
       <a class="text-link button-link button-link-primary" href="https://github.com/sneivandt" target="_blank" rel="me noopener noreferrer">
         View GitHub
         <span class="visually-hidden"> (opens in a new tab)</span>
+        <span class="link-arrow" aria-hidden="true">↗</span>
       </a>
       <a class="text-link button-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="me noopener noreferrer">
         Connect on LinkedIn
         <span class="visually-hidden"> (opens in a new tab)</span>
+        <span class="link-arrow" aria-hidden="true">↗</span>
       </a>
     </div>
   </section>

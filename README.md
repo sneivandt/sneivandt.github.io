@@ -4,6 +4,8 @@ Source for [stuartneivandt.com](https://stuartneivandt.com/), Stuart Neivandt's 
 
 A single-page profile built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
 
+A decorative SVG network echoes the profile's distributed-systems work. It is anchored to the portrait and fades toward the text. It animates as one layer on arrival and settles within five seconds; the profile stays still. Reduced-motion preferences disable the animation, which works without JavaScript.
+
 ## Preview locally
 
 With Python 3 installed, run this from the repository root:
