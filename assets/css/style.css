@@ -213,7 +213,7 @@ h1 span {
   min-height: 48px;
   justify-content: center;
   gap: 0.75rem;
-  padding: 0.75rem 1.125rem;
+  padding: 0.75rem clamp(0.75rem, 2vw, 1.125rem);
   border: 1px solid var(--color-link-underline);
   border-radius: 0.75rem;
   background: var(--color-button-bg);
@@ -333,11 +333,6 @@ h1 span {
   border-bottom: 1px solid var(--color-link-underline);
   border-left: 1px solid var(--color-link-underline);
   border-bottom-left-radius: 0.5rem;
-}
-
-.link-arrow {
-  display: inline-block;
-  opacity: 0.75;
 }
 
 /* The whole network arrives as one layer; the profile remains still. */
