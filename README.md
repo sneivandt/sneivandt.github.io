@@ -39,6 +39,8 @@ Keep the site small, readable, and directly publishable:
 
 When changing cached site files, bump `CACHE_VERSION` in `sw.js` so the next service worker installation refreshes the precache. Add new essential offline assets to `PRECACHE_ASSETS` as needed. HTML uses network-first caching, images and fonts use cache-first caching, and other assets use stale-while-revalidate.
 
+The favicon uses a circular version of the existing portrait in a 96×96 PNG, with a multi-size ICO fallback. Apple touch and app icons use the same portrait with square corners so the platform can apply its own mask. Keep these icons consistent when replacing the portrait. Google controls when its search favicon refreshes and how it is presented.
+
 ## Checks
 
 Pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. [Lighthouse CI](.lighthouserc.json) requires scores of at least **90** in performance, accessibility, best practices, and SEO.

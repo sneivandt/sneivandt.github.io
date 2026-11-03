@@ -12,9 +12,9 @@
   "categories": ["education", "portfolio", "productivity"],
   "icons": [
     {
-      "src": "assets/img/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "assets/img/favicon.png",
+      "sizes": "96x96",
+      "type": "image/png"
     },
     {
       "src": "assets/img/icon-192.png",

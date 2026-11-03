@@ -10,7 +10,7 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v44';
+const CACHE_VERSION = 'v45';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
@@ -29,7 +29,7 @@ const PRECACHE_ASSETS = [
   './assets/font/Inter-Regular.woff2',
   './assets/font/Inter-SemiBold.woff2',
   './assets/img/favicon.ico',
-  './assets/img/favicon.svg',
+  './assets/img/favicon.png',
   './assets/img/apple-touch-icon.png',
   './assets/img/icon-192.png',
   './assets/img/icon-512.png',
