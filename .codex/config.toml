@@ -1,0 +1,24 @@
+# Repository-specific permissions. Requires a trusted project and the modern
+# permission-profile defaults; legacy sandbox_mode settings take precedence.
+# Remove legacy sandbox_mode settings from user config before using this.
+default_permissions = "website-development"
+
+[features]
+network_proxy = true
+
+[permissions.website-development]
+description = "Workspace Git writes and network access to the local and deployed website."
+extends = ":workspace"
+
+[permissions.website-development.filesystem.":workspace_roots"]
+".git" = "write"
+".git/hooks" = "read"
+".git/config" = "read"
+
+[permissions.website-development.network]
+enabled = true
+mode = "limited"
+
+[permissions.website-development.network.domains]
+"localhost" = "allow"
+"stuartneivandt.com" = "allow"
