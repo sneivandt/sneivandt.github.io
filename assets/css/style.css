@@ -143,17 +143,6 @@ a:focus-visible {
   grid-area: heading;
 }
 
-.profile-kicker {
-  color: var(--color-text-muted);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-}
-
-.profile-kicker span {
-  margin-inline: 0.35rem;
-}
-
 h1 {
   text-wrap: balance;
 }
@@ -369,11 +358,6 @@ h1 span {
     display: flex;
     flex-direction: column;
     text-align: left;
-  }
-
-  .profile-kicker {
-    order: 1;
-    margin-top: 1rem;
   }
 
   h1 {
