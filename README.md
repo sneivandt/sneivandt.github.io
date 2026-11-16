@@ -43,7 +43,15 @@ The favicon uses a circular version of the existing portrait in a 96×96 PNG, wi
 
 ## Checks
 
-Pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. [Lighthouse CI](.lighthouserc.json) requires scores of at least **90** in performance, accessibility, best practices, and SEO.
+Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. On pull requests, [Lighthouse CI](.lighthouserc.json) also requires scores of at least **90** in performance, accessibility, best practices, and SEO.
+
+HTML and CSS checks use the official [Nu Html Checker](https://github.com/validator/validator) image, whose supported production release is `latest`. This keeps validation compatible with modern CSS such as `overflow-clip-margin` without suppressing errors. With Docker available, run the same check locally:
+
+```bash
+docker run --rm --volume "$PWD:/data:ro" \
+  ghcr.io/validator/validator:latest \
+  vnu --Werror --skip-non-html --also-check-css /data
+```
 
 Check JavaScript syntax with Node.js:
 
@@ -66,4 +74,4 @@ GitHub Pages publishes the repository's configured source without a frontend bui
 
 The canonical homepage is `https://stuartneivandt.com/`. Its page, social, and `ProfilePage`/`Person` metadata use that URL, and the sitemap lists only that page. When checking domain aliases, verify redirects at the host rather than adding JavaScript or duplicate redirect pages. Changes to DNS or GitHub Pages settings require explicit approval.
 
-The workflows in this repository validate pull requests; they do not deploy the site.
+The workflows in this repository validate the site; they do not deploy it.

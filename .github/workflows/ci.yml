@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -17,10 +20,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate HTML & CSS
-        uses: Cyb3r-Jak3/html5validator-action@v7.2.0
-        with:
-          root: .
-          css: true
+        run: |
+          docker run --rm --volume "$PWD:/data:ro" \
+            ghcr.io/validator/validator:latest \
+            vnu --Werror --skip-non-html --also-check-css /data
 
       - name: Validate JavaScript
         run: |
