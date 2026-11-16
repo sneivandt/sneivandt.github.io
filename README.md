@@ -4,8 +4,6 @@ Source for [stuartneivandt.com](https://stuartneivandt.com/), Stuart Neivandt's 
 
 A single-page profile built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
 
-The homepage introduces Stuart's role and work, links to his verified GitHub and LinkedIn profiles, and highlights his personal dotfiles project with documentation and source links. All content and navigation are available without JavaScript.
-
 A decorative SVG network echoes the profile's distributed-systems work. It is anchored to the portrait and fades toward the text. It animates as one layer on arrival and settles within five seconds; the profile stays still. Reduced-motion preferences disable the animation, which works without JavaScript.
 
 ## Preview locally
