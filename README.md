@@ -4,6 +4,8 @@ Source for [stuartneivandt.com](https://stuartneivandt.com/), Stuart Neivandt's 
 
 A single-page profile built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
 
+The homepage introduces Stuart's role and work, links to his verified GitHub and LinkedIn profiles, and highlights his personal dotfiles project with documentation and source links. All content and navigation are available without JavaScript.
+
 A decorative SVG network echoes the profile's distributed-systems work. It is anchored to the portrait and fades toward the text. It animates as one layer on arrival and settles within five seconds; the profile stays still. Reduced-motion preferences disable the animation, which works without JavaScript.
 
 ## Preview locally
@@ -63,5 +65,7 @@ For visual or interactive changes, also check a mobile viewport, keyboard naviga
 ## Deployment
 
 GitHub Pages publishes the repository's configured source without a frontend build. The custom domain is declared in `CNAME`; DNS, the publishing source, and HTTPS settings are managed outside these source files.
+
+The canonical homepage is `https://stuartneivandt.com/`. Its page, social, and `ProfilePage`/`Person` metadata use that URL, and the sitemap lists only that page. When checking domain aliases, verify redirects at the host rather than adding JavaScript or duplicate redirect pages. Changes to DNS or GitHub Pages settings require explicit approval.
 
 The workflows in this repository validate pull requests; they do not deploy the site.

@@ -176,6 +176,36 @@ h1 span {
   margin-top: 1.5rem;
 }
 
+.projects {
+  padding-block: var(--section-space);
+  border-top: 1px solid var(--color-border);
+}
+
+.projects h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.projects h3 {
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.projects p {
+  max-width: 65ch;
+  margin-top: 0.5rem;
+  color: var(--color-text-soft);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 1rem;
+}
+
 .text-link {
   display: inline-flex;
   width: fit-content;
