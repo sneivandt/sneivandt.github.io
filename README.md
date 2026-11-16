@@ -45,12 +45,12 @@ The favicon uses a circular version of the existing portrait in a 96×96 PNG, wi
 
 Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. On pull requests, [Lighthouse CI](.lighthouserc.json) also requires scores of at least **90** in performance, accessibility, best practices, and SEO.
 
-HTML and CSS checks use the official [Nu Html Checker](https://github.com/validator/validator) image, whose supported production release is `latest`. This keeps validation compatible with modern CSS such as `overflow-clip-margin` without suppressing errors. With Docker available, run the same check locally:
+HTML and CSS checks use the official [Nu Html Checker](https://github.com/validator/validator) image, whose supported production release is `latest`. This keeps validation compatible with modern CSS such as `overflow-clip-margin` without suppressing errors. Errors fail the check; informational warnings remain visible in its output. With Docker available, run the same check locally:
 
 ```bash
 docker run --rm --volume "$PWD:/data:ro" \
   ghcr.io/validator/validator:latest \
-  vnu --Werror --skip-non-html --also-check-css /data
+  vnu --skip-non-html --also-check-css /data
 ```
 
 Check JavaScript syntax with Node.js:

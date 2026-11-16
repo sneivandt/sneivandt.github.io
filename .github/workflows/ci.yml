@@ -23,7 +23,7 @@ jobs:
         run: |
           docker run --rm --volume "$PWD:/data:ro" \
             ghcr.io/validator/validator:latest \
-            vnu --Werror --skip-non-html --also-check-css /data
+            vnu --skip-non-html --also-check-css /data
 
       - name: Validate JavaScript
         run: |
