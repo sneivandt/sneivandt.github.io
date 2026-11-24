@@ -40,6 +40,7 @@ jobs:
           args: >-
             --verbose
             --no-progress
+            --root-dir ${{ github.workspace }}
             --accept 200,403,429
             './**/*.html'
             './**/*.md'
