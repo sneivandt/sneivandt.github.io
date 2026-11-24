@@ -19,16 +19,14 @@
   --color-bg: #0b0f14;
   --color-text: #f2f5f7;
   --color-text-soft: #c7d0d8;
-  --color-text-muted: #96a2ae;
-  --color-border: #25303a;
   --color-accent: #91bcea;
   --color-accent-glow: rgb(145 188 234 / 7%);
   --color-link-underline: rgb(145 188 234 / 35%);
   --color-button-bg: rgb(145 188 234 / 6%);
   --color-button-hover: rgb(145 188 234 / 12%);
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --container-width: min(calc(100% - clamp(2rem, 8vw, 6rem)), 960px);
-  --section-space: clamp(3.5rem, 7vw, 5rem);
+  --container-padding: clamp(1rem, 4vw, 3rem);
+  --container-max-width: 960px;
   --column-gap: clamp(3rem, 5vw, 4rem);
   --focus-outline: 2px solid var(--color-accent);
   --focus-outline-offset: 4px;
@@ -112,7 +110,10 @@ a:focus-visible {
 
 .container {
   position: relative;
-  width: var(--container-width);
+  overflow: clip;
+  width: 100%;
+  max-width: calc(var(--container-max-width) + var(--container-padding) * 2);
+  padding-inline: var(--container-padding);
   margin-inline: auto;
   flex: 1;
   display: flex;
@@ -127,8 +128,6 @@ a:focus-visible {
 }
 
 .hero {
-  overflow: clip;
-  overflow-clip-margin: 2rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(15rem, 24vw, 18rem);
   grid-template-areas:
@@ -139,16 +138,17 @@ a:focus-visible {
   padding-block: clamp(3rem, 8dvh, 6rem) clamp(4rem, 12dvh, 9rem);
 }
 
+.not-found {
+  max-width: 40rem;
+  padding-block: clamp(3rem, 8dvh, 6rem) clamp(4rem, 12dvh, 9rem);
+}
+
 .hero-heading {
   grid-area: heading;
 }
 
 h1 {
   text-wrap: balance;
-}
-
-h1 {
-  margin-top: 1.25rem;
   font-size: clamp(3.5rem, 7.5vw, 5.75rem);
   font-weight: 600;
   letter-spacing: -0.06em;
@@ -242,7 +242,6 @@ h1 span {
   grid-area: portrait;
   align-self: start;
   width: 100%;
-  margin-top: calc(1.25rem + 0.75rem * 1.65);
 }
 
 .profile-image {
@@ -344,8 +343,7 @@ h1 span {
 
 @media (max-width: 700px) {
   :root {
-    --container-width: calc(100% - 3rem);
-    --section-space: 3.5rem;
+    --container-padding: 1.5rem;
   }
 
   .hero {
@@ -361,7 +359,6 @@ h1 span {
   }
 
   h1 {
-    margin-top: 0;
     font-size: clamp(3rem, 12vw, 4.5rem);
   }
 
@@ -422,7 +419,8 @@ h1 span {
     scroll-behavior: auto;
   }
 
-  .text-link {
+  .text-link,
+  .button-link {
     transition: none;
   }
 }

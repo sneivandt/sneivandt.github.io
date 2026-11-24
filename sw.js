@@ -10,13 +10,12 @@
 
 "use strict";
 
-const CACHE_VERSION = 'v52';
+const CACHE_VERSION = 'v53';
 const CACHE_NAME = `sneivandt-${CACHE_VERSION}`;
 
 // HTTP Status Codes
 const HTTP_STATUS = {
   NOT_FOUND: 404,
-  METHOD_NOT_ALLOWED: 405,
   SERVICE_UNAVAILABLE: 503
 };
 
@@ -28,61 +27,64 @@ const PRECACHE_ASSETS = [
   './assets/css/style.css',
   './assets/font/Inter-Regular.woff2',
   './assets/font/Inter-SemiBold.woff2',
-  './assets/img/favicon.ico',
-  './assets/img/favicon.png',
-  './assets/img/apple-touch-icon.png',
-  './assets/img/icon-192.png',
-  './assets/img/icon-512.png',
   './assets/img/stuart-neivandt.webp',
-  './index.html',
   './assets/js/main.js',
   './manifest.json'
 ];
 
+const putInCache = (cache, request, response) =>
+  cache.put(request, response).catch(() => {});
+
 // Install Event
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
-      // Must cache critical assets successfully
-      await cache.addAll(PRECACHE_ASSETS);
-    })
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_ASSETS))
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
 // Activate Event - Clean up old caches
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then((keys) => Promise.all(
-      keys.map((key) => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      })
-    ))
+    caches.keys()
+      .then((keys) => Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 // Fetch Event
 self.addEventListener('fetch', (e) => {
-  // Only handle GET requests and ensure valid scheme (http/https)
+  // Only handle same-origin GET requests over http/https
   if (e.request.method !== 'GET' || !e.request.url.startsWith('http')) return;
+
+  const url = new URL(e.request.url);
+  if (url.origin !== self.location.origin) return;
 
   e.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-      const url = new URL(e.request.url);
 
       // Strategy 1: Navigation requests (HTML) -> Network First
       if (e.request.mode === 'navigate') {
+        const isHome = url.pathname === '/' || url.pathname === '/index.html';
+        const cacheKey = isHome ? './' : url.pathname;
+
         try {
           const networkResponse = await fetch(e.request);
           if (networkResponse && networkResponse.ok) {
-            cache.put(e.request, networkResponse.clone());
+            e.waitUntil(putInCache(cache, cacheKey, networkResponse.clone()));
             return networkResponse;
           }
-          return (await cache.match(e.request)) || networkResponse;
+          return (await cache.match(cacheKey)) || networkResponse;
         } catch (error) {
-          const cachedResponse = await cache.match(e.request);
+          const cachedResponse =
+            (await cache.match(e.request, { ignoreSearch: true })) ||
+            (isHome ? await cache.match('./') : null);
           if (cachedResponse) return cachedResponse;
           // Return a basic offline page response instead of throwing
           return new Response('Offline', {
@@ -95,7 +97,7 @@ self.addEventListener('fetch', (e) => {
 
       // Strategy 2: Static Assets (Images, Fonts) -> Cache First
       if (
-        url.pathname.match(/\.(webp|png|jpg|jpeg|svg|ttf|woff|woff2)$/i) ||
+        url.pathname.match(/\.(webp|png|jpg|jpeg|svg|ico|ttf|woff|woff2)$/i) ||
         url.pathname.includes('/assets/img/') ||
         url.pathname.includes('/assets/font/')
       ) {
@@ -104,8 +106,8 @@ self.addEventListener('fetch', (e) => {
 
         try {
           const networkResponse = await fetch(e.request);
-          if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
-            cache.put(e.request, networkResponse.clone());
+          if (networkResponse && networkResponse.ok) {
+            e.waitUntil(putInCache(cache, e.request, networkResponse.clone()));
           }
           return networkResponse;
         } catch (error) {
@@ -124,8 +126,8 @@ self.addEventListener('fetch', (e) => {
         // Serve from cache immediately, update in background
         e.waitUntil(
           fetch(e.request).then((networkResponse) => {
-            if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
-              return cache.put(e.request, networkResponse.clone());
+            if (networkResponse && networkResponse.ok) {
+              return putInCache(cache, e.request, networkResponse.clone());
             }
           }).catch(() => {})
         );
@@ -135,8 +137,8 @@ self.addEventListener('fetch', (e) => {
       // If not in cache, fetch from network
       try {
         const networkResponse = await fetch(e.request);
-        if (networkResponse && (networkResponse.ok || networkResponse.type === 'opaque')) {
-          cache.put(e.request, networkResponse.clone());
+        if (networkResponse && networkResponse.ok) {
+          e.waitUntil(putInCache(cache, e.request, networkResponse.clone()));
         }
         return networkResponse;
       } catch (error) {

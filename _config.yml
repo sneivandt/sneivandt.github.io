@@ -1,4 +1,5 @@
 exclude:
+  - AGENTS.md
   - serve.py
   - README.md
   - LICENSE

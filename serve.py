@@ -9,8 +9,8 @@ class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
 if __name__ == '__main__':
-    httpd = http.server.HTTPServer(('', 8000), NoCacheHTTPRequestHandler)
-    print('Serving at http://localhost:8000')
+    httpd = http.server.HTTPServer(('127.0.0.1', 8000), NoCacheHTTPRequestHandler)
+    print('Serving at http://127.0.0.1:8000')
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
