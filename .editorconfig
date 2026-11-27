@@ -8,9 +8,18 @@ indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.{html,css,js,json,xml,svg,yml,yaml,toml}]
+indent_style = space
+indent_size = 2
+
 [*.py]
+indent_style = space
 indent_size = 4
 
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
+
+[*.txt]
+indent_style = space
+indent_size = 2

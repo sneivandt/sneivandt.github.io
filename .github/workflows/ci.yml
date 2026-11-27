@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Validate HTML & CSS
         run: |
@@ -37,13 +37,13 @@ jobs:
           echo "All JavaScript files are valid ✓"
 
       - name: Check for broken links
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
         with:
           args: >-
             --verbose
             --no-progress
             --root-dir ${{ github.workspace }}
-            --accept 200,403,429
+            --accept 200,429
             './**/*.html'
             './**/*.md'
             --exclude-path './node_modules'
@@ -54,7 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Validate JSON, XML, JSON-LD, and helper scripts
+      - name: Validate JSON, XML, JSON-LD, head parity, assets, and helper scripts
         run: |
           python3 - <<'EOF'
           from html.parser import HTMLParser
@@ -63,25 +63,47 @@ jobs:
           import py_compile
           import xml.etree.ElementTree as ET
 
-          for json_path in ('manifest.json', '.github/lighthouserc.json'):
-              with Path(json_path).open(encoding='utf-8') as f:
-                  json.load(f)
-              print(f'{json_path} is valid JSON ✓')
+          manifest = json.loads(Path('manifest.json').read_text(encoding='utf-8'))
+          print('manifest.json is valid JSON ✓')
+
+          json.loads(Path('.github/lighthouserc.json').read_text(encoding='utf-8'))
+          print('.github/lighthouserc.json is valid JSON ✓')
 
           ET.parse('sitemap.xml')
           print('sitemap.xml is valid XML ✓')
 
-          class JsonLdExtractor(HTMLParser):
+          class HeadInspector(HTMLParser):
               def __init__(self):
                   super().__init__()
                   self._capture = False
                   self._chunks = []
-                  self.blocks = []
+                  self.jsonld_blocks = []
+                  self.csp = None
+                  self.stylesheets = set()
+                  self.icons = set()
+                  self.font_preloads = set()
+                  self.social_images = set()
 
               def handle_starttag(self, tag, attrs):
-                  if tag == 'script' and dict(attrs).get('type') == 'application/ld+json':
+                  attr = dict(attrs)
+                  if tag == 'script' and attr.get('type') == 'application/ld+json':
                       self._capture = True
                       self._chunks = []
+                  elif tag == 'meta':
+                      if attr.get('http-equiv', '').lower() == 'content-security-policy':
+                          self.csp = attr.get('content')
+                      if attr.get('property') in ('og:image', 'og:image:secure_url') or attr.get('name') == 'twitter:image':
+                          if attr.get('content'):
+                              self.social_images.add(attr['content'])
+                  elif tag == 'link':
+                      rel = attr.get('rel', '')
+                      href = attr.get('href', '')
+                      if rel == 'stylesheet':
+                          self.stylesheets.add(href)
+                      elif rel in ('icon', 'alternate icon', 'apple-touch-icon'):
+                          self.icons.add((rel, href))
+                      elif rel == 'preload' and attr.get('as') == 'font':
+                          self.font_preloads.add(href)
 
               def handle_data(self, data):
                   if self._capture:
@@ -89,16 +111,44 @@ jobs:
 
               def handle_endtag(self, tag):
                   if tag == 'script' and self._capture:
-                      self.blocks.append(''.join(self._chunks))
+                      self.jsonld_blocks.append(''.join(self._chunks))
                       self._capture = False
 
-          parser = JsonLdExtractor()
-          parser.feed(Path('index.html').read_text(encoding='utf-8'))
-          if not parser.blocks:
+          index_head = HeadInspector()
+          index_head.feed(Path('index.html').read_text(encoding='utf-8'))
+          not_found_head = HeadInspector()
+          not_found_head.feed(Path('404.html').read_text(encoding='utf-8'))
+
+          if not index_head.jsonld_blocks:
               raise SystemExit('Error: no JSON-LD script block found in index.html')
-          for block in parser.blocks:
-              json.loads(block)
-          print(f'index.html JSON-LD ({len(parser.blocks)} block) is valid JSON ✓')
+          site_origin = 'https://stuartneivandt.com/'
+          for block in index_head.jsonld_blocks:
+              parsed = json.loads(block)
+              img = parsed.get('mainEntity', {}).get('image', {})
+              if isinstance(img, dict) and img.get('url'):
+                  index_head.social_images.add(img['url'])
+          print(f'index.html JSON-LD ({len(index_head.jsonld_blocks)} block) is valid JSON ✓')
+
+          for label, a, b in (
+              ('CSP', index_head.csp, not_found_head.csp),
+              ('stylesheets', index_head.stylesheets, not_found_head.stylesheets),
+              ('icons', index_head.icons, not_found_head.icons),
+              ('font preloads', index_head.font_preloads, not_found_head.font_preloads),
+          ):
+              if not a or a != b:
+                  raise SystemExit(f'Error: index.html and 404.html {label} differ ({a!r} vs {b!r})')
+          print('index.html and 404.html head parity verified ✓')
+
+          for icon in manifest.get('icons', []):
+              src = icon.get('src', '')
+              if not src or not Path(src).is_file():
+                  raise SystemExit(f'Error: manifest.json icon missing on disk: {src!r}')
+          for url in sorted(index_head.social_images):
+              if url.startswith(site_origin):
+                  rel_path = url[len(site_origin):]
+                  if not Path(rel_path).is_file():
+                      raise SystemExit(f'Error: social/JSON-LD image missing on disk: {rel_path!r}')
+          print('Manifest and social/JSON-LD local image assets exist ✓')
 
           py_compile.compile('scripts/serve.py', doraise=True)
           print('scripts/serve.py syntax is valid ✓')

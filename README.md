@@ -22,9 +22,7 @@ The included server sends no-cache HTTP headers and serves `404.html` for missin
 python3 -m http.server 8000
 ```
 
-Serve over HTTP rather than opening `index.html` as a file so ES modules and service worker registration work correctly.
-
-**Seeing stale assets?** The service worker caches files independently of the server's HTTP headers. During development, unregister it and clear the site's Cache Storage in your browser's developer tools, then reload.
+Serve over HTTP rather than opening `index.html` as a file so ES modules work correctly.
 
 ## Making changes
 
@@ -38,13 +36,11 @@ Keep the site small, readable, and directly publishable:
 - Preserve semantic headings, keyboard navigation, visible focus styles, touch-friendly buttons, and reduced-motion support.
 - Update the sitemap's `lastmod` and structured data's `dateModified` when published page content changes materially.
 
-When changing cached site files, bump `CACHE_VERSION` in `sw.js` so the next service worker installation refreshes the precache. Add new essential offline assets to `PRECACHE_ASSETS` as needed. HTML uses network-first caching, images and fonts use cache-first caching, and other assets use stale-while-revalidate.
-
 The favicon uses a circular version of the existing portrait in a 96×96 PNG, with a multi-size ICO fallback. Apple touch and app icons use the same portrait with square corners so the platform can apply its own mask. Keep these icons consistent when replacing the portrait. Google controls when its search favicon refreshes and how it is presented.
 
 ## Checks
 
-Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and Python standard-library validation for `manifest.json`, `.github/lighthouserc.json`, `sitemap.xml`, inline JSON-LD in `index.html`, and `scripts/serve.py`. On pull requests, [Lighthouse CI](.github/lighthouserc.json) also requires scores of at least **90** in performance, accessibility, best practices, and SEO.
+Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, Python standard-library validation (for `manifest.json`, `.github/lighthouserc.json`, `sitemap.xml`, inline JSON-LD in `index.html`, `index.html`/`404.html` head parity, local manifest/social image assets, and `scripts/serve.py`), and [Lighthouse CI](.github/lighthouserc.json) requiring scores of at least **95** in performance, accessibility, best practices, and SEO. Lighthouse CI can also be triggered manually via `workflow_dispatch`.
 
 HTML and CSS checks use the official [Nu Html Checker](https://github.com/validator/validator) image, whose supported production release is `latest`. This keeps validation compatible with modern CSS without suppressing errors. Errors fail the check; informational warnings remain visible in its output. With Docker available, run the same check locally:
 
@@ -57,7 +53,6 @@ docker run --rm --volume "$PWD:/data:ro" \
 Check JavaScript syntax with Node.js:
 
 ```bash
-node --check sw.js
 node --check assets/js/main.js
 ```
 

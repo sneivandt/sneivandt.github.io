@@ -15,9 +15,9 @@ Use this skill for the site's content, presentation, and local maintenance:
 - fonts and images under `assets/`
 - `README.md` and `scripts/serve.py`
 
-Read `AGENTS.md` for repository-wide conventions. Use `github-pages-seo-pwa` for head metadata, structured data, domain configuration, the manifest, crawling files, and service worker caching.
+Read `AGENTS.md` for repository-wide conventions. Use `github-pages-seo-pwa` for head metadata, structured data, domain configuration, the manifest, and crawling files.
 
-The current page is a single profile with Home and Career views. `assets/js/main.js` manages the view switcher and registers the service worker; there are no active Web Components. Inspect the current source before assuming a component or footer is active.
+The current page is a single profile with Home and Career views. `assets/js/main.js` manages the view switcher; there are no active Web Components. Inspect the current source before assuming a component or footer is active.
 
 ## Hard Constraints
 
@@ -58,7 +58,7 @@ The current page is a single profile with Home and Career views. `assets/js/main
 
 ## Local Preview
 
-Run `./scripts/serve.py` from the repository root and open `http://127.0.0.1:8000/`. The server sends no-cache headers and serves `404.html` for missing paths, but the service worker can still serve cached assets. For stale local content, unregister the worker and clear this origin's Cache Storage in browser developer tools.
+Run `./scripts/serve.py` from the repository root and open `http://127.0.0.1:8000/`. The server sends no-cache headers and serves `404.html` for missing paths.
 
 ## Validation
 
@@ -66,10 +66,9 @@ Run `./scripts/serve.py` from the repository root and open `http://127.0.0.1:800
 - For page changes, verify static serving, landmarks, heading order, keyboard navigation, mobile layout, and reduced-motion behavior.
 - Include screenshots when opening pull requests for visual changes.
 - For documentation-only edits, check commands and relative links against the repository; no site audit or content-date change is needed.
-- Pushes to `main` and pull requests targeting `main` run HTML/CSS, JavaScript, link, and JSON/XML/JSON-LD/Python checks (`ci.yml`). Pull requests targeting `main` also run Lighthouse CI (`lighthouse.yml` and `.github/lighthouserc.json`). Check the workflow files before changing or describing those checks.
+- Pushes to `main` and pull requests targeting `main` run HTML/CSS, JavaScript, link, and JSON/XML/JSON-LD/head-parity/asset/Python checks (`ci.yml`) as well as Lighthouse CI (`lighthouse.yml` and `.github/lighthouserc.json`). Check the workflow files before changing or describing those checks.
 - For material page-content changes, synchronize `sitemap.xml` `lastmod` and JSON-LD `dateModified` with the change date.
-- For cached site-file changes, follow `github-pages-seo-pwa` to update the service worker cache version.
 
 ## Shipping
 
-Committing and pushing directly to `main` is the preferred way to ship changes in this repository. Verify relevant local checks before pushing, then monitor GitHub Actions CI on the pushed `main` commit until it passes. Use a pull request only when explicitly requested or when PR-only Lighthouse CI is needed beforehand.
+Committing and pushing directly to `main` is the preferred way to ship changes in this repository. Verify relevant local checks before pushing, then monitor GitHub Actions CI and Lighthouse CI on the pushed `main` commit until they pass. Use a pull request only when explicitly requested.

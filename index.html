@@ -12,7 +12,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
 
   <!-- Security: Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none';">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://stuartneivandt.com/">
@@ -20,9 +20,6 @@
   <!-- Web App Manifest -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-
-  <!-- iOS PWA capability -->
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- Favicon -->
   <link rel="icon" href="assets/img/favicon.png" type="image/png" sizes="96x96">
@@ -36,12 +33,12 @@
   <!-- Open Graph Meta Tags for social media sharing -->
   <meta property="og:title" content="Stuart Neivandt | Software Engineer">
   <meta property="og:description" content="Stuart Neivandt is a Principal Software Engineer at Microsoft in Redmond, Washington, focused on security, cloud infrastructure, and agentic developer tools.">
-  <meta property="og:image" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
-  <meta property="og:image:secure_url" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
+  <meta property="og:image" content="https://stuartneivandt.com/assets/img/og-card.png">
+  <meta property="og:image:secure_url" content="https://stuartneivandt.com/assets/img/og-card.png">
   <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="400">
-  <meta property="og:image:height" content="400">
-  <meta property="og:image:alt" content="Portrait of Stuart Neivandt">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Stuart Neivandt — Principal Software Engineer at Microsoft">
   <meta property="og:url" content="https://stuartneivandt.com/">
   <meta property="og:type" content="profile">
   <meta property="profile:first_name" content="Stuart">
@@ -51,11 +48,11 @@
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card data -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Stuart Neivandt | Software Engineer">
   <meta name="twitter:description" content="Stuart Neivandt is a Principal Software Engineer at Microsoft in Redmond, Washington, focused on security, cloud infrastructure, and agentic developer tools.">
-  <meta name="twitter:image" content="https://stuartneivandt.com/assets/img/stuart-neivandt.png">
-  <meta name="twitter:image:alt" content="Portrait of Stuart Neivandt">
+  <meta name="twitter:image" content="https://stuartneivandt.com/assets/img/og-card.png">
+  <meta name="twitter:image:alt" content="Stuart Neivandt — Principal Software Engineer at Microsoft">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -116,7 +113,7 @@
 
 <body>
 
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#profile-content" class="skip-link">Skip to main content</a>
 
 
 <div class="container">
@@ -128,80 +125,92 @@
       <a class="nav-link" id="tab-career" href="#career" data-view="career">Career</a>
     </nav>
 
-    <div class="card-panels">
-      <section class="card-panel" id="home" data-panel="home" aria-labelledby="intro-title">
-        <div class="hero-heading">
-          <h1 id="intro-title">Stuart <span>Neivandt</span></h1>
-        </div>
+    <div class="profile-content" id="profile-content" tabindex="-1">
+      <div class="hero-heading">
+        <h1 id="intro-title">Stuart Neivandt</h1>
+      </div>
 
-        <div class="hero-intro">
-          <p>I’m a husband, a dad to a little boy, and a Principal Software Engineer at Microsoft in Redmond, Washington. My work focuses on security, cloud infrastructure, and agentic developer tools.</p>
-        </div>
+      <div class="card-panels">
+        <section class="card-panel" id="home" data-panel="home" aria-labelledby="intro-title">
+          <div class="hero-intro">
+            <p>I’m a husband, a dad to a little boy, and a Principal Software Engineer at Microsoft in Redmond, Washington. My work focuses on security, cloud infrastructure, and agentic developer tools.</p>
+          </div>
 
-        <div class="hero-actions">
-          <a class="text-link button-link button-link-primary" href="https://github.com/sneivandt" target="_blank" rel="me noopener noreferrer">
-            GitHub
-            <span class="visually-hidden"> (opens in a new tab)</span>
-          </a>
-          <a class="text-link button-link" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="me noopener noreferrer">
-            LinkedIn
-            <span class="visually-hidden"> (opens in a new tab)</span>
-          </a>
-          <a class="text-link button-link" href="https://dotfiles.stuartneivandt.com/" target="_blank" rel="me noopener noreferrer">
-            Dotfiles
-            <span class="visually-hidden"> (opens in a new tab)</span>
-          </a>
-        </div>
-      </section>
+          <div class="hero-actions">
+            <a class="text-link button-link button-link-primary" href="https://www.linkedin.com/in/stuartneivandt" target="_blank" rel="me noopener noreferrer">
+              LinkedIn
+              <svg class="external-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                <path d="M5 11L11 5M6 5h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+            <a class="text-link button-link" href="https://github.com/sneivandt" target="_blank" rel="me noopener noreferrer">
+              GitHub
+              <svg class="external-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                <path d="M5 11L11 5M6 5h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+            <a class="text-link button-link" href="https://dotfiles.stuartneivandt.com/" target="_blank" rel="me noopener noreferrer">
+              Dotfiles
+              <svg class="external-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false">
+                <path d="M5 11L11 5M6 5h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </div>
+        </section>
 
-      <section class="card-panel" id="career" data-panel="career" aria-label="Career">
-        <ol class="timeline">
-          <li class="timeline-item timeline-item-current timeline-item-group">
-            <p class="timeline-period">Now</p>
-            <div class="timeline-body">
-              <h2 class="timeline-org">Microsoft</h2>
-            </div>
-            <ol class="timeline-roles" aria-label="Roles at Microsoft">
-              <li class="timeline-role">
-                <span class="timeline-period"><time datetime="2023">2023</time></span>
-                <span class="timeline-role-title">Principal Software Engineer</span>
-              </li>
-              <li class="timeline-role">
-                <span class="timeline-period"><time datetime="2021">2021</time></span>
-                <span class="timeline-role-title">Senior Software Engineer</span>
-              </li>
-              <li class="timeline-role">
-                <span class="timeline-period"><time datetime="2017">2017</time></span>
-                <span class="timeline-role-title">Software Engineer</span>
-              </li>
-            </ol>
-          </li>
+        <section class="card-panel" id="career" data-panel="career" aria-labelledby="career-title">
+          <h2 class="career-heading" id="career-title">Career</h2>
+          <ol class="timeline">
+            <li class="timeline-item timeline-item-current timeline-item-group">
+              <p class="timeline-period">Now</p>
+              <div class="timeline-body">
+                <h3 class="timeline-org">Microsoft</h3>
+              </div>
+              <ol class="timeline-roles" aria-label="Roles at Microsoft">
+                <li class="timeline-role">
+                  <span class="timeline-period"><time datetime="2023">2023</time></span>
+                  <span class="timeline-role-title">Principal Software Engineer</span>
+                </li>
+                <li class="timeline-role">
+                  <span class="timeline-period"><time datetime="2021">2021</time></span>
+                  <span class="timeline-role-title">Senior Software Engineer</span>
+                </li>
+                <li class="timeline-role">
+                  <span class="timeline-period"><time datetime="2017">2017</time></span>
+                  <span class="timeline-role-title">Software Engineer</span>
+                </li>
+              </ol>
+            </li>
 
-          <li class="timeline-item">
-            <p class="timeline-period"><time datetime="2015">2015</time></p>
-            <div class="timeline-body">
-              <h2 class="timeline-org">Cvent</h2>
-              <p class="timeline-summary">Software Engineer</p>
-            </div>
-          </li>
+            <li class="timeline-item">
+              <p class="timeline-period"><time datetime="2015">2015</time></p>
+              <div class="timeline-body">
+                <h3 class="timeline-org">Cvent</h3>
+                <p class="timeline-summary">Software Engineer</p>
+              </div>
+            </li>
 
-          <li class="timeline-item">
-            <p class="timeline-period"><time datetime="2013">2013</time></p>
-            <div class="timeline-body">
-              <h2 class="timeline-org">EHR Startup</h2>
-              <p class="timeline-summary">Software Engineer</p>
-            </div>
-          </li>
+            <li class="timeline-item">
+              <p class="timeline-period"><time datetime="2013">2013</time></p>
+              <div class="timeline-body">
+                <h3 class="timeline-org">EHR Startup</h3>
+                <p class="timeline-summary">Software Engineer</p>
+              </div>
+            </li>
 
-          <li class="timeline-item timeline-item-education">
-            <p class="timeline-period"><time datetime="2009">2009</time></p>
-            <div class="timeline-body">
-              <h2 class="timeline-org">UT Dallas</h2>
-              <p class="timeline-summary">B.S., Computer Science</p>
-            </div>
-          </li>
-        </ol>
-      </section>
+            <li class="timeline-item timeline-item-education">
+              <p class="timeline-period"><time datetime="2009">2009</time></p>
+              <div class="timeline-body">
+                <h3 class="timeline-org">UT Dallas</h3>
+                <p class="timeline-summary">B.S., Computer Science</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+      </div>
     </div>
 
     <figure class="portrait">
