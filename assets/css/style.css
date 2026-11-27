@@ -143,10 +143,7 @@ a:focus-visible {
 .profile-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(14rem, 22vw, 16.5rem);
-  grid-template-areas:
-    "nav ."
-    "content portrait";
-  grid-template-rows: auto 1fr;
+  grid-template-areas: "content portrait";
   column-gap: var(--column-gap);
   align-items: start;
   padding-block: clamp(2rem, 6dvh, 4rem) clamp(3rem, 8dvh, 5.5rem);
@@ -155,12 +152,11 @@ a:focus-visible {
 .view-nav {
   position: relative;
   z-index: 1;
-  grid-area: nav;
   display: flex;
-  justify-self: stretch;
   align-items: center;
   gap: 1.75rem;
-  margin-bottom: clamp(1.5rem, 3dvh, 2rem);
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
   background: linear-gradient(to right, var(--color-hairline) 82%, transparent) bottom / 100% 1px no-repeat;
 }
 
@@ -314,10 +310,6 @@ a:focus-visible {
   margin-top: 0;
 }
 
-.js .timeline {
-  margin-top: 1.5rem;
-}
-
 /* Prevent a flash of stacked panels before deferred module JS hydrates. */
 @media (scripting: enabled) {
   html:not(.js) .card-panels {
@@ -343,10 +335,6 @@ a:focus-visible {
     white-space: nowrap;
     border: 0;
     background: none;
-  }
-
-  html:not(.js) .timeline {
-    margin-top: 1.5rem;
   }
 
   html:not(.js) [data-panel="career"]:not(:target) {
@@ -681,6 +669,10 @@ h1 {
   line-height: 1.75;
 }
 
+.card-panel .hero-intro {
+  margin-top: 0;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -884,20 +876,24 @@ h1 {
     padding-right: max(var(--container-padding), env(safe-area-inset-right));
   }
 
+  .main-content {
+    justify-content: flex-start;
+  }
+
   .profile-card {
+    --profile-padding-top: clamp(1.5rem, 5dvh, 3rem);
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     grid-template-areas:
       "portrait"
-      "nav"
       "content";
-    padding-block: max(1.5rem, env(safe-area-inset-top)) max(2rem, env(safe-area-inset-bottom));
+    padding-block: max(var(--profile-padding-top), env(safe-area-inset-top)) max(2rem, env(safe-area-inset-bottom));
   }
 
   .view-nav {
-    justify-self: stretch;
     gap: 1.75rem;
-    margin-bottom: 1.5rem;
+    margin-top: 0.375rem;
+    margin-bottom: 1.25rem;
   }
 
   .hero-heading {
@@ -984,17 +980,9 @@ h1 {
   .js .card-panel.is-hidden {
     display: none;
   }
-
-  .js .timeline {
-    margin-top: 1.25rem;
-  }
 }
 
 @media (max-width: 700px) and (scripting: enabled) {
-  html:not(.js) .timeline {
-    margin-top: 1.25rem;
-  }
-
   html:not(.js) [data-panel="career"]:not(:target),
   html:not(.js) .card-panels:has([data-panel="career"]:target) [data-panel="home"] {
     display: none;
@@ -1008,7 +996,8 @@ h1 {
   }
 
   .view-nav {
-    margin-bottom: 1.25rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
   }
 
   .hero-intro {
@@ -1220,7 +1209,8 @@ h1 {
     margin-top: 2rem;
   }
 
-  .hero-intro {
+  .hero-intro,
+  .card-panel .hero-intro {
     max-width: none;
     margin-top: 0.85rem;
     font-size: 0.9375rem;
