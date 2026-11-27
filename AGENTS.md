@@ -33,7 +33,7 @@ Use the relevant skill under `.agents/skills/`:
 - `static-site-maintainer`: content, layout, styling, JavaScript, components, assets, and documentation.
 - `github-pages-seo-pwa`: metadata, structured data, publishing configuration, crawling files, and service worker caching.
 
-Inspect the current source before assuming a feature is active. The JavaScript entry point currently only registers the service worker.
+Inspect the current source before assuming a feature is active. The JavaScript entry point currently manages the in-page Home/Career view switcher and registers the service worker.
 
 ## Validation
 

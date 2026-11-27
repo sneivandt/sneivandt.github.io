@@ -2,7 +2,7 @@
 
 Source for [stuartneivandt.com](https://stuartneivandt.com/), Stuart Neivandt's personal website.
 
-A single-page profile built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
+A single-page profile with Home and Career views built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
 
 A decorative SVG network echoes the profile's cloud infrastructure work. It is anchored to the portrait and fades toward the text. It animates as one layer on arrival and settles within five seconds; the profile stays still. Reduced-motion preferences disable the animation, which works without JavaScript. A custom `404.html` page shares the same stylesheet, icons, font preloads, and Content Security Policy.
 

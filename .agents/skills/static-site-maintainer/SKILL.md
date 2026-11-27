@@ -17,7 +17,7 @@ Use this skill for the site's content, presentation, and local maintenance:
 
 Read `AGENTS.md` for repository-wide conventions. Use `github-pages-seo-pwa` for head metadata, structured data, domain configuration, the manifest, crawling files, and service worker caching.
 
-The current page is a single profile. `assets/js/main.js` only registers the service worker; there are no active Web Components. Inspect the current source before assuming a component or footer is active.
+The current page is a single profile with Home and Career views. `assets/js/main.js` manages the view switcher and registers the service worker; there are no active Web Components. Inspect the current source before assuming a component or footer is active.
 
 ## Hard Constraints
 
