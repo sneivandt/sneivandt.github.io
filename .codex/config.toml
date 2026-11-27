@@ -20,5 +20,6 @@ enabled = true
 mode = "limited"
 
 [permissions.website-development.network.domains]
+"127.0.0.1" = "allow"
 "localhost" = "allow"
 "stuartneivandt.com" = "allow"

@@ -9,11 +9,11 @@ description: Maintain this dependency-free static site, including page content, 
 
 Use this skill for the site's content, presentation, and local maintenance:
 
-- `index.html`
+- `index.html` and `404.html`
 - `assets/css/style.css`
 - `assets/js/main.js`
 - fonts and images under `assets/`
-- `README.md` and `serve.py`
+- `README.md` and `scripts/serve.py`
 
 Read `AGENTS.md` for repository-wide conventions. Use `github-pages-seo-pwa` for head metadata, structured data, domain configuration, the manifest, crawling files, and service worker caching.
 
@@ -58,14 +58,18 @@ The current page is a single profile. `assets/js/main.js` only registers the ser
 
 ## Local Preview
 
-Run `./serve.py` from the repository root and open `http://localhost:8000/`. The server sends no-cache headers, but the service worker can still serve cached assets. For stale local content, unregister the worker and clear this origin's Cache Storage in browser developer tools.
+Run `./scripts/serve.py` from the repository root and open `http://127.0.0.1:8000/`. The server sends no-cache headers and serves `404.html` for missing paths, but the service worker can still serve cached assets. For stale local content, unregister the worker and clear this origin's Cache Storage in browser developer tools.
 
 ## Validation
 
-- Run `node --check` on touched JavaScript files, including `main.js` when imports change.
+- Run `node --check` on touched JavaScript files, including `main.js` when imports change, and `python3 -m py_compile scripts/serve.py` when editing the local preview server.
 - For page changes, verify static serving, landmarks, heading order, keyboard navigation, mobile layout, and reduced-motion behavior.
-- Include screenshots in pull requests for visual changes.
+- Include screenshots when opening pull requests for visual changes.
 - For documentation-only edits, check commands and relative links against the repository; no site audit or content-date change is needed.
-- Pull requests targeting `main` run HTML/CSS, JavaScript, link, manifest JSON, and Lighthouse checks. Check the workflow files and `.lighthouserc.json` before changing or describing those checks.
+- Pushes to `main` and pull requests targeting `main` run HTML/CSS, JavaScript, link, and JSON/XML/JSON-LD/Python checks (`ci.yml`). Pull requests targeting `main` also run Lighthouse CI (`lighthouse.yml` and `.github/lighthouserc.json`). Check the workflow files before changing or describing those checks.
 - For material page-content changes, synchronize `sitemap.xml` `lastmod` and JSON-LD `dateModified` with the change date.
 - For cached site-file changes, follow `github-pages-seo-pwa` to update the service worker cache version.
+
+## Shipping
+
+Committing and pushing directly to `main` is the preferred way to ship changes in this repository. Verify relevant local checks before pushing, then monitor GitHub Actions CI on the pushed `main` commit until it passes. Use a pull request only when explicitly requested or when PR-only Lighthouse CI is needed beforehand.

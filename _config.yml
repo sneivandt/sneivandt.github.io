@@ -1,6 +1,6 @@
 exclude:
   - AGENTS.md
-  - serve.py
+  - scripts
   - README.md
   - LICENSE
 

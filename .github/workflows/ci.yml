@@ -26,12 +26,14 @@ jobs:
             vnu --skip-non-html --also-check-css /data
 
       - name: Validate JavaScript
+        shell: bash
         run: |
+          set -euo pipefail
           echo "Validating JavaScript syntax..."
-          for file in $(find . -name "*.js" -type f ! -path "./.git/*"); do
+          while IFS= read -r -d '' file; do
             echo "Checking $file..."
-            node --check "$file" || exit 1
-          done
+            node --check "$file"
+          done < <(find . -name "*.js" -type f ! -path "./.git/*" -print0)
           echo "All JavaScript files are valid ✓"
 
       - name: Check for broken links
@@ -46,14 +48,58 @@ jobs:
             './**/*.md'
             --exclude-path './node_modules'
             --exclude-path './vendor'
-            --exclude 'http://localhost:8000/'
+            --exclude 'http://(localhost|127\.0\.0\.1):8000/'
             --exclude 'linkedin\.com'
           fail: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Validate manifest.json
+      - name: Validate JSON, XML, JSON-LD, and helper scripts
         run: |
-          echo "Validating manifest.json syntax..."
-          cat manifest.json | python3 -m json.tool > /dev/null || { echo "Error: manifest.json is not valid JSON"; exit 1; }
-          echo "manifest.json is valid JSON ✓"
+          python3 - <<'EOF'
+          from html.parser import HTMLParser
+          import json
+          from pathlib import Path
+          import py_compile
+          import xml.etree.ElementTree as ET
+
+          for json_path in ('manifest.json', '.github/lighthouserc.json'):
+              with Path(json_path).open(encoding='utf-8') as f:
+                  json.load(f)
+              print(f'{json_path} is valid JSON ✓')
+
+          ET.parse('sitemap.xml')
+          print('sitemap.xml is valid XML ✓')
+
+          class JsonLdExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self._capture = False
+                  self._chunks = []
+                  self.blocks = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag == 'script' and dict(attrs).get('type') == 'application/ld+json':
+                      self._capture = True
+                      self._chunks = []
+
+              def handle_data(self, data):
+                  if self._capture:
+                      self._chunks.append(data)
+
+              def handle_endtag(self, tag):
+                  if tag == 'script' and self._capture:
+                      self.blocks.append(''.join(self._chunks))
+                      self._capture = False
+
+          parser = JsonLdExtractor()
+          parser.feed(Path('index.html').read_text(encoding='utf-8'))
+          if not parser.blocks:
+              raise SystemExit('Error: no JSON-LD script block found in index.html')
+          for block in parser.blocks:
+              json.loads(block)
+          print(f'index.html JSON-LD ({len(parser.blocks)} block) is valid JSON ✓')
+
+          py_compile.compile('scripts/serve.py', doraise=True)
+          print('scripts/serve.py syntax is valid ✓')
+          EOF

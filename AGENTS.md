@@ -14,6 +14,7 @@ This is a small personal website served directly by GitHub Pages. Keep changes s
 
 - Keep markup shallow and semantic, with one `h1` and logical heading order.
 - Keep metadata and JSON-LD inline and consistent with visible content, the canonical URL, and social previews.
+- Keep `404.html` aligned when changing shared stylesheets, icons, font preloads, or the Content Security Policy.
 - Reuse global CSS custom properties; keep selectors shallow and prefer fluid sizing with `clamp()`.
 - Preserve keyboard access and visible focus styles. Use native semantics before ARIA.
 - Maintain contrast of at least 4.5:1 for normal text and 3:1 for large text.
@@ -36,15 +37,16 @@ Inspect the current source before assuming a feature is active. The JavaScript e
 
 ## Validation
 
-- Preview with `./serve.py` from the repository root at `http://localhost:8000/`.
+- Preview with `./scripts/serve.py` from the repository root at `http://127.0.0.1:8000/` (also serves `404.html` for missing paths).
 - If local assets appear stale, unregister the service worker and clear this origin's Cache Storage; no-cache HTTP headers do not bypass it.
-- Run `node --check` on touched JavaScript files and `python3 -m json.tool manifest.json` when changing the manifest.
-- For visual or interactive changes, check mobile layout, keyboard navigation, and reduced-motion behavior. Include screenshots in the pull request.
-- Pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, manifest JSON validation, and Lighthouse audits requiring at least 90 in all four categories.
+- Run `node --check` on touched JavaScript files, `python3 -m json.tool` on touched JSON files (`manifest.json`, `.github/lighthouserc.json`), and `python3 -m py_compile scripts/serve.py` when changing the dev server.
+- For visual or interactive changes, check mobile layout, keyboard navigation, and reduced-motion behavior. Include screenshots when opening a pull request.
+- Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON/XML/JSON-LD/Python checks. Pull requests targeting `main` also run Lighthouse audits (`.github/lighthouserc.json`) requiring at least 90 in all four categories.
 - Documentation-only changes need accurate commands and links, not a site audit.
 
 ## Maintenance
 
+- Committing and pushing directly to `main` is the preferred way to ship changes in this repository. Run local checks first, push to `main`, and verify GitHub Actions CI (and Pages deployment when site files change) succeeds on the pushed commit. Use a pull request only when explicitly requested or when PR-only Lighthouse CI is needed beforehand.
 - Bump `CACHE_VERSION` in `sw.js` when changing cached site files. Update precache references when adding or removing essential offline assets.
 - For material published page-content changes, update sitemap `lastmod` and JSON-LD `dateModified`. Do not change those dates for documentation or skill edits alone.
 - Keep the copyright year in `LICENSE` current.

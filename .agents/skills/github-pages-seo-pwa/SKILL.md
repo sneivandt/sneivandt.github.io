@@ -10,9 +10,11 @@ description: Maintain GitHub Pages publishing metadata, SEO, and PWA behavior. U
 Use this skill when changing any of the site's publishing and discovery surface:
 
 - `index.html` metadata and structured data
+- `404.html` error-page metadata, `<base href="/">`, and CSP parity
 - `manifest.json`
 - `robots.txt`
 - `sitemap.xml`
+- `humans.txt`
 - `CNAME`
 - `_config.yml`
 - `sw.js`
@@ -23,9 +25,10 @@ Read `AGENTS.md` for repository-wide conventions. Use `static-site-maintainer` f
 
 - The canonical site is `https://stuartneivandt.com/`, published at the domain root.
 - `index.html` contains a `ProfilePage` with a `Person` as its JSON-LD `mainEntity`.
+- `404.html` carries `noindex`, `<base href="/">`, and the same CSP, icons, font preloads, and stylesheet as `index.html`.
 - `assets/js/main.js` registers `sw.js` after page load.
 - The service worker uses network-first navigation, cache-first images/fonts, and stale-while-revalidate for other requests.
-- Pull request workflows validate the site; they do not deploy it. Publishing source, DNS, and HTTPS settings are managed outside the source files.
+- CI workflows validate on pushes to `main` and pull requests (`ci.yml`), and run Lighthouse on pull requests (`lighthouse.yml`); they do not deploy the site. Publishing source, DNS, and HTTPS settings are managed outside the source files.
 
 ## Metadata Checklist
 
@@ -62,10 +65,14 @@ Read `AGENTS.md` for repository-wide conventions. Use `static-site-maintainer` f
 
 ## Validation
 
-- Re-read the final `<head>` for consistency after edits.
+- Re-read the final `<head>` for consistency after edits (including `404.html` when changing CSP, icons, or font preloads).
 - Run `python3 -m json.tool manifest.json` for manifest changes and `node --check sw.js` for worker changes.
 - Parse JSON-LD after structured-data changes and verify sitemap XML after sitemap edits using existing tools or the Python standard library.
 - Verify referenced images, icons, and precache paths exist and resolve from the domain root.
-- For cache changes, use a local HTTP preview to check online loading, a worker-version upgrade, and offline loading after installation. Check browser Cache Storage rather than assuming a refresh bypasses the worker.
+- For cache changes, use a local HTTP preview (`./scripts/serve.py`) to check online loading, a worker-version upgrade, and offline loading after installation. Check browser Cache Storage rather than assuming a refresh bypasses the worker.
 - For documentation-only skill edits, review frontmatter, paths, and routing; no browser audit or deployment is needed.
 - Keep CSP, manifest, and service worker changes conservative and explicit.
+
+## Shipping
+
+Committing and pushing directly to `main` is the preferred way to ship changes in this repository. Verify local checks first, push to `main`, and confirm GitHub Actions CI and Pages deployment succeed on the pushed commit. Use a pull request only when explicitly requested or when PR-only Lighthouse CI is needed beforehand.

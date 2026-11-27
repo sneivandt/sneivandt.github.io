@@ -4,19 +4,19 @@ Source for [stuartneivandt.com](https://stuartneivandt.com/), Stuart Neivandt's 
 
 A single-page profile built with plain HTML, native CSS, and vanilla JavaScript, hosted on GitHub Pages. **No build step, package installation, or framework runtime.** The files in this repository are the site.
 
-A decorative SVG network echoes the profile's distributed-systems work. It is anchored to the portrait and fades toward the text. It animates as one layer on arrival and settles within five seconds; the profile stays still. Reduced-motion preferences disable the animation, which works without JavaScript.
+A decorative SVG network echoes the profile's cloud infrastructure work. It is anchored to the portrait and fades toward the text. It animates as one layer on arrival and settles within five seconds; the profile stays still. Reduced-motion preferences disable the animation, which works without JavaScript. A custom `404.html` page shares the same stylesheet, icons, font preloads, and Content Security Policy.
 
 ## Preview locally
 
 With Python 3 installed, run this from the repository root:
 
 ```bash
-./serve.py
+./scripts/serve.py
 ```
 
-Open [localhost:8000](http://localhost:8000/). Edit the source files and refresh the browser; there is nothing to compile. Stop the server with `Ctrl+C`.
+Open [127.0.0.1:8000](http://127.0.0.1:8000/) (pass a port number as an argument to override `8000`). Edit the source files and refresh the browser; there is nothing to compile. Stop the server with `Ctrl+C`.
 
-The included server sends no-cache HTTP headers. A basic alternative is:
+The included server sends no-cache HTTP headers and serves `404.html` for missing paths, matching GitHub Pages behavior. A basic alternative is:
 
 ```bash
 python3 -m http.server 8000
@@ -31,6 +31,7 @@ Serve over HTTP rather than opening `index.html` as a file so ES modules and ser
 Keep the site small, readable, and directly publishable:
 
 - Keep visible content, page descriptions, social tags, and structured data consistent.
+- Keep `404.html` aligned when changing shared stylesheets, icons, font preloads, or the Content Security Policy.
 - Reuse existing CSS custom properties for colors, spacing, and typography.
 - Use vanilla JavaScript and native Web Components when interaction is needed. Keep the profile usable without JavaScript.
 - Optimize images before committing, include image dimensions, and keep fonts self-hosted.
@@ -43,7 +44,7 @@ The favicon uses a circular version of the existing portrait in a 96×96 PNG, wi
 
 ## Checks
 
-Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and JSON syntax validation for `manifest.json`. On pull requests, [Lighthouse CI](.lighthouserc.json) also requires scores of at least **90** in performance, accessibility, best practices, and SEO.
+Pushes to `main` and pull requests targeting `main` run HTML/CSS validation, JavaScript syntax checks, HTML/Markdown link checks, and Python standard-library validation for `manifest.json`, `.github/lighthouserc.json`, `sitemap.xml`, inline JSON-LD in `index.html`, and `scripts/serve.py`. On pull requests, [Lighthouse CI](.github/lighthouserc.json) also requires scores of at least **90** in performance, accessibility, best practices, and SEO.
 
 HTML and CSS checks use the official [Nu Html Checker](https://github.com/validator/validator) image, whose supported production release is `latest`. This keeps validation compatible with modern CSS without suppressing errors. Errors fail the check; informational warnings remain visible in its output. With Docker available, run the same check locally:
 
@@ -60,13 +61,15 @@ node --check sw.js
 node --check assets/js/main.js
 ```
 
-Check the manifest with Python's standard library:
+Check JSON files and helper script syntax with Python's standard library:
 
 ```bash
-python3 -m json.tool manifest.json
+python3 -m json.tool manifest.json > /dev/null
+python3 -m json.tool .github/lighthouserc.json > /dev/null
+python3 -m py_compile scripts/serve.py
 ```
 
-For visual or interactive changes, also check a mobile viewport, keyboard navigation, and reduced-motion preferences. Include screenshots of the updated site in the pull request.
+For visual or interactive changes, also check a mobile viewport, keyboard navigation, and reduced-motion preferences. When opening a pull request for visual changes, include screenshots of the updated site.
 
 ## Deployment
 
