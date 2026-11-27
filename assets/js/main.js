@@ -24,9 +24,8 @@ const initViewSwitcher = () => {
     career: 'Career | Stuart Neivandt'
   };
 
-  document.documentElement.classList.add('js');
-
   nav.setAttribute('role', 'tablist');
+  nav.classList.add('has-indicator');
   for (const tab of tabs) {
     const view = tab.dataset.view;
     tab.setAttribute('role', 'tab');
@@ -46,13 +45,17 @@ const initViewSwitcher = () => {
 
   const updateIndicator = (activeTab) => {
     if (!activeTab) return;
-    nav.style.setProperty('--indicator-x', `${activeTab.offsetLeft}px`);
-    nav.style.setProperty('--indicator-w', `${activeTab.offsetWidth}px`);
+    const styles = window.getComputedStyle(activeTab);
+    const padLeft = parseFloat(styles.paddingLeft) || 0;
+    const padRight = parseFloat(styles.paddingRight) || 0;
+    nav.style.setProperty('--indicator-x', `${activeTab.offsetLeft + padLeft}px`);
+    nav.style.setProperty('--indicator-w', `${Math.max(0, activeTab.offsetWidth - padLeft - padRight)}px`);
   };
 
   const viewFromHash = () => {
     const hash = window.location.hash.slice(1).toLowerCase();
-    return validViews.has(hash) ? hash : defaultView;
+    if (!hash) return defaultView;
+    return validViews.has(hash) ? hash : null;
   };
 
   let currentView = null;
@@ -91,8 +94,6 @@ const initViewSwitcher = () => {
       }
     }
 
-    updateIndicator(activeTab);
-
     for (const panel of panels) {
       const isActive = panel.dataset.panel === target;
       panel.classList.toggle('is-hidden', !isActive);
@@ -104,6 +105,8 @@ const initViewSwitcher = () => {
         panel.classList.add('is-entering');
       }
     }
+
+    updateIndicator(activeTab);
 
     document.title = viewTitles[target] || defaultTitle;
 
@@ -131,6 +134,12 @@ const initViewSwitcher = () => {
     const currentIndex = tabs.indexOf(document.activeElement);
     if (currentIndex === -1) return;
 
+    if (event.key === ' ') {
+      event.preventDefault();
+      setActiveView(tabs[currentIndex].dataset.view, { historyMode: 'push', animate: true });
+      return;
+    }
+
     let nextIndex = null;
     if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
     else if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
@@ -143,22 +152,39 @@ const initViewSwitcher = () => {
     }
   });
 
-  window.addEventListener('hashchange', () => setActiveView(viewFromHash(), { animate: true }));
-  window.addEventListener('popstate', () => setActiveView(viewFromHash(), { animate: true }));
-  window.addEventListener('resize', () => {
+  const syncViewFromLocation = () => {
+    const nextView = viewFromHash();
+    if (nextView) {
+      setActiveView(nextView, { animate: true });
+    }
+  };
+
+  const refreshIndicator = () => {
     const activeTab = tabs.find((tab) => tab.dataset.view === currentView);
     updateIndicator(activeTab);
-  });
+  };
+
+  window.addEventListener('hashchange', syncViewFromLocation);
+  window.addEventListener('popstate', syncViewFromLocation);
+  if (typeof ResizeObserver === 'function') {
+    const resizeObserver = new ResizeObserver(refreshIndicator);
+    resizeObserver.observe(nav);
+    for (const tab of tabs) {
+      resizeObserver.observe(tab);
+    }
+  } else {
+    window.addEventListener('resize', refreshIndicator);
+  }
 
   const initialHash = window.location.hash.slice(1).toLowerCase();
-  setActiveView(viewFromHash());
-  nav.classList.add('has-indicator');
-  requestAnimationFrame(() => nav.classList.add('is-indicator-ready'));
+  setActiveView(viewFromHash() || defaultView);
+  document.documentElement.classList.add('js');
+  requestAnimationFrame(() => {
+    document.documentElement.classList.add('js-ready');
+    nav.classList.add('is-indicator-ready');
+  });
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => {
-      const activeTab = tabs.find((tab) => tab.dataset.view === currentView);
-      updateIndicator(activeTab);
-    });
+    document.fonts.ready.then(refreshIndicator);
   }
   if (validViews.has(initialHash)) {
     window.scrollTo(0, 0);

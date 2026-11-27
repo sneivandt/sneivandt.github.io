@@ -3,7 +3,8 @@
     "collect": {
       "staticDistDir": ".",
       "url": [
-        "http://localhost/"
+        "http://localhost/",
+        "http://localhost/#career"
       ]
     },
     "assert": {

@@ -183,14 +183,17 @@ a:focus-visible {
 }
 
 .view-nav.has-indicator .nav-link::after {
-  opacity: 0;
+  display: none;
 }
 
 .nav-link {
+  --nav-link-pad-x: 0.45rem;
   position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  padding-inline: var(--nav-link-pad-x);
+  margin-inline: calc(var(--nav-link-pad-x) * -1);
   border-radius: 0.375rem;
   color: var(--color-text-muted);
   font-size: 0.875rem;
@@ -213,8 +216,8 @@ a:focus-visible {
 .nav-link::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: var(--nav-link-pad-x);
+  right: var(--nav-link-pad-x);
   bottom: -1px;
   height: 2px;
   border-radius: 1px;
@@ -282,13 +285,19 @@ a:focus-visible {
   grid-area: 1 / 1;
   opacity: 1;
   visibility: visible;
-  transition: opacity 180ms ease, visibility 0s linear 0s;
 }
 
 .js .card-panel.is-hidden {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+.js-ready .card-panel {
+  transition: opacity 180ms ease, visibility 0s linear 0s;
+}
+
+.js-ready .card-panel.is-hidden {
   transition: opacity 140ms ease, visibility 0s linear 140ms;
 }
 
@@ -614,7 +623,7 @@ a:focus-visible {
 
 @media (hover: hover) {
   .timeline:hover .timeline-item:not(:hover) {
-    opacity: 0.58;
+    opacity: 0.76;
   }
 
   .timeline-item:hover::after {
@@ -972,6 +981,10 @@ h1 {
     top: 0.74rem;
   }
 
+  .js .card-panel.is-hidden {
+    display: none;
+  }
+
   .js .timeline {
     margin-top: 1.25rem;
   }
@@ -980,6 +993,11 @@ h1 {
 @media (max-width: 700px) and (scripting: enabled) {
   html:not(.js) .timeline {
     margin-top: 1.25rem;
+  }
+
+  html:not(.js) [data-panel="career"]:not(:target),
+  html:not(.js) .card-panels:has([data-panel="career"]:target) [data-panel="home"] {
+    display: none;
   }
 }
 
@@ -1010,8 +1028,8 @@ h1 {
   .nav-link,
   .nav-link::after,
   .view-nav.has-indicator.is-indicator-ready::after,
-  .js .card-panel,
-  .js .card-panel.is-hidden,
+  .js-ready .card-panel,
+  .js-ready .card-panel.is-hidden,
   .timeline::before,
   .timeline-item,
   .timeline-item::before,
@@ -1054,6 +1072,7 @@ h1 {
   .view-nav.has-indicator .nav-link[aria-selected="true"]::after,
   .nav-link[aria-selected="true"]::after,
   .nav-link[aria-current="page"]::after {
+    display: block;
     opacity: 1;
     background: none;
     border-bottom: 2px solid Highlight;
@@ -1079,5 +1098,241 @@ h1 {
 
   .button-link-primary {
     border-color: Highlight;
+  }
+}
+
+@media print {
+  @page {
+    margin: 0.65in;
+  }
+
+  :root {
+    color-scheme: light;
+    --color-bg: #fff;
+    --color-text: #111827;
+    --color-text-soft: #374151;
+    --color-text-muted: #57606a;
+    --color-accent: #111827;
+    --color-hairline: #d0d7de;
+    --color-link-underline: #8c959f;
+  }
+
+  html,
+  body {
+    min-height: auto;
+    background: #fff;
+    color: var(--color-text);
+    line-height: 1.55;
+  }
+
+  .skip-link,
+  .view-nav,
+  .network-scene,
+  .external-icon,
+  .portrait::before,
+  .portrait::after,
+  .timeline::before {
+    display: none !important;
+  }
+
+  .container {
+    overflow: visible;
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  .main-content {
+    display: block;
+  }
+
+  .profile-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 7.25rem;
+    grid-template-areas:
+      "heading portrait"
+      "home portrait"
+      "career career";
+    grid-template-rows: auto auto auto;
+    column-gap: 2.25rem;
+    align-items: start;
+    padding-block: 0;
+  }
+
+  .profile-content,
+  .card-panels,
+  .js .card-panels {
+    display: contents;
+  }
+
+  .hero-heading {
+    grid-area: heading;
+  }
+
+  .hero-heading::before {
+    content: "stuartneivandt.com";
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  h1 {
+    font-size: 2rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .portrait {
+    grid-area: portrait;
+    width: 100%;
+    margin: 0.25rem 0 0;
+  }
+
+  .profile-image {
+    border: 1px solid var(--color-hairline);
+    border-radius: 0.5rem;
+    box-shadow: none;
+    filter: none;
+  }
+
+  [data-panel="home"],
+  .js [data-panel="home"] {
+    grid-area: home;
+  }
+
+  [data-panel="career"],
+  .js [data-panel="career"] {
+    grid-area: career;
+  }
+
+  .js .card-panel,
+  .js .card-panel.is-hidden {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .card-panel + .card-panel,
+  .js .card-panel + .card-panel {
+    margin-top: 2rem;
+  }
+
+  .hero-intro {
+    max-width: none;
+    margin-top: 0.85rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-top: 1rem;
+  }
+
+  .button-link,
+  .button-link-primary {
+    display: inline;
+    min-height: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .hero-actions a[href^="http"]::after {
+    content: "  ·  " attr(href);
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+
+  .career-heading,
+  .js .career-heading {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0 0 1.1rem;
+    padding: 0 0 0.45rem;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    border-bottom: 1px solid var(--color-hairline);
+    background: none;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .timeline,
+  .js .timeline {
+    margin-top: 0;
+    --timeline-pad-y: 0.65rem;
+    --timeline-date-col: 2.5rem;
+    --timeline-gap: 1.75rem;
+    --timeline-node-top: 0.38rem;
+  }
+
+  .timeline-item {
+    break-inside: avoid;
+  }
+
+  .timeline-item:not(:last-child) {
+    background: none;
+  }
+
+  .timeline-item::before {
+    background: none;
+    border-left: 1px solid #c9d1d9;
+  }
+
+  .timeline-item:last-child::before {
+    display: none;
+  }
+
+  .timeline-item::after {
+    border-color: #374151;
+    background: #fff;
+    box-shadow: none;
+    animation: none;
+  }
+
+  .timeline-item-current::after {
+    border: 4.5px solid var(--color-text);
+    background: var(--color-text);
+  }
+
+  .timeline-item-current > .timeline-period {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .timeline-org {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .timeline-summary,
+  .timeline-role {
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .timeline-period {
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+
+  .timeline-role::after {
+    top: 0.68rem;
+    border-color: #6b7280;
+    background: #fff;
   }
 }
