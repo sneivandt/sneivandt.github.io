@@ -155,8 +155,8 @@ a:focus-visible {
   display: flex;
   align-items: center;
   gap: 1.75rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 0.125rem;
+  margin-bottom: 1rem;
   background: linear-gradient(to right, var(--color-hairline) 82%, transparent) bottom / 100% 1px no-repeat;
 }
 
@@ -186,9 +186,9 @@ a:focus-visible {
   --nav-link-pad-x: 0.45rem;
   position: relative;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   min-height: 44px;
-  padding-inline: var(--nav-link-pad-x);
+  padding: 0 var(--nav-link-pad-x) 0.625rem;
   margin-inline: calc(var(--nav-link-pad-x) * -1);
   border-radius: 0.375rem;
   color: var(--color-text-muted);
@@ -779,6 +779,10 @@ h1 {
 }
 
 @media (min-width: 701px) {
+  .portrait {
+    margin-top: 0.375rem;
+  }
+
   .profile-image {
     border: 1px solid var(--color-link-underline);
   }
@@ -892,8 +896,8 @@ h1 {
 
   .view-nav {
     gap: 1.75rem;
-    margin-top: 0.375rem;
-    margin-bottom: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 0.875rem;
   }
 
   .hero-heading {
@@ -996,8 +1000,8 @@ h1 {
   }
 
   .view-nav {
-    margin-top: 0.25rem;
-    margin-bottom: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
   }
 
   .hero-intro {
